@@ -7,7 +7,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>PokeVerse</Text>
+        <Text style={styles.headerText}>PokéVerse</Text>
       </View>
       <PokemonList />
     </SafeAreaView>
