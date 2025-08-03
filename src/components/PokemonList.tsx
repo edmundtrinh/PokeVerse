@@ -40,12 +40,18 @@ interface PokemonDetail {
   }[];
 }
 
+// New interface for list items with sprites
+interface PokemonListItem {
+  name: string;
+  url: string;
+  sprite?: string;
+  id?: number;
+}
+
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
 const PokemonList: React.FC = () => {
-  const [pokemonList, setPokemonList] = useState<
-    { name: string; url: string }[]
-  >([]);
+  const [pokemonList, setPokemonList] = useState<PokemonListItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
@@ -54,18 +60,41 @@ const PokemonList: React.FC = () => {
   const [loadingDetail, setLoadingDetail] = useState<boolean>(false);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
+  // Extract Pokemon ID from URL
+  const extractPokemonId = (url: string): number => {
+    const pattern = /\/pokemon\/(\d+)\//;
+    const match = url.match(pattern);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  // Get sprite URL from Pokemon ID
+  const getSpriteUrl = (id: number): string => {
+    // return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    return `https://www.serebii.net/pokedex-sv/icon/${id}.png`;
+  };
+
   const fetchPokemon = async (
     url = `${BASE_URL}/pokemon?limit=20&offset=0`
   ) => {
     try {
       const response = await axios.get<PokemonListResponse>(url);
 
+      // Transform the results to include sprite URLs
+      const enhancedResults = response.data.results.map((pokemon) => {
+        const id = extractPokemonId(pokemon.url);
+        return {
+          ...pokemon,
+          sprite: getSpriteUrl(id),
+          id: id,
+        };
+      });
+
       if (url === `${BASE_URL}/pokemon?limit=20&offset=0`) {
         // Initial load
-        setPokemonList(response.data.results);
+        setPokemonList(enhancedResults);
       } else {
         // Loading more
-        setPokemonList((prevList) => [...prevList, ...response.data.results]);
+        setPokemonList((prevList) => [...prevList, ...enhancedResults]);
       }
 
       setNextUrl(response.data.next);
@@ -124,7 +153,18 @@ const PokemonList: React.FC = () => {
             style={styles.listItem}
             onPress={() => handlePokemonSelect(item.name)}
           >
-            <Text style={styles.pokemonName}>{item.name}</Text>
+            <View style={styles.listItemContent}>
+              <Image
+                source={{ uri: item.sprite }}
+                style={styles.listItemSprite}
+              />
+              <View style={styles.listItemDetails}>
+                <Text style={styles.pokemonName}>{item.name}</Text>
+                <Text style={styles.pokemonId}>
+                  #{item.id?.toString().padStart(3, '0')}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
         )}
         onEndReached={handleLoadMore}
@@ -180,13 +220,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listItem: {
-    padding: 16,
+    padding: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+  },
+  listItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  listItemSprite: {
+    width: 50,
+    height: 50,
+  },
+  listItemDetails: {
+    marginLeft: 10,
+    flex: 1,
   },
   pokemonName: {
     textTransform: 'capitalize',
     fontSize: 16,
+    fontWeight: '500',
+  },
+  pokemonId: {
+    color: '#666',
+    fontSize: 14,
   },
   detailLoader: {
     margin: 20,
