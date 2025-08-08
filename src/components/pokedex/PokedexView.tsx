@@ -66,6 +66,7 @@ const PokedexView: React.FC = () => {
   const [showBack, setShowBack] = useState<boolean>(false);
   const [showFemale, setShowFemale] = useState<boolean>(false);
   const [useAlternativeSources, setUseAlternativeSources] = useState<boolean>(false);
+  const [showVersionPicker, setShowVersionPicker] = useState<boolean>(false);
 
   useEffect(() => {
     fetchPokemons();
@@ -125,6 +126,52 @@ const PokedexView: React.FC = () => {
               front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
               front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`
             }
+          },
+          versions: {
+            'generation-i': {
+              'red-blue': {
+                front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/red-blue/back/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_gray: null,
+                back_gray: null,
+                front_transparent: null,
+                back_transparent: null
+              },
+              yellow: {
+                front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/yellow/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-i/yellow/back/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_gray: null,
+                back_gray: null,
+                front_transparent: null,
+                back_transparent: null
+              }
+            },
+            'generation-ii': {
+              gold: {
+                front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/gold/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/gold/back/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/gold/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/gold/back/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_transparent: null
+              },
+              silver: {
+                front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/silver/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/silver/back/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/silver/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/silver/back/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_transparent: null
+              },
+              crystal: {
+                front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                back_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/shiny/${name === 'pikachu' ? '25' : name === 'charizard' ? '6' : '1'}.png`,
+                front_shiny_transparent: null,
+                back_shiny_transparent: null,
+                front_transparent: null,
+                back_transparent: null
+              }
+            }
           }
         },
         types: [{ slot: 1, type: { name: 'electric', url: '' } }],
@@ -148,6 +195,8 @@ const PokedexView: React.FC = () => {
 
   // Get the appropriate sprite based on all selected options
   const getCurrentSprite = (pokemon: PokemonDetail): string | null => {
+    console.log('Getting sprite for:', pokemon.name, 'version:', selectedVersion);
+    
     if (useAlternativeSources) {
       const altSources = getAlternativeSpriteSources(pokemon.id, pokemon.name);
       if (isShiny) {
@@ -186,87 +235,36 @@ const PokedexView: React.FC = () => {
 
     const isAnimated = selectedVersion === 'black-white-animated';
     
-    return getSprite(pokemon.sprites, {
+    console.log('Sprite options:', {
+      generation: selectedGameVersion.generation,
+      game: selectedGameVersion.value,
+      variant,
+      animated: isAnimated
+    });
+    
+    const sprite = getSprite(pokemon.sprites, {
       generation: selectedGameVersion.generation,
       game: selectedGameVersion.value as SpriteGame,
       variant,
       animated: isAnimated
     });
+    
+    console.log('Found sprite:', sprite);
+    console.log('Pokemon sprites structure:', pokemon.sprites);
+    
+    // If no sprite found, fallback to basic sprites but still honor user preferences
+    if (!sprite) {
+      if (isShiny) {
+        return showBack ? pokemon.sprites.back_shiny : pokemon.sprites.front_shiny;
+      }
+      return showBack ? pokemon.sprites.back_default : pokemon.sprites.front_default;
+    }
+    
+    return sprite;
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.controlsContainer}>
-        {/* Sprite Version Dropdown */}
-        <View style={styles.dropdownSection}>
-          <Text style={styles.sectionTitle}>Sprite Version</Text>
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={selectedVersion}
-              style={styles.picker}
-              onValueChange={(itemValue) => setSelectedVersion(itemValue)}
-            >
-              {gameVersions.map((version) => (
-                <Picker.Item
-                  key={version.value}
-                  label={version.label}
-                  value={version.value}
-                />
-              ))}
-            </Picker>
-          </View>
-        </View>
-
-        {/* Toggle Controls */}
-        <View style={styles.toggleSection}>
-          <Text style={styles.sectionTitle}>Options</Text>
-          <View style={styles.toggleGrid}>
-            <View style={styles.toggleRow}>
-              <View style={styles.toggleItem}>
-                <Text style={styles.toggleLabel}>✨ Shiny</Text>
-                <Switch
-                  value={isShiny}
-                  onValueChange={setIsShiny}
-                  trackColor={{ false: '#ccc', true: '#FFD700' }}
-                  thumbColor={isShiny ? '#FFA500' : '#f4f3f4'}
-                />
-              </View>
-
-              <View style={styles.toggleItem}>
-                <Text style={styles.toggleLabel}>🔄 Back View</Text>
-                <Switch
-                  value={showBack}
-                  onValueChange={setShowBack}
-                  trackColor={{ false: '#ccc', true: '#4CAF50' }}
-                  thumbColor={showBack ? '#2E7D32' : '#f4f3f4'}
-                />
-              </View>
-            </View>
-
-            <View style={styles.toggleRow}>
-              <View style={styles.toggleItem}>
-                <Text style={styles.toggleLabel}>♀️ Female</Text>
-                <Switch
-                  value={showFemale}
-                  onValueChange={setShowFemale}
-                  trackColor={{ false: '#ccc', true: '#E91E63' }}
-                  thumbColor={showFemale ? '#C2185B' : '#f4f3f4'}
-                />
-              </View>
-
-              <View style={styles.toggleItem}>
-                <Text style={styles.toggleLabel}>🌐 Alt Sources</Text>
-                <Switch
-                  value={useAlternativeSources}
-                  onValueChange={setUseAlternativeSources}
-                  trackColor={{ false: '#ccc', true: '#2196F3' }}
-                  thumbColor={useAlternativeSources ? '#1976D2' : '#f4f3f4'}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
 
       <FlatList
         data={pokemonList}
@@ -326,6 +324,116 @@ const PokedexView: React.FC = () => {
                   }
                 }}
               />
+
+              {/* Sprite Controls - Right in the modal! */}
+              <View style={styles.spriteControls}>
+                <Text style={styles.controlsTitle}>🎨 Sprite Options</Text>
+                
+                {/* Sprite Version Dropdown */}
+                <View style={styles.dropdownSection}>
+                  <Text style={styles.controlLabel}>Version:</Text>
+                  <TouchableOpacity 
+                    style={styles.customDropdown}
+                    onPress={() => setShowVersionPicker(!showVersionPicker)}
+                  >
+                    <Text style={styles.dropdownText}>
+                      {gameVersions.find(v => v.value === selectedVersion)?.label || 'Select Version'}
+                    </Text>
+                    <Text style={styles.dropdownArrow}>{showVersionPicker ? '▲' : '▼'}</Text>
+                  </TouchableOpacity>
+                  
+                  {showVersionPicker && (
+                    <View style={styles.dropdownList}>
+                      <ScrollView 
+                        style={styles.dropdownScroll} 
+                        nestedScrollEnabled={true}
+                        showsVerticalScrollIndicator={true}
+                      >
+                        {gameVersions.map((version) => {
+                          // Check if this version has available sprites for current Pokemon
+                          const hasSprites = selectedPokemon && getSprite(selectedPokemon.sprites, {
+                            generation: version.generation,
+                            game: version.value as any,
+                            variant: 'front_default'
+                          });
+                          
+                          return (
+                            <TouchableOpacity
+                              key={version.value}
+                              style={[
+                                styles.dropdownItem,
+                                selectedVersion === version.value && styles.selectedItem,
+                                !hasSprites && version.value !== 'best' && styles.disabledItem
+                              ]}
+                              onPress={() => {
+                                setSelectedVersion(version.value);
+                                setShowVersionPicker(false);
+                              }}
+                              disabled={!hasSprites && version.value !== 'best'}
+                            >
+                              <Text style={[
+                                styles.dropdownItemText,
+                                selectedVersion === version.value && styles.selectedItemText,
+                                !hasSprites && version.value !== 'best' && styles.disabledItemText
+                              ]}>
+                                {version.label}
+                                {!hasSprites && version.value !== 'best' && ' (N/A)'}
+                              </Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </ScrollView>
+                    </View>
+                  )}
+                </View>
+
+                {/* Toggle Controls */}
+                <View style={styles.quickToggles}>
+                  <View style={styles.toggleRow}>
+                    <View style={styles.toggleItem}>
+                      <Text style={styles.toggleLabel}>✨ Shiny</Text>
+                      <Switch
+                        value={isShiny}
+                        onValueChange={setIsShiny}
+                        trackColor={{ false: '#ccc', true: '#FFD700' }}
+                        thumbColor={isShiny ? '#FFA500' : '#f4f3f4'}
+                      />
+                    </View>
+
+                    <View style={styles.toggleItem}>
+                      <Text style={styles.toggleLabel}>🔄 Back</Text>
+                      <Switch
+                        value={showBack}
+                        onValueChange={setShowBack}
+                        trackColor={{ false: '#ccc', true: '#4CAF50' }}
+                        thumbColor={showBack ? '#2E7D32' : '#f4f3f4'}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.toggleRow}>
+                    <View style={styles.toggleItem}>
+                      <Text style={styles.toggleLabel}>♀️ Female</Text>
+                      <Switch
+                        value={showFemale}
+                        onValueChange={setShowFemale}
+                        trackColor={{ false: '#ccc', true: '#E91E63' }}
+                        thumbColor={showFemale ? '#C2185B' : '#f4f3f4'}
+                      />
+                    </View>
+
+                    <View style={styles.toggleItem}>
+                      <Text style={styles.toggleLabel}>🌐 Fallback</Text>
+                      <Switch
+                        value={useAlternativeSources}
+                        onValueChange={setUseAlternativeSources}
+                        trackColor={{ false: '#ccc', true: '#2196F3' }}
+                        thumbColor={useAlternativeSources ? '#1976D2' : '#f4f3f4'}
+                      />
+                    </View>
+                  </View>
+                </View>
+              </View>
 
               {/* Pokémon Type */}
               <View style={styles.typeContainer}>
@@ -445,64 +553,126 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  controlsContainer: {
-    backgroundColor: '#fff',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  spriteControls: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 20,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  controlsTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#2c3e50',
+    marginBottom: 16,
+    textAlign: 'center',
   },
   dropdownSection: {
-    marginBottom: 20,
+    marginBottom: 16,
+    position: 'relative',
+    zIndex: 1,
   },
-  sectionTitle: {
+  controlLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#495057',
+    marginBottom: 8,
+  },
+  customDropdown: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#ced4da',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    minHeight: 46,
+  },
+  dropdownText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 10,
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    backgroundColor: '#fafafa',
-  },
-  picker: {
-    height: 50,
-    color: '#333',
-  },
-  toggleSection: {
-    marginBottom: 10,
-  },
-  toggleGrid: {
+    color: '#374151',
+    fontWeight: '500',
     flex: 1,
+  },
+  dropdownArrow: {
+    fontSize: 14,
+    color: '#6b7280',
+    marginLeft: 8,
+  },
+  dropdownList: {
+    position: 'absolute',
+    top: 50,
+    left: 0,
+    right: 0,
+    borderWidth: 1.5,
+    borderColor: '#ced4da',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    maxHeight: 150,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 10,
+    zIndex: 1000,
+  },
+  dropdownItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f3f4',
+  },
+  selectedItem: {
+    backgroundColor: '#e3f2fd',
+  },
+  dropdownItemText: {
+    fontSize: 15,
+    color: '#374151',
+  },
+  selectedItemText: {
+    color: '#1976d2',
+    fontWeight: '600',
+  },
+  dropdownScroll: {
+    maxHeight: 150,
+  },
+  disabledItem: {
+    backgroundColor: '#f8f9fa',
+    opacity: 0.6,
+  },
+  disabledItemText: {
+    color: '#adb5bd',
+    fontStyle: 'italic',
+  },
+  quickToggles: {
+    marginTop: 8,
   },
   toggleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    marginBottom: 10,
+    gap: 10,
   },
   toggleItem: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 15,
+    paddingHorizontal: 12,
     paddingVertical: 10,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    marginHorizontal: 5,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#dee2e6',
   },
   toggleLabel: {
-    fontSize: 14,
-    color: '#333',
+    fontSize: 13,
+    color: '#495057',
     fontWeight: '500',
-    flex: 1,
+    marginRight: 6,
   },
   pokemonCard: {
     flex: 1,
