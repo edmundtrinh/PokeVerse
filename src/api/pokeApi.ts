@@ -1,6 +1,4 @@
 // src/api/pokeApi.ts
-import axios from 'axios';
-
 const BASE_URL = 'https://pokeapi.co/api/v2';
 
 export interface PokemonSprites {
@@ -227,38 +225,21 @@ export interface PokemonDetail {
   }[];
 }
 
-// Generate a function to get all available game versions/generations
-export const getGameVersions = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/version-group`);
-    return response.data.results;
-  } catch (error) {
-    console.error('Error fetching game versions:', error);
-    throw error;
+// Simple fetch-based API functions
+export const getPokemonByName = async (name: string): Promise<PokemonDetail> => {
+  const response = await fetch(`${BASE_URL}/pokemon/${name}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${name}: ${response.status}`);
   }
-};
-
-// Enhanced functions to get more detailed Pokémon data
-export const getPokemonByName = async (
-  name: string
-): Promise<PokemonDetail> => {
-  try {
-    const response = await axios.get(`${BASE_URL}/pokemon/${name}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching Pokemon ${name}:`, error);
-    throw error;
-  }
+  return response.json();
 };
 
 export const getPokemons = async (limit: number = 20, offset: number = 0) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching Pokemon list:', error);
-    throw error;
+  const response = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Pokemon list: ${response.status}`);
   }
+  return response.json();
 };
 
 // Sprite retrieval utilities
