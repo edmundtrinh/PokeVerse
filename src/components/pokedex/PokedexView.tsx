@@ -677,7 +677,7 @@ const PokedexView: React.FC = () => {
 
               {/* Sprite Controls - Right in the modal! */}
               <View style={styles.spriteControls}>
-                <Text style={styles.controlsTitle}>🎨 Sprite Options</Text>
+                <Text style={styles.controlsTitle}>Sprite Options</Text>
                 
                 {/* Sprite Version Dropdown */}
                 <View style={styles.dropdownSection}>
@@ -741,6 +741,7 @@ const PokedexView: React.FC = () => {
 
                 {/* Toggle Controls */}
                 <View style={styles.quickToggles}>
+                  <Text style={styles.togglesTitle}>Display Options</Text>
                   <View style={styles.toggleRow}>
                     <View style={styles.toggleItem}>
                       <Text style={styles.toggleLabel}>✨ Shiny</Text>
@@ -898,30 +899,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   spriteControls: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 16,
-    padding: 20,
-    marginVertical: 20,
-    borderWidth: 1,
-    borderColor: '#e9ecef',
+    backgroundColor: 'transparent',
+    marginVertical: 24,
+    paddingHorizontal: 16,
+    width: '100%',
   },
   controlsTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#2c3e50',
-    marginBottom: 16,
-    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#1a1a1a',
+    marginBottom: 20,
+    textAlign: 'left',
+    letterSpacing: 0.5,
   },
   dropdownSection: {
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 20,
     marginBottom: 16,
     position: 'relative',
     zIndex: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
   },
   controlLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#495057',
-    marginBottom: 8,
+    color: '#374151',
+    marginBottom: 12,
+    letterSpacing: 0.3,
   },
   customDropdown: {
     flexDirection: 'row',
@@ -992,31 +1001,47 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   quickToggles: {
-    marginTop: 8,
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+  togglesTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#374151',
+    marginBottom: 16,
+    letterSpacing: 0.3,
   },
   toggleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
-    gap: 10,
+    marginBottom: 16,
+    gap: 16,
   },
   toggleItem: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#dee2e6',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: '#f8fafc',
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: '#e2e8f0',
+    minHeight: 56,
   },
   toggleLabel: {
-    fontSize: 13,
-    color: '#495057',
-    fontWeight: '500',
-    marginRight: 6,
+    fontSize: 16,
+    color: '#374151',
+    fontWeight: '600',
+    marginRight: 8,
+    letterSpacing: 0.2,
   },
   pokemonCard: {
     flex: 1,
