@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'; // This must be the first import
-import React from 'react';
+import React, { useState } from 'react';
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -7,15 +7,39 @@ import {
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import 'react-native-gesture-handler';
 // import { useReactNavigationDevTools } from '@dev-plugins/react-navigation';
-import { SafeAreaView, StyleSheet, StatusBar, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, Text, View, TouchableOpacity } from 'react-native';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import PokedexView from './src/components/pokedex/PokedexView';
 
 // Create placeholder screens for new features
-const PokedexScreen = () => (
-  <SafeAreaView style={[styles.container, { flex: 1 }]}>
-    <PokedexView />
-  </SafeAreaView>
-);
+const PokedexScreen = ({ navigation }: any) => {
+  const [settingsModalVisible, setSettingsModalVisible] = useState(false);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={() => setSettingsModalVisible(true)}
+          accessibilityRole="button"
+          accessibilityLabel="Settings"
+          accessibilityHint="Opens Pokedex settings to change sprite styles"
+        >
+          <MaterialIcons name="album" size={24} color="white" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
+  return (
+    <SafeAreaView style={[styles.container, { flex: 1 }]}>
+      <PokedexView 
+        settingsModalVisible={settingsModalVisible}
+        setSettingsModalVisible={setSettingsModalVisible}
+      />
+    </SafeAreaView>
+  );
+};
 const TradingCardsScreen = () => (
   <View style={styles.screenContainer}>
     <Text>Trading Cards Feature Coming Soon!</Text>
@@ -88,6 +112,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  settingsButton: {
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
   },
   header: {
     backgroundColor: '#f44336',

@@ -1,0 +1,9 @@
+node_modules/
+.expo/
+.expo-shared/
+dist/
+build/
+.git/
+*.log
+package-lock.json
+yarn.lock

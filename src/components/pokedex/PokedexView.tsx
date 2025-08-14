@@ -161,7 +161,15 @@ const gameVersions = [
   { label: 'Gen VII - Ultra Sun/Ultra Moon', value: 'ultra-sun-ultra-moon', generation: 'generation-vii' as SpriteGeneration },
 ];
 
-const PokedexView: React.FC = () => {
+interface PokedexViewProps {
+  settingsModalVisible: boolean;
+  setSettingsModalVisible: (visible: boolean) => void;
+}
+
+const PokedexView: React.FC<PokedexViewProps> = ({ 
+  settingsModalVisible, 
+  setSettingsModalVisible 
+}) => {
   const [pokemonList, setPokemonList] = useState<
     { name: string; url: string; id?: number }[]
   >([]);
@@ -171,10 +179,31 @@ const PokedexView: React.FC = () => {
   );
   const [selectedVersion, setSelectedVersion] = useState<string>('best');
   const [detailModalVisible, setDetailModalVisible] = useState<boolean>(false);
+  const [spriteStyle, setSpriteStyle] = useState<'party' | 'animated' | 'home' | 'gen9'>('home');
   const [page, setPage] = useState<number>(0);
   const [isShiny, setIsShiny] = useState<boolean>(false);
   const [showBack, setShowBack] = useState<boolean>(false);
   const [showFemale, setShowFemale] = useState<boolean>(false);
+
+  // Get sprite URL based on selected style
+  const getMiniSpriteUrl = (pokemonId: number): string => {
+    switch (spriteStyle) {
+      case 'party':
+        // Gen 3-8 party/box icons - using Diamond/Pearl style as representative
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/diamond-pearl/${pokemonId}.png`;
+      case 'animated':
+        // Gen 5 animated sprites (Black/White)
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemonId}.gif`;
+      case 'home':
+        // Modern Pokémon HOME sprites
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
+      case 'gen9':
+        // Official artwork (Gen 9 style)
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
+      default:
+        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
+    }
+  };
 
   // Check if Pokemon has different female sprites
   const hasFemaleSprites = (pokemon: PokemonDetail): boolean => {
@@ -668,7 +697,6 @@ const PokedexView: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       <FlatList
         data={pokemonList}
         keyExtractor={(item, index) => `${item.name}-${index}`}
@@ -682,6 +710,9 @@ const PokedexView: React.FC = () => {
               handlePokemonSelect(item.name);
             }}
             activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={`${item.name}, Pokemon number ${item.id}`}
+            accessibilityHint="Opens detailed view with sprites and stats"
           >
             {/* Pokemon Number */}
             <Text style={styles.pokemonNumber}>
@@ -692,12 +723,12 @@ const PokedexView: React.FC = () => {
             <View style={styles.miniSpriteContainer}>
               <Image
                 source={{ 
-                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${item.id || 1}.png`
+                  uri: getMiniSpriteUrl(item.id || 1)
                 }}
                 style={styles.miniSprite}
                 resizeMode="contain"
                 onError={() => {
-                  // Fallback to regular sprite if Home sprite fails
+                  // Fallback to regular sprite if current style fails
                 }}
               />
             </View>
@@ -722,6 +753,7 @@ const PokedexView: React.FC = () => {
                 size='large'
                 color='#3b82f6'
               />
+              <Text style={styles.loadingText}>Loading more Pokémon... ⚡</Text>
             </View>
           ) : null
         }
@@ -973,6 +1005,112 @@ const PokedexView: React.FC = () => {
           </SafeAreaView>
         ) : null}
       </Modal>
+
+      {/* Settings Modal */}
+      <Modal
+        animationType='slide'
+        transparent={false}
+        visible={settingsModalVisible}
+        onRequestClose={() => setSettingsModalVisible(false)}
+      >
+        <SafeAreaView style={styles.modalContainer}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setSettingsModalVisible(false)}
+          >
+            <Text style={styles.closeButtonText}>Done</Text>
+          </TouchableOpacity>
+
+          <ScrollView contentContainerStyle={styles.settingsModalContent}>
+            <Text style={styles.settingsTitle}>Pokédex Settings</Text>
+            
+            <View style={styles.settingSection}>
+              <Text style={styles.settingLabel}>Mini Sprite Style</Text>
+              <Text style={styles.settingDescription}>
+                Choose the sprite style for Pokemon in the list
+              </Text>
+              
+              <View style={styles.spriteStyleOptions}>
+                <TouchableOpacity
+                  style={[
+                    styles.spriteStyleOption,
+                    spriteStyle === 'party' && styles.selectedSpriteStyle
+                  ]}
+                  onPress={() => setSpriteStyle('party')}
+                  activeOpacity={0.7}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: spriteStyle === 'party' }}
+                  accessibilityLabel="Party and Box icons style"
+                  accessibilityHint="Classic party and PC box icons from Gen 3-8"
+                >
+                  <Text style={[
+                    styles.spriteStyleText,
+                    spriteStyle === 'party' && styles.selectedSpriteStyleText
+                  ]}>📦 Party/Box Icons</Text>
+                  <Text style={styles.spriteStyleSubtext}>Classic Gen 3-8 style</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.spriteStyleOption,
+                    spriteStyle === 'animated' && styles.selectedSpriteStyle
+                  ]}
+                  onPress={() => setSpriteStyle('animated')}
+                  activeOpacity={0.7}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: spriteStyle === 'animated' }}
+                  accessibilityLabel="Animated Gen 5 style"
+                  accessibilityHint="Animated pixel sprites from Black and White"
+                >
+                  <Text style={[
+                    styles.spriteStyleText,
+                    spriteStyle === 'animated' && styles.selectedSpriteStyleText
+                  ]}>🕹️ Gen 5 Animated</Text>
+                  <Text style={styles.spriteStyleSubtext}>Black/White pixel animations</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.spriteStyleOption,
+                    spriteStyle === 'home' && styles.selectedSpriteStyle
+                  ]}
+                  onPress={() => setSpriteStyle('home')}
+                  activeOpacity={0.7}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: spriteStyle === 'home' }}
+                  accessibilityLabel="Pokemon HOME style"
+                  accessibilityHint="Modern HD sprites"
+                >
+                  <Text style={[
+                    styles.spriteStyleText,
+                    spriteStyle === 'home' && styles.selectedSpriteStyleText
+                  ]}>🏠 Pokémon HOME</Text>
+                  <Text style={styles.spriteStyleSubtext}>Modern HD sprites</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.spriteStyleOption,
+                    spriteStyle === 'gen9' && styles.selectedSpriteStyle
+                  ]}
+                  onPress={() => setSpriteStyle('gen9')}
+                  activeOpacity={0.7}
+                  accessibilityRole="radio"
+                  accessibilityState={{ checked: spriteStyle === 'gen9' }}
+                  accessibilityLabel="Official Artwork style"
+                  accessibilityHint="High-quality illustrations"
+                >
+                  <Text style={[
+                    styles.spriteStyleText,
+                    spriteStyle === 'gen9' && styles.selectedSpriteStyleText
+                  ]}>🎨 Official Artwork</Text>
+                  <Text style={styles.spriteStyleSubtext}>High-quality illustrations</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -1070,7 +1208,14 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   loadingContainer: {
-    paddingVertical: 16,
+    paddingVertical: 24,
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#6b7280',
+    fontWeight: '500',
   },
   spriteControls: {
     backgroundColor: 'transparent',
@@ -1338,6 +1483,59 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     marginBottom: 5,
     color: '#555',
+  },
+  // Settings Modal Styles
+  settingsModalContent: {
+    padding: 20,
+  },
+  settingsTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  settingSection: {
+    marginBottom: 30,
+  },
+  settingLabel: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+  },
+  settingDescription: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    lineHeight: 22,
+  },
+  spriteStyleOptions: {
+    gap: 12,
+  },
+  spriteStyleOption: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 2,
+    borderColor: '#e9ecef',
+  },
+  selectedSpriteStyle: {
+    backgroundColor: '#e3f2fd',
+    borderColor: '#2196f3',
+  },
+  spriteStyleText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  selectedSpriteStyleText: {
+    color: '#1976d2',
+  },
+  spriteStyleSubtext: {
+    fontSize: 14,
+    color: '#666',
   },
 });
 

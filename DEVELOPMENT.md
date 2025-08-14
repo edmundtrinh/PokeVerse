@@ -110,10 +110,39 @@ When you need to test on a physical device:
 ## Configuration Notes
 
 - **Fast Refresh**: Enabled by default in localhost mode
-- **New Architecture**: Enabled (`newArchEnabled: true`) - may cause some Fast Refresh issues
-- **Metro Bundler**: Uses localhost for reliability
+- **New Architecture**: Disabled (`newArchEnabled: false`) - prevents Fast Refresh issues
+- **Metro Bundler**: Custom config with localhost URL rewriting for reliability
 - **Platform**: iOS simulator recommended for primary development
+- **Watchman**: Fixed with proper watch deletion/recreation
+- **Babel**: Simplified config without NativeWind plugin (was breaking Fast Refresh)
+
+## ⚠️ CRITICAL: Fast Refresh Troubleshooting
+
+**If Fast Refresh stops working after ANY config change:**
+
+1. **Kill everything and fix watchman:**
+   ```bash
+   pkill -f expo; pkill -f metro
+   watchman watch-del '/Users/edmundtrinh/Documents/Projects/PokeVerse'
+   watchman watch-project '/Users/edmundtrinh/Documents/Projects/PokeVerse'
+   npm run ios:dev
+   ```
+
+2. **Check babel.config.js - MUST be minimal:**
+   ```js
+   module.exports = function (api) {
+     api.cache(true);
+     return {
+       presets: ['babel-preset-expo'],
+       plugins: ['react-native-reanimated/plugin'], // Must be last
+     };
+   };
+   ```
+
+3. **No CSS imports in App.tsx** - breaks Fast Refresh
+
+4. **Verify metro.config.js exists** with localhost URL rewriting
 
 ---
 
-*Last updated: Latest session - Fast Refresh reliability fixes*
+*Last updated: PERMANENT Fast Refresh fix - December 2024*
