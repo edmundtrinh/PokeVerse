@@ -186,6 +186,43 @@ const PokedexView: React.FC = () => {
     
     return pokemonWithGenderDifferences.includes(pokemonId);
   };
+
+  // Check what sprite options are available for the current version
+  const getAvailableOptions = (version: string) => {
+    const versionCapabilities = {
+      // Generation I - No shiny, limited gender differences
+      'red-blue': { shiny: false, back: true, female: false },
+      'yellow': { shiny: false, back: true, female: false },
+      
+      // Generation II - First to have shiny sprites
+      'gold': { shiny: true, back: true, female: false },
+      'silver': { shiny: true, back: true, female: false },
+      'crystal': { shiny: true, back: true, female: false },
+      
+      // Generation III+
+      'ruby-sapphire': { shiny: true, back: true, female: false },
+      'emerald': { shiny: true, back: true, female: false },
+      'firered-leafgreen': { shiny: true, back: true, female: false },
+      'diamond-pearl': { shiny: true, back: true, female: true },
+      'platinum': { shiny: true, back: true, female: true },
+      'heartgold-soulsilver': { shiny: true, back: true, female: true },
+      'black-white': { shiny: true, back: true, female: true },
+      'black-white-animated': { shiny: true, back: true, female: true },
+      'x-y': { shiny: true, back: true, female: true },
+      'omegaruby-alphasapphire': { shiny: true, back: true, female: true },
+      'ultra-sun-ultra-moon': { shiny: true, back: true, female: true },
+      
+      // Modern/Default
+      'best': { shiny: true, back: true, female: true },
+      'official-artwork': { shiny: true, back: false, female: false },
+      'dream-world': { shiny: false, back: false, female: true },
+      'home': { shiny: true, back: false, female: true },
+      'showdown': { shiny: true, back: true, female: true },
+    };
+
+    return versionCapabilities[version as keyof typeof versionCapabilities] || 
+           { shiny: true, back: true, female: true }; // Default to all options
+  };
   // Removed useAlternativeSources - fallbacks now automatic
   const [showVersionPicker, setShowVersionPicker] = useState<boolean>(false);
 
@@ -195,6 +232,28 @@ const PokedexView: React.FC = () => {
     // Test direct network connectivity on app start
     testNetworkConnectivity();
   }, []);
+
+  // Reset options when version changes to invalid combinations
+  useEffect(() => {
+    if (selectedPokemon) {
+      const availableOptions = getAvailableOptions(selectedVersion);
+      
+      // Reset shiny if not available for this version
+      if (!availableOptions.shiny && isShiny) {
+        setIsShiny(false);
+      }
+      
+      // Reset back sprite if not available for this version
+      if (!availableOptions.back && showBack) {
+        setShowBack(false);
+      }
+      
+      // Reset female if not available for this version or Pokemon
+      if ((!availableOptions.female || !hasFemaleSprites(selectedPokemon)) && showFemale) {
+        setShowFemale(false);
+      }
+    }
+  }, [selectedVersion, selectedPokemon]);
 
   const testNetworkConnectivity = async () => {
     console.log('🌐 Testing network connectivity...');
@@ -742,41 +801,76 @@ const PokedexView: React.FC = () => {
                 {/* Toggle Controls */}
                 <View style={styles.quickToggles}>
                   <Text style={styles.togglesTitle}>Display Options</Text>
-                  <View style={styles.toggleRow}>
-                    <View style={styles.toggleItem}>
-                      <Text style={styles.toggleLabel}>✨ Shiny</Text>
-                      <Switch
-                        value={isShiny}
-                        onValueChange={setIsShiny}
-                        trackColor={{ false: '#ccc', true: '#FFD700' }}
-                        thumbColor={isShiny ? '#FFA500' : '#f4f3f4'}
-                      />
-                    </View>
+                  {(() => {
+                    const availableOptions = getAvailableOptions(selectedVersion);
+                    const showShiny = availableOptions.shiny;
+                    const showBackOption = availableOptions.back;
+                    
+                    // Create toggles array based on available options
+                    const toggles = [];
+                    
+                    if (showShiny) {
+                      toggles.push(
+                        <View key="shiny" style={styles.toggleItem}>
+                          <Text style={styles.toggleLabel}>✨ Shiny</Text>
+                          <Switch
+                            value={isShiny}
+                            onValueChange={setIsShiny}
+                            trackColor={{ false: '#ccc', true: '#FFD700' }}
+                            thumbColor={isShiny ? '#FFA500' : '#f4f3f4'}
+                          />
+                        </View>
+                      );
+                    }
+                    
+                    if (showBackOption) {
+                      toggles.push(
+                        <View key="back" style={styles.toggleItem}>
+                          <Text style={styles.toggleLabel}>🔄 Back</Text>
+                          <Switch
+                            value={showBack}
+                            onValueChange={setShowBack}
+                            trackColor={{ false: '#ccc', true: '#4CAF50' }}
+                            thumbColor={showBack ? '#2E7D32' : '#f4f3f4'}
+                          />
+                        </View>
+                      );
+                    }
+                    
+                    // Split toggles into rows of 2
+                    const rows = [];
+                    for (let i = 0; i < toggles.length; i += 2) {
+                      rows.push(
+                        <View key={i} style={styles.toggleRow}>
+                          {toggles.slice(i, i + 2)}
+                        </View>
+                      );
+                    }
+                    
+                    return rows;
+                  })()}
 
-                    <View style={styles.toggleItem}>
-                      <Text style={styles.toggleLabel}>🔄 Back</Text>
-                      <Switch
-                        value={showBack}
-                        onValueChange={setShowBack}
-                        trackColor={{ false: '#ccc', true: '#4CAF50' }}
-                        thumbColor={showBack ? '#2E7D32' : '#f4f3f4'}
-                      />
-                    </View>
-                  </View>
-
-                  {hasFemaleSprites(selectedPokemon) && (
-                    <View style={styles.toggleRow}>
-                      <View style={styles.toggleItem}>
-                        <Text style={styles.toggleLabel}>♀️ Female</Text>
-                        <Switch
-                          value={showFemale}
-                          onValueChange={setShowFemale}
-                          trackColor={{ false: '#ccc', true: '#E91E63' }}
-                          thumbColor={showFemale ? '#C2185B' : '#f4f3f4'}
-                        />
-                      </View>
-                    </View>
-                  )}
+                  {(() => {
+                    const availableOptions = getAvailableOptions(selectedVersion);
+                    const showFemaleOption = availableOptions.female && hasFemaleSprites(selectedPokemon);
+                    
+                    if (showFemaleOption) {
+                      return (
+                        <View style={styles.toggleRow}>
+                          <View style={styles.toggleItem}>
+                            <Text style={styles.toggleLabel}>♀️ Female</Text>
+                            <Switch
+                              value={showFemale}
+                              onValueChange={setShowFemale}
+                              trackColor={{ false: '#ccc', true: '#E91E63' }}
+                              thumbColor={showFemale ? '#C2185B' : '#f4f3f4'}
+                            />
+                          </View>
+                        </View>
+                      );
+                    }
+                    return null;
+                  })()}
                 </View>
               </View>
 
