@@ -1,0 +1,6 @@
+Starting project at /Users/edmundtrinh/Documents/Projects/PokeVerse
+Starting Metro Bundler
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundling failed 635ms
+Unable to resolve "react-native-web/dist/exports/SafeAreaView" from "App.tsx"
