@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios"
+    "start": "expo start --localhost",
+    "start:dev": "expo start --localhost --clear",
+    "ios": "expo start --localhost --ios",
+    "ios:dev": "expo start --localhost --ios --clear",
+    "android": "expo start --localhost --android",
+    "android:dev": "expo start --localhost --android --clear",
+    "web": "expo start --web",
+    "tunnel": "expo start --tunnel"
   },
   "dependencies": {
     "@react-native-picker/picker": "2.4.10",
