@@ -163,7 +163,7 @@ const gameVersions = [
 
 const PokedexView: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<
-    { name: string; url: string }[]
+    { name: string; url: string; id?: number }[]
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
@@ -279,41 +279,41 @@ const PokedexView: React.FC = () => {
 
   // Expanded demo Pokemon list for offline experience
   const getDemoPokemons = () => [
-    { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/' },
-    { name: 'charizard', url: 'https://pokeapi.co/api/v2/pokemon/6/' },
-    { name: 'blastoise', url: 'https://pokeapi.co/api/v2/pokemon/9/' },
-    { name: 'venusaur', url: 'https://pokeapi.co/api/v2/pokemon/3/' },
-    { name: 'alakazam', url: 'https://pokeapi.co/api/v2/pokemon/65/' },
-    { name: 'gengar', url: 'https://pokeapi.co/api/v2/pokemon/94/' },
-    { name: 'gyarados', url: 'https://pokeapi.co/api/v2/pokemon/130/' },
-    { name: 'dragonite', url: 'https://pokeapi.co/api/v2/pokemon/149/' },
-    { name: 'mewtwo', url: 'https://pokeapi.co/api/v2/pokemon/150/' },
-    { name: 'mew', url: 'https://pokeapi.co/api/v2/pokemon/151/' },
-    { name: 'typhlosion', url: 'https://pokeapi.co/api/v2/pokemon/157/' },
-    { name: 'celebi', url: 'https://pokeapi.co/api/v2/pokemon/251/' },
-    { name: 'lugia', url: 'https://pokeapi.co/api/v2/pokemon/249/' },
-    { name: 'ho-oh', url: 'https://pokeapi.co/api/v2/pokemon/250/' },
-    { name: 'blaziken', url: 'https://pokeapi.co/api/v2/pokemon/257/' },
-    { name: 'salamence', url: 'https://pokeapi.co/api/v2/pokemon/373/' },
-    { name: 'metagross', url: 'https://pokeapi.co/api/v2/pokemon/376/' },
-    { name: 'rayquaza', url: 'https://pokeapi.co/api/v2/pokemon/384/' },
-    { name: 'garchomp', url: 'https://pokeapi.co/api/v2/pokemon/445/' },
-    { name: 'lucario', url: 'https://pokeapi.co/api/v2/pokemon/448/' },
-    { name: 'dialga', url: 'https://pokeapi.co/api/v2/pokemon/483/' },
-    { name: 'giratina-origin', url: 'https://pokeapi.co/api/v2/pokemon/10007/' },
-    { name: 'reshiram', url: 'https://pokeapi.co/api/v2/pokemon/643/' },
-    { name: 'greninja', url: 'https://pokeapi.co/api/v2/pokemon/658/' },
-    { name: 'tyranitar', url: 'https://pokeapi.co/api/v2/pokemon/248/' },
-    { name: 'xerneas', url: 'https://pokeapi.co/api/v2/pokemon/716/' },
-    { name: 'yveltal', url: 'https://pokeapi.co/api/v2/pokemon/717/' },
-    { name: 'zygarde-complete', url: 'https://pokeapi.co/api/v2/pokemon/10118/' },
-    { name: 'decidueye', url: 'https://pokeapi.co/api/v2/pokemon/724/' },
-    { name: 'corviknight', url: 'https://pokeapi.co/api/v2/pokemon/823/' },
-    { name: 'dragapult', url: 'https://pokeapi.co/api/v2/pokemon/887/' },
-    { name: 'gholdengo', url: 'https://pokeapi.co/api/v2/pokemon/1000/' },
-    { name: 'iron-valiant', url: 'https://pokeapi.co/api/v2/pokemon/1006/' },
-    { name: 'tandemaus', url: 'https://pokeapi.co/api/v2/pokemon/924/' },
-    { name: 'scizor', url: 'https://pokeapi.co/api/v2/pokemon/212/' }
+    { name: 'venusaur', url: 'https://pokeapi.co/api/v2/pokemon/3/', id: 3 },
+    { name: 'charizard', url: 'https://pokeapi.co/api/v2/pokemon/6/', id: 6 },
+    { name: 'blastoise', url: 'https://pokeapi.co/api/v2/pokemon/9/', id: 9 },
+    { name: 'pikachu', url: 'https://pokeapi.co/api/v2/pokemon/25/', id: 25 },
+    { name: 'alakazam', url: 'https://pokeapi.co/api/v2/pokemon/65/', id: 65 },
+    { name: 'gengar', url: 'https://pokeapi.co/api/v2/pokemon/94/', id: 94 },
+    { name: 'gyarados', url: 'https://pokeapi.co/api/v2/pokemon/130/', id: 130 },
+    { name: 'dragonite', url: 'https://pokeapi.co/api/v2/pokemon/149/', id: 149 },
+    { name: 'mewtwo', url: 'https://pokeapi.co/api/v2/pokemon/150/', id: 150 },
+    { name: 'mew', url: 'https://pokeapi.co/api/v2/pokemon/151/', id: 151 },
+    { name: 'typhlosion', url: 'https://pokeapi.co/api/v2/pokemon/157/', id: 157 },
+    { name: 'scizor', url: 'https://pokeapi.co/api/v2/pokemon/212/', id: 212 },
+    { name: 'tyranitar', url: 'https://pokeapi.co/api/v2/pokemon/248/', id: 248 },
+    { name: 'lugia', url: 'https://pokeapi.co/api/v2/pokemon/249/', id: 249 },
+    { name: 'ho-oh', url: 'https://pokeapi.co/api/v2/pokemon/250/', id: 250 },
+    { name: 'celebi', url: 'https://pokeapi.co/api/v2/pokemon/251/', id: 251 },
+    { name: 'blaziken', url: 'https://pokeapi.co/api/v2/pokemon/257/', id: 257 },
+    { name: 'salamence', url: 'https://pokeapi.co/api/v2/pokemon/373/', id: 373 },
+    { name: 'metagross', url: 'https://pokeapi.co/api/v2/pokemon/376/', id: 376 },
+    { name: 'rayquaza', url: 'https://pokeapi.co/api/v2/pokemon/384/', id: 384 },
+    { name: 'garchomp', url: 'https://pokeapi.co/api/v2/pokemon/445/', id: 445 },
+    { name: 'lucario', url: 'https://pokeapi.co/api/v2/pokemon/448/', id: 448 },
+    { name: 'dialga', url: 'https://pokeapi.co/api/v2/pokemon/483/', id: 483 },
+    { name: 'giratina-origin', url: 'https://pokeapi.co/api/v2/pokemon/10007/', id: 487 },
+    { name: 'reshiram', url: 'https://pokeapi.co/api/v2/pokemon/643/', id: 643 },
+    { name: 'greninja', url: 'https://pokeapi.co/api/v2/pokemon/658/', id: 658 },
+    { name: 'xerneas', url: 'https://pokeapi.co/api/v2/pokemon/716/', id: 716 },
+    { name: 'yveltal', url: 'https://pokeapi.co/api/v2/pokemon/717/', id: 717 },
+    { name: 'zygarde-complete', url: 'https://pokeapi.co/api/v2/pokemon/10118/', id: 718 },
+    { name: 'decidueye', url: 'https://pokeapi.co/api/v2/pokemon/724/', id: 724 },
+    { name: 'corviknight', url: 'https://pokeapi.co/api/v2/pokemon/823/', id: 823 },
+    { name: 'dragapult', url: 'https://pokeapi.co/api/v2/pokemon/887/', id: 887 },
+    { name: 'tandemaus', url: 'https://pokeapi.co/api/v2/pokemon/924/', id: 924 },
+    { name: 'gholdengo', url: 'https://pokeapi.co/api/v2/pokemon/1000/', id: 1000 },
+    { name: 'iron-valiant', url: 'https://pokeapi.co/api/v2/pokemon/1006/', id: 1006 }
   ];
 
   const fetchPokemons = async (offset = 0) => {
@@ -672,28 +672,57 @@ const PokedexView: React.FC = () => {
       <FlatList
         data={pokemonList}
         keyExtractor={(item, index) => `${item.name}-${index}`}
-        numColumns={2}
+        numColumns={1}
+        style={{ flex: 1, paddingHorizontal: 16, backgroundColor: '#f9fafb' }}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.pokemonCard}
+            style={styles.pokemonListCard}
             onPress={() => {
               console.log(`🖱️ Card pressed: ${item.name}`);
               handlePokemonSelect(item.name);
             }}
             activeOpacity={0.7}
           >
-            <Text style={styles.pokemonName}>{item.name}</Text>
-            {/* We could show a thumbnail here but would need to fetch each Pokémon */}
+            {/* Pokemon Number */}
+            <Text style={styles.pokemonNumber}>
+              #{String(item.id || 1).padStart(4, '0')}
+            </Text>
+            
+            {/* Mini Pokemon Sprite */}
+            <View style={styles.miniSpriteContainer}>
+              <Image
+                source={{ 
+                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${item.id || 1}.png`
+                }}
+                style={styles.miniSprite}
+                resizeMode="contain"
+                onError={() => {
+                  // Fallback to regular sprite if Home sprite fails
+                }}
+              />
+            </View>
+            
+            {/* Pokemon Name */}
+            <View style={styles.pokemonNameContainer}>
+              <Text style={styles.pokemonListName}>
+                {item.name.replace('-', ' ')}
+              </Text>
+            </View>
+            
+            {/* Arrow indicator */}
+            <Text style={styles.arrowIndicator}>›</Text>
           </TouchableOpacity>
         )}
         onEndReached={() => fetchPokemons((page + 1) * 20)}
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           loading ? (
-            <ActivityIndicator
-              size='large'
-              color='#0000ff'
-            />
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator
+                size='large'
+                color='#3b82f6'
+              />
+            </View>
           ) : null
         }
       />
@@ -990,7 +1019,58 @@ const getTypeColor = (type: string): string => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f9fafb',
+  },
+  // New Pokemon List Styles
+  pokemonListCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    padding: 16,
+    marginHorizontal: 8,
+    marginVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: '#f3f4f6',
+  },
+  pokemonNumber: {
+    color: '#9ca3af',
+    fontWeight: 'bold',
+    fontSize: 18,
+    width: 64,
+    textAlign: 'center',
+  },
+  miniSpriteContainer: {
+    width: 64,
+    height: 64,
+    marginRight: 16,
+    marginLeft: 8,
+  },
+  miniSprite: {
+    width: '100%',
+    height: '100%',
+  },
+  pokemonNameContainer: {
+    flex: 1,
+  },
+  pokemonListName: {
+    color: '#1f2937',
+    fontWeight: 'bold',
+    fontSize: 20,
+    textTransform: 'capitalize',
+  },
+  arrowIndicator: {
+    color: '#9ca3af',
+    fontSize: 24,
+    fontWeight: '300',
+  },
+  loadingContainer: {
+    paddingVertical: 16,
   },
   spriteControls: {
     backgroundColor: 'transparent',
