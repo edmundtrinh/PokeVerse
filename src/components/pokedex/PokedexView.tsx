@@ -12,7 +12,10 @@ import {
   Modal,
   ScrollView,
   Switch,
+  TextInput,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import {
   getPokemons,
@@ -25,6 +28,39 @@ import {
   SpriteGame,
   SpriteVariant,
 } from '../../api/pokeApi';
+
+// All Pokemon types for filtering
+const POKEMON_TYPES = [
+  'normal', 'fire', 'water', 'electric', 'grass', 'ice',
+  'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug',
+  'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'
+];
+
+// Pokemon generations by ID ranges
+const POKEMON_GENERATIONS = [
+  { name: 'Gen I', label: 'Kanto', range: [1, 151], color: '#FF6B6B' },
+  { name: 'Gen II', label: 'Johto', range: [152, 251], color: '#4ECDC4' },
+  { name: 'Gen III', label: 'Hoenn', range: [252, 386], color: '#45B7D1' },
+  { name: 'Gen IV', label: 'Sinnoh', range: [387, 493], color: '#96CEB4' },
+  { name: 'Gen V', label: 'Unova', range: [494, 649], color: '#FFEAA7' },
+  { name: 'Gen VI', label: 'Kalos', range: [650, 721], color: '#DDA0DD' },
+  { name: 'Gen VII', label: 'Alola', range: [722, 809], color: '#F19CBB' },
+  { name: 'Gen VIII', label: 'Galar', range: [810, 905], color: '#A29BFE' },
+  { name: 'Gen IX', label: 'Paldea', range: [906, 1025], color: '#FD79A8' },
+];
+
+// Helper function to get Pokemon generation
+const getPokemonGeneration = (pokemonId: number): string | null => {
+  for (const gen of POKEMON_GENERATIONS) {
+    if (pokemonId >= gen.range[0] && pokemonId <= gen.range[1]) {
+      return gen.name;
+    }
+  }
+  return null;
+};
+
+// AsyncStorage key for favorites
+const FAVORITES_STORAGE_KEY = '@pokemon_favorites';
 
 // Pokemon demo data helpers
 const getPokemonTypes = (name: string) => {
@@ -173,6 +209,14 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const [pokemonList, setPokemonList] = useState<
     { name: string; url: string; id?: number }[]
   >([]);
+  const [filteredPokemonList, setFilteredPokemonList] = useState<
+    { name: string; url: string; id?: number }[]
+  >([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedGenerations, setSelectedGenerations] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<Set<number>>(new Set());
+  const [showOnlyFavorites, setShowOnlyFavorites] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
     null
@@ -184,6 +228,41 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const [isShiny, setIsShiny] = useState<boolean>(false);
   const [showBack, setShowBack] = useState<boolean>(false);
   const [showFemale, setShowFemale] = useState<boolean>(false);
+
+  // Load favorites from storage
+  const loadFavorites = async () => {
+    try {
+      const storedFavorites = await AsyncStorage.getItem(FAVORITES_STORAGE_KEY);
+      if (storedFavorites) {
+        const favoritesArray = JSON.parse(storedFavorites);
+        setFavorites(new Set(favoritesArray));
+      }
+    } catch (error) {
+      console.error('Error loading favorites:', error);
+    }
+  };
+
+  // Save favorites to storage
+  const saveFavorites = async (newFavorites: Set<number>) => {
+    try {
+      const favoritesArray = Array.from(newFavorites);
+      await AsyncStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoritesArray));
+    } catch (error) {
+      console.error('Error saving favorites:', error);
+    }
+  };
+
+  // Toggle favorite status
+  const toggleFavorite = async (pokemonId: number) => {
+    const newFavorites = new Set(favorites);
+    if (newFavorites.has(pokemonId)) {
+      newFavorites.delete(pokemonId);
+    } else {
+      newFavorites.add(pokemonId);
+    }
+    setFavorites(newFavorites);
+    await saveFavorites(newFavorites);
+  };
 
   // Get sprite URL based on selected style
   const getMiniSpriteUrl = (pokemonId: number): string => {
@@ -257,10 +336,55 @@ const PokedexView: React.FC<PokedexViewProps> = ({
 
   useEffect(() => {
     fetchPokemons();
+    loadFavorites();
     
     // Test direct network connectivity on app start
     testNetworkConnectivity();
   }, []);
+
+  // Filter Pokemon based on search query, selected types, and generations
+  useEffect(() => {
+    let filtered = pokemonList;
+    
+    // Apply search filter
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(pokemon => {
+        const query = searchQuery.toLowerCase();
+        const name = pokemon.name.toLowerCase();
+        const id = pokemon.id?.toString() || '';
+        
+        return name.includes(query) || id.includes(query);
+      });
+    }
+    
+    // Apply type filter
+    if (selectedTypes.length > 0) {
+      filtered = filtered.filter(pokemon => {
+        const pokemonTypes = getPokemonTypes(pokemon.name);
+        return selectedTypes.some(selectedType => 
+          pokemonTypes.some((typeObj: any) => typeObj.type.name === selectedType)
+        );
+      });
+    }
+    
+    // Apply generation filter
+    if (selectedGenerations.length > 0) {
+      filtered = filtered.filter(pokemon => {
+        if (!pokemon.id) return false;
+        const pokemonGeneration = getPokemonGeneration(pokemon.id);
+        return selectedGenerations.includes(pokemonGeneration || '');
+      });
+    }
+    
+    // Apply favorites filter
+    if (showOnlyFavorites) {
+      filtered = filtered.filter(pokemon => {
+        return favorites.has(pokemon.id || 0);
+      });
+    }
+    
+    setFilteredPokemonList(filtered);
+  }, [pokemonList, searchQuery, selectedTypes, selectedGenerations, showOnlyFavorites, favorites]);
 
   // Reset options when version changes to invalid combinations
   useEffect(() => {
@@ -697,8 +821,158 @@ const PokedexView: React.FC<PokedexViewProps> = ({
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Pokémon by name or number..."
+          placeholderTextColor="#9ca3af"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          autoCorrect={false}
+          autoCapitalize="none"
+          clearButtonMode="while-editing"
+          accessibilityLabel="Search Pokemon"
+          accessibilityHint="Enter Pokemon name or number to filter the list"
+        />
+        {searchQuery.trim() && (
+          <Text style={styles.searchResults}>
+            {filteredPokemonList.length} Pokémon found
+          </Text>
+        )}
+      </View>
+      
+      {/* Type Filters */}
+      <View style={styles.typeFiltersContainer}>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.typeFiltersContent}
+        >
+          {POKEMON_TYPES.map(type => (
+            <TouchableOpacity
+              key={type}
+              style={[
+                styles.typeChip,
+                selectedTypes.includes(type) && styles.typeChipSelected,
+                { backgroundColor: getTypeColor(type) }
+              ]}
+              onPress={() => {
+                if (selectedTypes.includes(type)) {
+                  setSelectedTypes(selectedTypes.filter(t => t !== type));
+                } else {
+                  setSelectedTypes([...selectedTypes, type]);
+                }
+              }}
+              accessibilityRole="button"
+              accessibilityState={{ selected: selectedTypes.includes(type) }}
+              accessibilityLabel={`${type} type filter`}
+              accessibilityHint={`Filter Pokemon by ${type} type`}
+            >
+              <Text style={[
+                styles.typeChipText,
+                selectedTypes.includes(type) && styles.typeChipTextSelected
+              ]}>
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        
+        {selectedTypes.length > 0 && (
+          <TouchableOpacity
+            style={styles.clearFiltersButton}
+            onPress={() => setSelectedTypes([])}
+            accessibilityRole="button"
+            accessibilityLabel="Clear type filters"
+          >
+            <Text style={styles.clearFiltersText}>Clear</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      
+      {/* Generation Filters */}
+      <View style={styles.generationFiltersContainer}>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.generationFiltersContent}
+        >
+          {/* Favorites Filter */}
+          <TouchableOpacity
+            style={[
+              styles.generationChip,
+              styles.favoritesChip,
+              showOnlyFavorites && styles.generationChipSelected,
+              { backgroundColor: showOnlyFavorites ? '#ef4444' : '#f3f4f6' }
+            ]}
+            onPress={() => setShowOnlyFavorites(!showOnlyFavorites)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: showOnlyFavorites }}
+            accessibilityLabel="Favorites filter"
+            accessibilityHint="Show only your favorite Pokemon"
+          >
+            <Ionicons
+              name="heart"
+              size={16}
+              color={showOnlyFavorites ? '#ffffff' : '#ef4444'}
+              style={{ marginBottom: 2 }}
+            />
+            <Text style={[
+              styles.generationChipText,
+              { color: showOnlyFavorites ? '#ffffff' : '#374151' },
+              showOnlyFavorites && styles.generationChipTextSelected
+            ]}>
+              Favorites
+            </Text>
+          </TouchableOpacity>
+          {POKEMON_GENERATIONS.map(generation => (
+            <TouchableOpacity
+              key={generation.name}
+              style={[
+                styles.generationChip,
+                selectedGenerations.includes(generation.name) && styles.generationChipSelected,
+                { backgroundColor: generation.color }
+              ]}
+              onPress={() => {
+                if (selectedGenerations.includes(generation.name)) {
+                  setSelectedGenerations(selectedGenerations.filter(g => g !== generation.name));
+                } else {
+                  setSelectedGenerations([...selectedGenerations, generation.name]);
+                }
+              }}
+              accessibilityRole="button"
+              accessibilityState={{ selected: selectedGenerations.includes(generation.name) }}
+              accessibilityLabel={`${generation.name} generation filter`}
+              accessibilityHint={`Filter Pokemon from ${generation.label} region`}
+            >
+              <Text style={[
+                styles.generationChipText,
+                selectedGenerations.includes(generation.name) && styles.generationChipTextSelected
+              ]}>
+                {generation.name}
+              </Text>
+              <Text style={styles.generationChipSubtext}>
+                {generation.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+        
+        {selectedGenerations.length > 0 && (
+          <TouchableOpacity
+            style={styles.clearFiltersButton}
+            onPress={() => setSelectedGenerations([])}
+            accessibilityRole="button"
+            accessibilityLabel="Clear generation filters"
+          >
+            <Text style={styles.clearFiltersText}>Clear</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+      
       <FlatList
-        data={pokemonList}
+        data={filteredPokemonList}
         keyExtractor={(item, index) => `${item.name}-${index}`}
         numColumns={1}
         style={{ flex: 1, paddingHorizontal: 16, backgroundColor: '#f9fafb' }}
@@ -739,6 +1013,24 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                 {item.name.replace('-', ' ')}
               </Text>
             </View>
+            
+            {/* Favorite Heart */}
+            <TouchableOpacity
+              style={styles.favoriteButton}
+              onPress={(e) => {
+                e.stopPropagation(); // Prevent card press when tapping heart
+                toggleFavorite(item.id || 1);
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={favorites.has(item.id || 1) ? "Remove from favorites" : "Add to favorites"}
+              accessibilityHint={`${favorites.has(item.id || 1) ? 'Remove' : 'Add'} ${item.name} ${favorites.has(item.id || 1) ? 'from' : 'to'} your favorites`}
+            >
+              <Ionicons
+                name={favorites.has(item.id || 1) ? "heart" : "heart-outline"}
+                size={24}
+                color={favorites.has(item.id || 1) ? "#ef4444" : "#9ca3af"}
+              />
+            </TouchableOpacity>
             
             {/* Arrow indicator */}
             <Text style={styles.arrowIndicator}>›</Text>
@@ -1159,6 +1451,141 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f9fafb',
   },
+  // Search Bar Styles
+  searchContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  searchInput: {
+    height: 44,
+    backgroundColor: '#f3f4f6',
+    borderRadius: 22,
+    paddingHorizontal: 16,
+    fontSize: 16,
+    color: '#374151',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+  },
+  searchResults: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#6b7280',
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  // Type Filter Styles
+  typeFiltersContainer: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  typeFiltersContent: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  typeChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginRight: 8,
+    borderRadius: 20,
+    opacity: 0.7,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  typeChipSelected: {
+    opacity: 1,
+    borderColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  typeChipText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  typeChipTextSelected: {
+    fontWeight: '700',
+  },
+  clearFiltersButton: {
+    position: 'absolute',
+    right: 16,
+    top: 12,
+    backgroundColor: '#ef4444',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+  },
+  clearFiltersText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  // Generation Filter Styles
+  generationFiltersContainer: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e5e7eb',
+  },
+  generationFiltersContent: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  generationChip: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginRight: 8,
+    borderRadius: 16,
+    opacity: 0.7,
+    borderWidth: 2,
+    borderColor: 'transparent',
+    minWidth: 80,
+    alignItems: 'center',
+  },
+  generationChipSelected: {
+    opacity: 1,
+    borderColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  generationChipText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '700',
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  generationChipTextSelected: {
+    fontWeight: '800',
+  },
+  generationChipSubtext: {
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: '500',
+    marginTop: 2,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+  },
+  favoritesChip: {
+    marginRight: 16,
+    borderWidth: 2,
+    borderColor: '#ef4444',
+  },
   // New Pokemon List Styles
   pokemonListCard: {
     flexDirection: 'row',
@@ -1201,6 +1628,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     textTransform: 'capitalize',
+  },
+  favoriteButton: {
+    padding: 8,
+    marginRight: 8,
+    borderRadius: 20,
+    backgroundColor: 'transparent',
   },
   arrowIndicator: {
     color: '#9ca3af',
