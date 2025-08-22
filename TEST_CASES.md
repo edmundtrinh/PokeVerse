@@ -38,11 +38,33 @@
 - **TC-027**: No results state handled gracefully
 - **TC-028**: Filter performance remains smooth with large datasets
 
-## UI/UX
-- **TC-029**: All filter chips are horizontally scrollable
-- **TC-030**: Touch targets are adequate size (44px minimum)
-- **TC-031**: Accessibility labels are descriptive and dynamic
-- **TC-032**: Visual feedback is clear for all interactive elements
+## Animated Stats Visualization
+- **TC-029**: Stats bars animate with staggered delays (100ms between each)
+- **TC-030**: Each stat has correct color (HP=red, Attack=orange, Defense=yellow, etc.)
+- **TC-031**: High stats (≥100) show gold star indicators
+- **TC-032**: Stat bars scale correctly (255 max = 100% width)
+- **TC-033**: Total stats row calculates and displays sum correctly
+- **TC-034**: Animation duration feels smooth (800ms fill, 600ms fade)
+- **TC-035**: Stats section loads without affecting other modal content
 
-*Generated: 2024-12-14*
-*Features: Search, Type Filters, Generation Filters, Favorites System*
+## Pokédex Information Display
+- **TC-036**: Species category displays correctly (e.g., "Mouse Pokémon")
+- **TC-037**: Habitat information shows when available
+- **TC-038**: English description loads and displays properly
+- **TC-039**: Loading spinner appears while fetching species data
+- **TC-040**: Graceful fallback when species data unavailable
+- **TC-041**: Description text properly formatted (quotes, line breaks)
+- **TC-042**: API calls don't block UI interaction
+- **TC-043**: Species data persists for same Pokemon across modal reopens
+
+## UI/UX
+- **TC-044**: All filter chips are horizontally scrollable
+- **TC-045**: Touch targets are adequate size (44px minimum)
+- **TC-046**: Accessibility labels are descriptive and dynamic
+- **TC-047**: Visual feedback is clear for all interactive elements
+- **TC-048**: Modal scrolls smoothly with all new content sections
+- **TC-049**: Loading states don't interfere with user interactions
+
+*Generated: 2024-12-14*  
+*Updated: 2024-12-14*
+*Features: Search, Type Filters, Generation Filters, Favorites System, Animated Stats, Pokédex Data*
