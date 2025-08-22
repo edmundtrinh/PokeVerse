@@ -14,13 +14,21 @@ import {
   Switch,
   TextInput,
 } from 'react-native';
+import Animated, { 
+  useSharedValue, 
+  withTiming, 
+  useAnimatedStyle,
+  withDelay 
+} from 'react-native-reanimated';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import {
   getPokemons,
   getPokemonByName,
+  getPokemonSpecies,
   PokemonDetail,
+  PokemonSpecies,
   getSprite,
   getBestQualitySprite,
   getAlternativeSpriteSources,
@@ -61,6 +69,71 @@ const getPokemonGeneration = (pokemonId: number): string | null => {
 
 // AsyncStorage key for favorites
 const FAVORITES_STORAGE_KEY = '@pokemon_favorites';
+
+// Helper functions for species data
+const getEnglishDescription = (species: PokemonSpecies): string => {
+  const englishEntry = species.flavor_text_entries.find(
+    entry => entry.language.name === 'en'
+  );
+  return englishEntry 
+    ? englishEntry.flavor_text.replace(/\f/g, ' ').replace(/\n/g, ' ').trim()
+    : 'No description available.';
+};
+
+const getEnglishGenus = (species: PokemonSpecies): string => {
+  const englishGenus = species.genera.find(
+    genus => genus.language.name === 'en'
+  );
+  return englishGenus ? englishGenus.genus : 'Unknown Species';
+};
+
+// Stat color mapping for visual appeal
+const getStatColor = (statName: string): string => {
+  const colors: { [key: string]: string } = {
+    'hp': '#ff5959',
+    'attack': '#f5ac78', 
+    'defense': '#fae078',
+    'special-attack': '#9db7f5',
+    'special-defense': '#a7db8d',
+    'speed': '#fa92b2'
+  };
+  return colors[statName] || '#94a3b8';
+};
+
+// Animated Stat Bar Component
+const AnimatedStatBar: React.FC<{
+  statName: string;
+  statValue: number;
+  delay: number;
+}> = ({ statName, statValue, delay }) => {
+  const width = useSharedValue(0);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    const targetWidth = Math.min(100, (statValue / 255) * 100);
+    width.value = withDelay(delay, withTiming(targetWidth, { duration: 800 }));
+    opacity.value = withDelay(delay, withTiming(1, { duration: 600 }));
+  }, [statValue, delay]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    width: `${width.value}%`,
+    opacity: opacity.value,
+  }));
+
+  return (
+    <View style={styles.statBarContainer}>
+      <View style={styles.statBarBackground}>
+        <Animated.View
+          style={[
+            styles.statBar,
+            { backgroundColor: getStatColor(statName) },
+            animatedStyle
+          ]}
+        />
+      </View>
+    </View>
+  );
+};
 
 // Pokemon demo data helpers
 const getPokemonTypes = (name: string) => {
@@ -124,6 +197,14 @@ const getPokemonStats = (name: string) => {
       { base_stat: 85, effort: 0, stat: { name: 'special-defense', url: '' } },
       { base_stat: 100, effort: 0, stat: { name: 'speed', url: '' } }
     ],
+    'venusaur': [
+      { base_stat: 80, effort: 0, stat: { name: 'hp', url: '' } },
+      { base_stat: 82, effort: 0, stat: { name: 'attack', url: '' } },
+      { base_stat: 83, effort: 0, stat: { name: 'defense', url: '' } },
+      { base_stat: 100, effort: 3, stat: { name: 'special-attack', url: '' } },
+      { base_stat: 100, effort: 0, stat: { name: 'special-defense', url: '' } },
+      { base_stat: 80, effort: 0, stat: { name: 'speed', url: '' } }
+    ],
     'alakazam': [
       { base_stat: 55, effort: 0, stat: { name: 'hp', url: '' } },
       { base_stat: 50, effort: 0, stat: { name: 'attack', url: '' } },
@@ -158,6 +239,10 @@ const getPokemonAbilities = (name: string) => {
     'typhlosion': [
       { ability: { name: 'blaze', url: '' }, is_hidden: false, slot: 1 },
       { ability: { name: 'flash-fire', url: '' }, is_hidden: true, slot: 3 }
+    ],
+    'venusaur': [
+      { ability: { name: 'overgrow', url: '' }, is_hidden: false, slot: 1 },
+      { ability: { name: 'chlorophyll', url: '' }, is_hidden: true, slot: 3 }
     ],
     'alakazam': [
       { ability: { name: 'synchronize', url: '' }, is_hidden: false, slot: 1 },
@@ -221,6 +306,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonDetail | null>(
     null
   );
+  const [pokemonSpecies, setPokemonSpecies] = useState<PokemonSpecies | null>(
+    null
+  );
+  const [loadingSpecies, setLoadingSpecies] = useState<boolean>(false);
   const [selectedVersion, setSelectedVersion] = useState<string>('best');
   const [detailModalVisible, setDetailModalVisible] = useState<boolean>(false);
   const [spriteStyle, setSpriteStyle] = useState<'party' | 'animated' | 'home' | 'gen9'>('home');
@@ -512,6 +601,18 @@ const PokedexView: React.FC<PokedexViewProps> = ({
         setShowFemale(false);
       }
       setDetailModalVisible(true);
+      
+      // Fetch species data for Pokédex information
+      setLoadingSpecies(true);
+      try {
+        const species = await getPokemonSpecies(detail.id);
+        setPokemonSpecies(species);
+      } catch (speciesError) {
+        console.warn(`Failed to fetch species data for ${name}:`, speciesError);
+        setPokemonSpecies(null);
+      } finally {
+        setLoadingSpecies(false);
+      }
     } catch (error) {
       // Simplified logging - this is expected behavior
       // Enhanced Pokemon ID mapping for better demo experience
@@ -695,7 +796,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
           }
         },
         types: getPokemonTypes(name),
-        
+        species: {
+          name: name,
+          url: `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}/`
+        },
         stats: getPokemonStats(name),
         abilities: getPokemonAbilities(name)
       };
@@ -1242,42 +1346,94 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                 ))}
               </View>
 
+              {/* Pokédex Information */}
+              <View style={styles.infoSection}>
+                <Text style={styles.sectionTitle}>Pokédex Data</Text>
+                
+                {loadingSpecies ? (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="#3b82f6" />
+                    <Text style={styles.loadingText}>Loading Pokédex data...</Text>
+                  </View>
+                ) : pokemonSpecies ? (
+                  <>
+                    {/* Species Category */}
+                    <View style={styles.pokedexRow}>
+                      <Text style={styles.pokedexLabel}>Species</Text>
+                      <Text style={styles.pokedexValue}>
+                        {getEnglishGenus(pokemonSpecies)}
+                      </Text>
+                    </View>
+                    
+                    {/* Habitat */}
+                    {pokemonSpecies.habitat && (
+                      <View style={styles.pokedexRow}>
+                        <Text style={styles.pokedexLabel}>Habitat</Text>
+                        <Text style={styles.pokedexValue}>
+                          {pokemonSpecies.habitat.name.charAt(0).toUpperCase() + pokemonSpecies.habitat.name.slice(1)}
+                        </Text>
+                      </View>
+                    )}
+                    
+                    {/* Description */}
+                    <View style={styles.descriptionContainer}>
+                      <Text style={styles.pokedexDescription}>
+                        "{getEnglishDescription(pokemonSpecies)}"
+                      </Text>
+                    </View>
+                  </>
+                ) : (
+                  <Text style={styles.noDataText}>Pokédex data unavailable</Text>
+                )}
+              </View>
+
               {/* Basic Info */}
               <View style={styles.infoSection}>
-                <Text style={styles.sectionTitle}>Info</Text>
+                <Text style={styles.sectionTitle}>Physical Data</Text>
                 <View style={styles.infoRow}>
-                  <Text>Height: {selectedPokemon.height / 10}m</Text>
-                  <Text>Weight: {selectedPokemon.weight / 10}kg</Text>
+                  <Text style={styles.physicalDataText}>Height: {selectedPokemon.height / 10}m</Text>
+                  <Text style={styles.physicalDataText}>Weight: {selectedPokemon.weight / 10}kg</Text>
                 </View>
               </View>
 
               {/* Stats */}
               <View style={styles.infoSection}>
                 <Text style={styles.sectionTitle}>Base Stats</Text>
-                {selectedPokemon.stats.map((stat) => (
+                {selectedPokemon.stats.map((stat, index) => (
                   <View
                     key={stat.stat.name}
                     style={styles.statRow}
                   >
-                    <Text style={styles.statName}>
-                      {formatStatName(stat.stat.name)}
-                    </Text>
-                    <View style={styles.statBarContainer}>
-                      <View
-                        style={[
-                          styles.statBar,
-                          {
-                            width: `${Math.min(
-                              100,
-                              (stat.base_stat / 255) * 100
-                            )}%`,
-                          },
-                        ]}
-                      />
+                    <View style={styles.statNameContainer}>
+                      <Text style={styles.statName}>
+                        {formatStatName(stat.stat.name)}
+                      </Text>
+                      {stat.base_stat >= 100 && (
+                        <Text style={styles.statRank}>★</Text>
+                      )}
                     </View>
-                    <Text style={styles.statValue}>{stat.base_stat}</Text>
+                    <AnimatedStatBar
+                      statName={stat.stat.name}
+                      statValue={stat.base_stat}
+                      delay={index * 100}
+                    />
+                    <Text style={[
+                      styles.statValue,
+                      stat.base_stat >= 100 && styles.highStatValue
+                    ]}>
+                      {stat.base_stat}
+                    </Text>
                   </View>
                 ))}
+                
+                {/* Total Stats */}
+                <View style={[styles.statRow, styles.totalStatRow]}>
+                  <Text style={[styles.statName, styles.totalStatName]}>Total</Text>
+                  <View style={styles.statBarContainer} />
+                  <Text style={[styles.statValue, styles.totalStatValue]}>
+                    {selectedPokemon.stats.reduce((sum, stat) => sum + stat.base_stat, 0)}
+                  </Text>
+                </View>
               </View>
 
               {/* Abilities */}
@@ -1886,23 +2042,105 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
-  statName: {
+  statNameContainer: {
     flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statName: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#333',
+    color: '#374151',
+    textTransform: 'capitalize',
+  },
+  statRank: {
+    fontSize: 14,
+    color: '#fbbf24',
+    marginLeft: 4,
+  },
+  highStatValue: {
+    color: '#059669',
+    fontWeight: '700',
   },
   statBarContainer: {
     flex: 2,
-    height: 8,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 4,
     marginHorizontal: 10,
+  },
+  statBarBackground: {
+    height: 12,
+    backgroundColor: '#e5e7eb',
+    borderRadius: 6,
+    overflow: 'hidden',
   },
   statBar: {
     height: '100%',
-    backgroundColor: '#4CAF50',
-    borderRadius: 4,
+    borderRadius: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  totalStatRow: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#e5e7eb',
+  },
+  totalStatName: {
+    fontWeight: '700',
+    color: '#1f2937',
+  },
+  totalStatValue: {
+    fontWeight: '700',
+    color: '#1f2937',
+  },
+  // Pokédex Information Styles
+  pokedexRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  pokedexLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6b7280',
+    flex: 1,
+  },
+  pokedexValue: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#374151',
+    flex: 2,
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  descriptionContainer: {
+    marginTop: 12,
+    backgroundColor: '#f8fafc',
+    borderRadius: 8,
+    padding: 12,
+    borderLeftWidth: 3,
+    borderLeftColor: '#3b82f6',
+  },
+  pokedexDescription: {
+    fontSize: 14,
+    lineHeight: 20,
+    color: '#374151',
+    fontStyle: 'italic',
+  },
+  noDataText: {
+    fontSize: 14,
+    color: '#9ca3af',
+    textAlign: 'center',
+    paddingVertical: 8,
+  },
+  physicalDataText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#374151',
   },
   statValue: {
     flex: 0.5,

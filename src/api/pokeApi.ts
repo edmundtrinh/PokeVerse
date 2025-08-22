@@ -188,6 +188,32 @@ export interface PokemonSprites {
   };
 }
 
+export interface PokemonSpecies {
+  flavor_text_entries: {
+    flavor_text: string;
+    language: {
+      name: string;
+    };
+    version: {
+      name: string;
+    };
+  }[];
+  genera: {
+    genus: string;
+    language: {
+      name: string;
+    };
+  }[];
+  habitat: {
+    name: string;
+    url: string;
+  } | null;
+  shape: {
+    name: string;
+    url: string;
+  };
+}
+
 export interface PokemonDetail {
   id: number;
   name: string;
@@ -209,6 +235,10 @@ export interface PokemonDetail {
       url: string;
     };
   }[];
+  species: {
+    name: string;
+    url: string;
+  };
   abilities: {
     ability: {
       name: string;
@@ -238,6 +268,14 @@ export const getPokemons = async (limit: number = 20, offset: number = 0) => {
   const response = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch Pokemon list: ${response.status}`);
+  }
+  return response.json();
+};
+
+export const getPokemonSpecies = async (pokemonId: number): Promise<PokemonSpecies> => {
+  const response = await fetch(`${BASE_URL}/pokemon-species/${pokemonId}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch Pokemon species ${pokemonId}: ${response.status}`);
   }
   return response.json();
 };
