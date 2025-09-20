@@ -37,7 +37,21 @@
       "Bash(npx expo:*)",
       "Bash(grep:*)",
       "Bash(npm run ios:dev:*)",
-      "Bash(npm run ios:*)"
+      "Bash(npm run ios:*)",
+      "mcp__ide__getDiagnostics",
+      "WebFetch(domain:bulbapedia.bulbagarden.net)",
+      "WebFetch(domain:bulbapedia.bulbagarden.net)",
+      "WebFetch(domain:bulbapedia.bulbagarden.net)",
+      "Bash(npm i:*)",
+      "Bash(npm uninstall:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "Bash(claude-code --version)",
+      "Bash(npx:*)",
+      "Bash(npm start:*)",
+      "Bash(npm cache clean:*)",
+      "Bash(npm cache:*)",
+      "Bash(chmod:*)"
     ],
     "deny": []
   }

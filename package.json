@@ -7,10 +7,13 @@
     "start:dev": "expo start --localhost --clear",
     "ios": "expo start --localhost --ios",
     "ios:dev": "expo start --localhost --ios --clear",
+    "ios:clean": "expo start --localhost --ios --reset-cache",
     "android": "expo start --localhost --android",
     "android:dev": "expo start --localhost --android --clear",
     "web": "expo start --web",
-    "tunnel": "expo start --tunnel"
+    "tunnel": "expo start --tunnel",
+    "dev:reset": "./scripts/dev-reset.sh",
+    "dev:reset:full": "./scripts/dev-reset.sh --full"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
