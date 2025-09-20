@@ -1,5 +1,5 @@
 // src/components/pokedex/PokedexView.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,9 @@ import {
   ScrollView,
   Switch,
   TextInput,
+  RefreshControl,
 } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import Animated, { 
   useSharedValue, 
   withTiming, 
@@ -27,14 +29,23 @@ import {
   getPokemons,
   getPokemonByName,
   getPokemonSpecies,
+  getEvolutionChain,
   PokemonDetail,
   PokemonSpecies,
+  EvolutionChain,
   getSprite,
   getBestQualitySprite,
   getAlternativeSpriteSources,
   SpriteGeneration,
   SpriteGame,
   SpriteVariant,
+  PokemonForm,
+  PokemonFormsGroup,
+  PokemonFormType,
+  getPokemonForms,
+  getPokemonFormById,
+  hasMultipleForms,
+  POKEMON_FORMS_DATABASE,
 } from '../../api/pokeApi';
 
 // All Pokemon types for filtering
@@ -87,6 +98,64 @@ const getEnglishGenus = (species: PokemonSpecies): string => {
   return englishGenus ? englishGenus.genus : 'Unknown Species';
 };
 
+// Helper functions for evolution chain data
+const parseEvolutionChain = (chain: EvolutionChain): Array<{
+  name: string;
+  id: number;
+  trigger?: string;
+  level?: number;
+  item?: string;
+}> => {
+  const evolutions: Array<{
+    name: string;
+    id: number;
+    trigger?: string;
+    level?: number;
+    item?: string;
+  }> = [];
+  
+  // Recursive function to traverse evolution chain
+  const traverseChain = (chainNode: any) => {
+    // Extract Pokemon ID from species URL
+    const urlParts = chainNode.species.url.split('/');
+    const pokemonId = parseInt(urlParts[urlParts.length - 2]);
+    
+    evolutions.push({
+      name: chainNode.species.name,
+      id: pokemonId
+    });
+    
+    // Process evolution details for next stage
+    if (chainNode.evolves_to && chainNode.evolves_to.length > 0) {
+      chainNode.evolves_to.forEach((evolution: any) => {
+        const urlParts = evolution.species.url.split('/');
+        const evolvedId = parseInt(urlParts[urlParts.length - 2]);
+        
+        const evolutionDetails = evolution.evolution_details[0]; // Take first evolution method
+        evolutions.push({
+          name: evolution.species.name,
+          id: evolvedId,
+          trigger: evolutionDetails?.trigger?.name,
+          level: evolutionDetails?.min_level,
+          item: evolutionDetails?.item?.name
+        });
+        
+        // Continue traversing for further evolutions
+        traverseChain(evolution);
+      });
+    }
+  };
+  
+  traverseChain(chain.chain);
+  
+  // Remove duplicates and return
+  const uniqueEvolutions = evolutions.filter((evolution, index, self) => 
+    index === self.findIndex(e => e.id === evolution.id)
+  );
+  
+  return uniqueEvolutions.sort((a, b) => a.id - b.id);
+};
+
 // Stat color mapping for visual appeal
 const getStatColor = (statName: string): string => {
   const colors: { [key: string]: string } = {
@@ -133,6 +202,122 @@ const AnimatedStatBar: React.FC<{
       </View>
     </View>
   );
+};
+
+// Animated Pokemon Card Component
+const AnimatedPokemonCard: React.FC<{
+  item: { name: string; url: string; id?: number };
+  onPress: () => void;
+  favorites: Set<number>;
+  toggleFavorite: (id: number) => void;
+  getMiniSpriteUrl: (id: number) => string;
+}> = ({ item, onPress, favorites, toggleFavorite, getMiniSpriteUrl }) => {
+  const scaleAnim = useSharedValue(1);
+  
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleAnim.value }]
+  }));
+
+  return (
+    <Animated.View style={[animatedStyle]}>
+      <TouchableOpacity
+        style={[
+          styles.pokemonListCard,
+          { 
+            backgroundColor: getPokemonCardColor(item.name),
+            borderColor: getPokemonBorderColor(item.name)
+          }
+        ]}
+        onPressIn={() => {
+          scaleAnim.value = withTiming(0.96, { duration: 100 });
+        }}
+        onPressOut={() => {
+          scaleAnim.value = withTiming(1, { duration: 150 });
+        }}
+        onPress={() => {
+          console.log(`🖱️ Card pressed: ${item.name}`);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          onPress();
+        }}
+        activeOpacity={1}
+        accessibilityRole="button"
+        accessibilityLabel={`${item.name}, Pokemon number ${item.id}`}
+        accessibilityHint="Opens detailed view with sprites and stats"
+      >
+        {/* Pokemon Number */}
+        <Text style={styles.pokemonNumber}>
+          #{String(item.id || 1).padStart(4, '0')}
+        </Text>
+        
+        {/* Mini Pokemon Sprite */}
+        <View style={styles.miniSpriteContainer}>
+          <Image
+            source={{ 
+              uri: getMiniSpriteUrl(item.id || 1)
+            }}
+            style={styles.miniSprite}
+            resizeMode="contain"
+            onError={() => {
+              // Fallback to regular sprite if current style fails
+            }}
+          />
+        </View>
+        
+        {/* Pokemon Name */}
+        <View style={styles.pokemonNameContainer}>
+          <Text style={styles.pokemonListName}>
+            {item.name.replace('-', ' ')}
+          </Text>
+        </View>
+        
+        {/* Favorite Heart */}
+        <TouchableOpacity
+          style={styles.favoriteButton}
+          onPress={(e) => {
+            e.stopPropagation(); // Prevent card press when tapping heart
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            toggleFavorite(item.id || 1);
+          }}
+          accessibilityRole="button"
+          accessibilityLabel={favorites.has(item.id || 1) ? "Remove from favorites" : "Add to favorites"}
+          accessibilityHint={`${favorites.has(item.id || 1) ? 'Remove' : 'Add'} ${item.name} ${favorites.has(item.id || 1) ? 'from' : 'to'} your favorites`}
+        >
+          <Ionicons
+            name={favorites.has(item.id || 1) ? "heart" : "heart-outline"}
+            size={24}
+            color={favorites.has(item.id || 1) ? "#ef4444" : "#9ca3af"}
+          />
+        </TouchableOpacity>
+        
+        {/* Arrow indicator */}
+        <Text style={styles.arrowIndicator}>›</Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+// Helper function to get Pokemon's primary type color
+const getPokemonCardColor = (pokemonName: string): string => {
+  const types = getPokemonTypes(pokemonName);
+  if (types.length > 0) {
+    const primaryType = types[0].type.name;
+    const typeColor = getTypeColor(primaryType);
+    // Return a very light tint of the type color for card background
+    return typeColor + '15'; // Add 15% opacity
+  }
+  return '#ffffff'; // Default white background
+};
+
+// Helper function to get Pokemon's border color
+const getPokemonBorderColor = (pokemonName: string): string => {
+  const types = getPokemonTypes(pokemonName);
+  if (types.length > 0) {
+    const primaryType = types[0].type.name;
+    const typeColor = getTypeColor(primaryType);
+    // Return a more solid tint for border
+    return typeColor + '40'; // Add 40% opacity
+  }
+  return '#e5e7eb'; // Default gray border
 };
 
 // Pokemon demo data helpers
@@ -280,6 +465,10 @@ const gameVersions = [
   { label: 'Gen VI - X/Y', value: 'x-y', generation: 'generation-vi' as SpriteGeneration },
   { label: 'Gen VI - Omega Ruby/Alpha Sapphire', value: 'omegaruby-alphasapphire', generation: 'generation-vi' as SpriteGeneration },
   { label: 'Gen VII - Ultra Sun/Ultra Moon', value: 'ultra-sun-ultra-moon', generation: 'generation-vii' as SpriteGeneration },
+  { label: 'Gen VIII - Sword/Shield', value: 'sword-shield', generation: 'generation-viii' as SpriteGeneration },
+  { label: 'Gen VIII - Brilliant Diamond/Shining Pearl', value: 'brilliant-diamond-shining-pearl', generation: 'generation-viii' as SpriteGeneration },
+  { label: 'Gen VIII - Legends Arceus', value: 'legends-arceus', generation: 'generation-viii' as SpriteGeneration },
+  { label: 'Gen IX - Scarlet/Violet', value: 'scarlet-violet', generation: 'generation-ix' as SpriteGeneration },
 ];
 
 interface PokedexViewProps {
@@ -310,6 +499,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
     null
   );
   const [loadingSpecies, setLoadingSpecies] = useState<boolean>(false);
+  const [evolutionChain, setEvolutionChain] = useState<EvolutionChain | null>(
+    null
+  );
+  const [loadingEvolution, setLoadingEvolution] = useState<boolean>(false);
   const [selectedVersion, setSelectedVersion] = useState<string>('best');
   const [detailModalVisible, setDetailModalVisible] = useState<boolean>(false);
   const [spriteStyle, setSpriteStyle] = useState<'party' | 'animated' | 'home' | 'gen9'>('home');
@@ -317,6 +510,15 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const [isShiny, setIsShiny] = useState<boolean>(false);
   const [showBack, setShowBack] = useState<boolean>(false);
   const [showFemale, setShowFemale] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [showScrollToTop, setShowScrollToTop] = useState<boolean>(false);
+  
+  // Pokemon Forms state
+  const [selectedForm, setSelectedForm] = useState<PokemonForm | null>(null);
+  const [availableForms, setAvailableForms] = useState<PokemonFormsGroup | null>(null);
+  
+  // FlatList ref for scroll-to-top functionality
+  const flatListRef = useRef<FlatList>(null);
 
   // Load favorites from storage
   const loadFavorites = async () => {
@@ -351,6 +553,38 @@ const PokedexView: React.FC<PokedexViewProps> = ({
     }
     setFavorites(newFavorites);
     await saveFavorites(newFavorites);
+  };
+
+  // Refresh function for pull-to-refresh
+  const onRefresh = async () => {
+    setRefreshing(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    
+    try {
+      // Re-fetch Pokemon data
+      await fetchPokemons();
+      
+      // Re-load favorites in case they changed
+      await loadFavorites();
+      
+      console.log('✅ Data refreshed successfully');
+    } catch (error) {
+      console.warn('❌ Error refreshing data:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  };
+
+  // Handle scroll events to show/hide scroll-to-top button
+  const handleScroll = (event: any) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    setShowScrollToTop(offsetY > 500); // Show button after scrolling 500px
   };
 
   // Get sprite URL based on selected style
@@ -408,6 +642,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
       'x-y': { shiny: true, back: true, female: true },
       'omegaruby-alphasapphire': { shiny: true, back: true, female: true },
       'ultra-sun-ultra-moon': { shiny: true, back: true, female: true },
+      'sword-shield': { shiny: true, back: true, female: true },
+      'brilliant-diamond-shining-pearl': { shiny: true, back: true, female: true },
+      'legends-arceus': { shiny: true, back: true, female: true },
+      'scarlet-violet': { shiny: true, back: true, female: true },
       
       // Modern/Default
       'best': { shiny: true, back: true, female: true },
@@ -596,6 +834,21 @@ const PokedexView: React.FC<PokedexViewProps> = ({
     try {
       const detail = await getPokemonByName(name);
       setSelectedPokemon(detail);
+      
+      // Load Pokemon forms if available
+      const formsGroup = getPokemonForms(detail.id);
+      if (formsGroup) {
+        setAvailableForms(formsGroup);
+        // Set default form to base form
+        const baseForm = formsGroup.forms.find(f => f.formType === 'base') || formsGroup.forms[0];
+        setSelectedForm(baseForm);
+        console.log(`📋 Found ${formsGroup.forms.length} forms for ${name}:`, formsGroup.forms.map(f => f.displayName));
+      } else {
+        setAvailableForms(null);
+        setSelectedForm(null);
+        console.log(`📋 No additional forms found for ${name}`);
+      }
+      
       // Reset female toggle if new Pokemon doesn't have female sprites
       if (!hasFemaleSprites(detail)) {
         setShowFemale(false);
@@ -607,6 +860,20 @@ const PokedexView: React.FC<PokedexViewProps> = ({
       try {
         const species = await getPokemonSpecies(detail.id);
         setPokemonSpecies(species);
+        
+        // Fetch evolution chain if species data is available
+        if (species && species.evolution_chain) {
+          setLoadingEvolution(true);
+          try {
+            const evolutionData = await getEvolutionChain(species.evolution_chain.url);
+            setEvolutionChain(evolutionData);
+          } catch (evolutionError) {
+            console.warn(`Failed to fetch evolution chain for ${name}:`, evolutionError);
+            setEvolutionChain(null);
+          } finally {
+            setLoadingEvolution(false);
+          }
+        }
       } catch (speciesError) {
         console.warn(`Failed to fetch species data for ${name}:`, speciesError);
         setPokemonSpecies(null);
@@ -962,6 +1229,7 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                 { backgroundColor: getTypeColor(type) }
               ]}
               onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 if (selectedTypes.includes(type)) {
                   setSelectedTypes(selectedTypes.filter(t => t !== type));
                 } else {
@@ -1010,7 +1278,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
               showOnlyFavorites && styles.generationChipSelected,
               { backgroundColor: showOnlyFavorites ? '#ef4444' : '#f3f4f6' }
             ]}
-            onPress={() => setShowOnlyFavorites(!showOnlyFavorites)}
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              setShowOnlyFavorites(!showOnlyFavorites);
+            }}
             accessibilityRole="button"
             accessibilityState={{ selected: showOnlyFavorites }}
             accessibilityLabel="Favorites filter"
@@ -1039,6 +1310,7 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                 { backgroundColor: generation.color }
               ]}
               onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                 if (selectedGenerations.includes(generation.name)) {
                   setSelectedGenerations(selectedGenerations.filter(g => g !== generation.name));
                 } else {
@@ -1076,69 +1348,30 @@ const PokedexView: React.FC<PokedexViewProps> = ({
       </View>
       
       <FlatList
+        ref={flatListRef}
         data={filteredPokemonList}
         keyExtractor={(item, index) => `${item.name}-${index}`}
         numColumns={1}
         style={{ flex: 1, paddingHorizontal: 16, backgroundColor: '#f9fafb' }}
+        onScroll={handleScroll}
+        scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#3b82f6"
+            title="Pull to refresh Pokemon data"
+            titleColor="#6b7280"
+          />
+        }
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.pokemonListCard}
-            onPress={() => {
-              console.log(`🖱️ Card pressed: ${item.name}`);
-              handlePokemonSelect(item.name);
-            }}
-            activeOpacity={0.7}
-            accessibilityRole="button"
-            accessibilityLabel={`${item.name}, Pokemon number ${item.id}`}
-            accessibilityHint="Opens detailed view with sprites and stats"
-          >
-            {/* Pokemon Number */}
-            <Text style={styles.pokemonNumber}>
-              #{String(item.id || 1).padStart(4, '0')}
-            </Text>
-            
-            {/* Mini Pokemon Sprite */}
-            <View style={styles.miniSpriteContainer}>
-              <Image
-                source={{ 
-                  uri: getMiniSpriteUrl(item.id || 1)
-                }}
-                style={styles.miniSprite}
-                resizeMode="contain"
-                onError={() => {
-                  // Fallback to regular sprite if current style fails
-                }}
-              />
-            </View>
-            
-            {/* Pokemon Name */}
-            <View style={styles.pokemonNameContainer}>
-              <Text style={styles.pokemonListName}>
-                {item.name.replace('-', ' ')}
-              </Text>
-            </View>
-            
-            {/* Favorite Heart */}
-            <TouchableOpacity
-              style={styles.favoriteButton}
-              onPress={(e) => {
-                e.stopPropagation(); // Prevent card press when tapping heart
-                toggleFavorite(item.id || 1);
-              }}
-              accessibilityRole="button"
-              accessibilityLabel={favorites.has(item.id || 1) ? "Remove from favorites" : "Add to favorites"}
-              accessibilityHint={`${favorites.has(item.id || 1) ? 'Remove' : 'Add'} ${item.name} ${favorites.has(item.id || 1) ? 'from' : 'to'} your favorites`}
-            >
-              <Ionicons
-                name={favorites.has(item.id || 1) ? "heart" : "heart-outline"}
-                size={24}
-                color={favorites.has(item.id || 1) ? "#ef4444" : "#9ca3af"}
-              />
-            </TouchableOpacity>
-            
-            {/* Arrow indicator */}
-            <Text style={styles.arrowIndicator}>›</Text>
-          </TouchableOpacity>
+          <AnimatedPokemonCard
+            item={item}
+            onPress={() => handlePokemonSelect(item.name)}
+            favorites={favorites}
+            toggleFavorite={toggleFavorite}
+            getMiniSpriteUrl={getMiniSpriteUrl}
+          />
         )}
         onEndReached={() => fetchPokemons((page + 1) * 20)}
         onEndReachedThreshold={0.5}
@@ -1160,13 +1393,27 @@ const PokedexView: React.FC<PokedexViewProps> = ({
         animationType='slide'
         transparent={false}
         visible={detailModalVisible}
-        onRequestClose={() => setDetailModalVisible(false)}
+        onRequestClose={() => {
+          setDetailModalVisible(false);
+          setPokemonSpecies(null);
+          setEvolutionChain(null);
+          setShowVersionPicker(false);
+          setSelectedForm(null);
+          setAvailableForms(null);
+        }}
       >
         {selectedPokemon ? (
           <SafeAreaView style={styles.modalContainer}>
             <TouchableOpacity
               style={styles.closeButton}
-              onPress={() => setDetailModalVisible(false)}
+              onPress={() => {
+                setDetailModalVisible(false);
+                setPokemonSpecies(null);
+                setEvolutionChain(null);
+                setShowVersionPicker(false);
+                setSelectedForm(null);
+                setAvailableForms(null);
+              }}
             >
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
@@ -1176,10 +1423,85 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                 #{selectedPokemon.id} {selectedPokemon.name}
               </Text>
 
+              {/* Pokemon Forms Selector */}
+              {availableForms && availableForms.forms.length > 1 && (
+                <View style={styles.formsSection}>
+                  <Text style={styles.formsSectionTitle}>Available Forms</Text>
+                  <ScrollView 
+                    horizontal 
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.formsContainer}
+                  >
+                    {availableForms.forms.map((form) => (
+                      <TouchableOpacity
+                        key={form.id}
+                        style={[
+                          styles.formCard,
+                          selectedForm?.id === form.id && styles.selectedFormCard
+                        ]}
+                        onPress={() => {
+                          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                          setSelectedForm(form);
+                          console.log(`🔄 Form changed to: ${form.displayName}`);
+                        }}
+                        accessibilityRole="button"
+                        accessibilityLabel={`Switch to ${form.displayName}`}
+                        accessibilityHint={`Changes to ${form.displayName} form with different stats and abilities`}
+                      >
+                        <Image
+                          source={{ uri: form.spriteUrl || form.artworkUrl }}
+                          style={styles.formSprite}
+                          resizeMode="contain"
+                        />
+                        <Text style={[
+                          styles.formName,
+                          selectedForm?.id === form.id && styles.selectedFormName
+                        ]}>
+                          {form.displayName}
+                        </Text>
+                        <View style={styles.formTypeContainer}>
+                          <Text style={styles.formType}>
+                            {form.formType === 'base' ? 'Original' : 
+                             form.formType === 'regional' ? form.region :
+                             form.formType === 'mega' ? 'Mega' :
+                             form.formType === 'gigantamax' ? 'G-Max' :
+                             form.formType.charAt(0).toUpperCase() + form.formType.slice(1)}
+                          </Text>
+                          {form.introduced && (
+                            <Text style={styles.formIntroduced}>{form.introduced}</Text>
+                          )}
+                        </View>
+                        
+                        {/* Type indicators */}
+                        <View style={styles.formTypes}>
+                          {form.types.map((type, index) => (
+                            <View 
+                              key={index}
+                              style={[
+                                styles.formTypeChip,
+                                { backgroundColor: getTypeColor(type) }
+                              ]}
+                            >
+                              <Text style={styles.formTypeText}>
+                                {type.toUpperCase()}
+                              </Text>
+                            </View>
+                          ))}
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+
               {/* Display the selected sprite */}
               <Image
-                key={`${selectedPokemon.name}-${selectedVersion}-${isShiny}-${showBack}-${showFemale}`}
-                source={{ uri: getCurrentSprite(selectedPokemon) || selectedPokemon.sprites.front_default || undefined }}
+                key={`${selectedPokemon.name}-${selectedForm?.id || 'base'}-${selectedVersion}-${isShiny}-${showBack}-${showFemale}`}
+                source={{ 
+                  uri: selectedForm?.spriteUrl || selectedForm?.artworkUrl || 
+                       getCurrentSprite(selectedPokemon) || 
+                       selectedPokemon.sprites.front_default || undefined 
+                }}
                 style={styles.pokemonSprite}
                 resizeMode='contain'
                 onError={() => {
@@ -1272,7 +1594,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                           <Text style={styles.toggleLabel}>✨ Shiny</Text>
                           <Switch
                             value={isShiny}
-                            onValueChange={setIsShiny}
+                            onValueChange={(value) => {
+                              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                              setIsShiny(value);
+                            }}
                             trackColor={{ false: '#ccc', true: '#FFD700' }}
                             thumbColor={isShiny ? '#FFA500' : '#f4f3f4'}
                           />
@@ -1286,7 +1611,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                           <Text style={styles.toggleLabel}>🔄 Back</Text>
                           <Switch
                             value={showBack}
-                            onValueChange={setShowBack}
+                            onValueChange={(value) => {
+                              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                              setShowBack(value);
+                            }}
                             trackColor={{ false: '#ccc', true: '#4CAF50' }}
                             thumbColor={showBack ? '#2E7D32' : '#f4f3f4'}
                           />
@@ -1318,7 +1646,10 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                             <Text style={styles.toggleLabel}>♀️ Female</Text>
                             <Switch
                               value={showFemale}
-                              onValueChange={setShowFemale}
+                              onValueChange={(value) => {
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                setShowFemale(value);
+                              }}
                               trackColor={{ false: '#ccc', true: '#E91E63' }}
                               thumbColor={showFemale ? '#C2185B' : '#f4f3f4'}
                             />
@@ -1384,6 +1715,66 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                   </>
                 ) : (
                   <Text style={styles.noDataText}>Pokédex data unavailable</Text>
+                )}
+              </View>
+
+              {/* Evolution Chain */}
+              <View style={styles.infoSection}>
+                <Text style={styles.sectionTitle}>Evolution Chain</Text>
+                
+                {loadingEvolution ? (
+                  <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="small" color="#3b82f6" />
+                    <Text style={styles.loadingText}>Loading evolution data...</Text>
+                  </View>
+                ) : evolutionChain ? (() => {
+                  const evolutions = parseEvolutionChain(evolutionChain);
+                  return evolutions.length > 1 ? (
+                    <View style={styles.evolutionContainer}>
+                      {evolutions.map((evolution, index) => (
+                        <React.Fragment key={evolution.id}>
+                          <View style={styles.evolutionStage}>
+                            <View style={styles.evolutionImageContainer}>
+                              <Image
+                                source={{
+                                  uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.id}.png`
+                                }}
+                                style={styles.evolutionImage}
+                                resizeMode="contain"
+                              />
+                            </View>
+                            <Text style={styles.evolutionName}>
+                              {evolution.name.charAt(0).toUpperCase() + evolution.name.slice(1)}
+                            </Text>
+                            <Text style={styles.evolutionId}>#{evolution.id}</Text>
+                          </View>
+                          
+                          {index < evolutions.length - 1 && (
+                            <View style={styles.evolutionArrow}>
+                              <Ionicons name="arrow-forward" size={20} color="#6b7280" />
+                              {evolution.level && (
+                                <Text style={styles.evolutionTrigger}>Lv. {evolution.level}</Text>
+                              )}
+                              {evolution.item && (
+                                <Text style={styles.evolutionTrigger}>
+                                  {evolution.item.charAt(0).toUpperCase() + evolution.item.slice(1)}
+                                </Text>
+                              )}
+                              {evolution.trigger && !evolution.level && !evolution.item && (
+                                <Text style={styles.evolutionTrigger}>
+                                  {evolution.trigger.charAt(0).toUpperCase() + evolution.trigger.slice(1)}
+                                </Text>
+                              )}
+                            </View>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </View>
+                  ) : (
+                    <Text style={styles.noDataText}>This Pokémon does not evolve</Text>
+                  );
+                })() : (
+                  <Text style={styles.noDataText}>Evolution data unavailable</Text>
                 )}
               </View>
 
@@ -1559,6 +1950,21 @@ const PokedexView: React.FC<PokedexViewProps> = ({
           </ScrollView>
         </SafeAreaView>
       </Modal>
+
+      {/* Scroll to Top Button */}
+      {showScrollToTop && (
+        <Animated.View style={styles.scrollToTopButton}>
+          <TouchableOpacity
+            onPress={scrollToTop}
+            style={styles.scrollToTopButtonInner}
+            accessibilityRole="button"
+            accessibilityLabel="Scroll to top"
+            accessibilityHint="Scroll to the top of the Pokemon list"
+          >
+            <Ionicons name="chevron-up" size={24} color="#ffffff" />
+          </TouchableOpacity>
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 };
@@ -2207,6 +2613,174 @@ const styles = StyleSheet.create({
   spriteStyleSubtext: {
     fontSize: 14,
     color: '#666',
+  },
+  
+  // Evolution Chain Styles
+  evolutionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    paddingVertical: 8,
+  },
+  evolutionStage: {
+    alignItems: 'center',
+    marginHorizontal: 8,
+    marginVertical: 4,
+  },
+  evolutionImageContainer: {
+    width: 64,
+    height: 64,
+    backgroundColor: '#f9fafb',
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  evolutionImage: {
+    width: 48,
+    height: 48,
+  },
+  evolutionName: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#374151',
+    textAlign: 'center',
+    marginBottom: 2,
+  },
+  evolutionId: {
+    fontSize: 10,
+    color: '#6b7280',
+    textAlign: 'center',
+  },
+  evolutionArrow: {
+    alignItems: 'center',
+    marginHorizontal: 4,
+    paddingVertical: 8,
+  },
+  evolutionTrigger: {
+    fontSize: 10,
+    color: '#6b7280',
+    textAlign: 'center',
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  
+  // Scroll to Top Button Styles
+  scrollToTopButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: 20,
+    zIndex: 1000,
+  },
+  scrollToTopButtonInner: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#3b82f6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  
+  // Pokemon Forms Styles
+  formsSection: {
+    marginVertical: 20,
+    paddingHorizontal: 16,
+  },
+  formsSectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1f2937',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  formsContainer: {
+    paddingHorizontal: 8,
+  },
+  formCard: {
+    width: 140,
+    marginHorizontal: 8,
+    padding: 12,
+    backgroundColor: '#f8fafc',
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: '#e2e8f0',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  selectedFormCard: {
+    borderColor: '#3b82f6',
+    backgroundColor: '#eff6ff',
+    shadowColor: '#3b82f6',
+    shadowOpacity: 0.3,
+    elevation: 6,
+  },
+  formSprite: {
+    width: 80,
+    height: 80,
+    marginBottom: 8,
+  },
+  formName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#374151',
+    textAlign: 'center',
+    marginBottom: 6,
+  },
+  selectedFormName: {
+    color: '#1d4ed8',
+  },
+  formTypeContainer: {
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  formType: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#6b7280',
+    backgroundColor: '#e5e7eb',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+    textAlign: 'center',
+  },
+  formIntroduced: {
+    fontSize: 10,
+    color: '#9ca3af',
+    marginTop: 2,
+    textAlign: 'center',
+  },
+  formTypes: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 4,
+  },
+  formTypeChip: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 8,
+    minWidth: 35,
+  },
+  formTypeText: {
+    fontSize: 9,
+    fontWeight: '600',
+    color: '#ffffff',
+    textAlign: 'center',
   },
 });
 
