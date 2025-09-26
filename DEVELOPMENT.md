@@ -145,4 +145,37 @@ When you need to test on a physical device:
 
 ---
 
-*Last updated: PERMANENT Fast Refresh fix - December 2024*
+## Recent Bug Fixes & Improvements (January 2025)
+
+### ✅ Latest Fixes Applied:
+
+1. **Form Buttons Layout Fixed**
+   - Added `maxHeight: 160` to form cards to prevent vertical stretching
+   - Form buttons now stay within screen bounds
+
+2. **Pokemon Display Names Cleaned**
+   - Created `cleanPokemonName()` function
+   - Deoxys shows as "Deoxys" instead of "Deoxys Normal"
+   - Removes "-normal" suffixes from base form displays
+
+3. **Duplicate Pokemon Results Eliminated**
+   - Added deduplication logic in `getPokemons()` API function
+   - Filters out Pokemon with IDs > 1025 (forms beyond main series)
+   - Only keeps first occurrence of each unique Pokemon ID
+   - No more multiple Mudkip, Rayquaza, Ralts in search results
+
+4. **Sprite Version Dropdown Filtering**
+   - Already implemented and working correctly
+   - Disables sprite versions when sprites aren't available for that Pokemon
+   - Uses `getSprite()` function to check availability
+   - Styles disabled options with reduced opacity
+
+### Hot Reload Status: ✅ FULLY WORKING
+- App auto-recompiles on file save
+- Fast Refresh preserves component state
+- Changes reflect immediately in simulator
+- Use `npm run ios:dev` for development with cache clearing
+
+---
+
+*Last updated: January 26, 2025 - All major UI issues fixed*

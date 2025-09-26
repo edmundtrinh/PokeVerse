@@ -361,14 +361,33 @@ export const getPokemons = async (limit: number = 20, offset: number = 0) => {
     throw new Error(`Failed to fetch Pokemon list: ${response.status}`);
   }
   const data = await response.json();
-  
+
   // Add ID field to each Pokemon by extracting from URL
+  const pokemonWithIds = data.results.map((pokemon: any) => ({
+    ...pokemon,
+    id: extractPokemonIdFromUrl(pokemon.url)
+  }));
+
+  // Filter out duplicate Pokemon and alternate forms
+  const uniquePokemon = pokemonWithIds.filter((pokemon: any, index: number, arr: any[]) => {
+    // Only keep Pokemon with IDs <= 1025 (no forms beyond the main series)
+    if (pokemon.id > 1025) return false;
+
+    // Remove alternate form suffixes to get base Pokemon name
+    const baseName = pokemon.name.replace(/-normal$|-attack$|-defense$|-speed$|-origin$|-sky$|-heat$|-wash$|-frost$|-fan$|-mow$|-altered$|-plant$|-sandy$|-trash$|-10-percent$|-50-percent$|-complete$|-red-meteor$|-orange-meteor$|-yellow-meteor$|-green-meteor$|-blue-meteor$|-indigo-meteor$|-violet-meteor$/i, '');
+
+    // Keep if this is the first occurrence of this base Pokemon name
+    const firstOccurrenceIndex = arr.findIndex((p: any) => {
+      const pBaseName = p.name.replace(/-normal$|-attack$|-defense$|-speed$|-origin$|-sky$|-heat$|-wash$|-frost$|-fan$|-mow$|-altered$|-plant$|-sandy$|-trash$|-10-percent$|-50-percent$|-complete$|-red-meteor$|-orange-meteor$|-yellow-meteor$|-green-meteor$|-blue-meteor$|-indigo-meteor$|-violet-meteor$/i, '');
+      return pBaseName === baseName;
+    });
+
+    return firstOccurrenceIndex === index;
+  });
+
   return {
     ...data,
-    results: data.results.map((pokemon: any) => ({
-      ...pokemon,
-      id: extractPokemonIdFromUrl(pokemon.url)
-    }))
+    results: uniquePokemon
   };
 };
 
