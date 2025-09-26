@@ -78,6 +78,14 @@ const getPokemonGeneration = (pokemonId: number): string | null => {
   return null;
 };
 
+// Helper function to clean Pokemon display names
+const cleanPokemonName = (name: string): string => {
+  // Remove "-normal" suffix from base forms for cleaner display
+  const cleanedName = name.replace(/-normal$/i, '');
+  // Replace remaining hyphens with spaces and capitalize
+  return cleanedName.replace('-', ' ');
+};
+
 // AsyncStorage key for favorites
 const FAVORITES_STORAGE_KEY = '@pokemon_favorites';
 
@@ -266,7 +274,7 @@ const AnimatedPokemonCard: React.FC<{
         {/* Pokemon Name */}
         <View style={styles.pokemonNameContainer}>
           <Text style={styles.pokemonListName}>
-            {item.name.replace('-', ' ')}
+            {cleanPokemonName(item.name)}
           </Text>
         </View>
         
@@ -471,11 +479,15 @@ const gameVersions = [
   { label: 'Gen IX - Scarlet/Violet', value: 'scarlet-violet', generation: 'generation-ix' as SpriteGeneration },
 ];
 
-interface PokedexViewProps {}
+interface PokedexViewProps {
+  settingsModalVisible: boolean;
+  setSettingsModalVisible: (visible: boolean) => void;
+}
 
-const PokedexView: React.FC<PokedexViewProps> = () => {
-  // Internal settings modal state management
-  const [settingsModalVisible, setSettingsModalVisible] = useState<boolean>(false);
+const PokedexView: React.FC<PokedexViewProps> = ({
+  settingsModalVisible,
+  setSettingsModalVisible
+}) => {
   const [pokemonList, setPokemonList] = useState<
     { name: string; url: string; id?: number }[]
   >([]);
@@ -1423,10 +1435,11 @@ const PokedexView: React.FC<PokedexViewProps> = () => {
               {availableForms && availableForms.forms.length > 1 && (
                 <View style={styles.formsSection}>
                   <Text style={styles.formsSectionTitle}>Available Forms</Text>
-                  <ScrollView 
-                    horizontal 
+                  <ScrollView
+                    horizontal
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.formsContainer}
+                    style={{ maxHeight: 150 }}
                   >
                     {availableForms.forms.map((form) => (
                       <TouchableOpacity
@@ -2690,8 +2703,9 @@ const styles = StyleSheet.create({
   
   // Pokemon Forms Styles
   formsSection: {
-    marginVertical: 20,
+    marginVertical: 16,
     paddingHorizontal: 16,
+    maxHeight: 180,
   },
   formsSectionTitle: {
     fontSize: 18,
@@ -2705,6 +2719,7 @@ const styles = StyleSheet.create({
   },
   formCard: {
     width: 140,
+    maxHeight: 160,
     marginHorizontal: 8,
     padding: 12,
     backgroundColor: '#f8fafc',
