@@ -33,10 +33,7 @@ const PokedexScreen = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={[styles.container, { flex: 1 }]}>
-      <PokedexView 
-        settingsModalVisible={settingsModalVisible}
-        setSettingsModalVisible={setSettingsModalVisible}
-      />
+      <PokedexView />
     </SafeAreaView>
   );
 };

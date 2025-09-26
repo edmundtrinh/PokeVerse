@@ -471,15 +471,11 @@ const gameVersions = [
   { label: 'Gen IX - Scarlet/Violet', value: 'scarlet-violet', generation: 'generation-ix' as SpriteGeneration },
 ];
 
-interface PokedexViewProps {
-  settingsModalVisible: boolean;
-  setSettingsModalVisible: (visible: boolean) => void;
-}
+interface PokedexViewProps {}
 
-const PokedexView: React.FC<PokedexViewProps> = ({ 
-  settingsModalVisible, 
-  setSettingsModalVisible 
-}) => {
+const PokedexView: React.FC<PokedexViewProps> = () => {
+  // Internal settings modal state management
+  const [settingsModalVisible, setSettingsModalVisible] = useState<boolean>(false);
   const [pokemonList, setPokemonList] = useState<
     { name: string; url: string; id?: number }[]
   >([]);

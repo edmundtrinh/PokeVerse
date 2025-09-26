@@ -185,6 +185,12 @@ export interface PokemonSprites {
         front_female: string | null;
       };
     };
+    'generation-ix'?: {
+      icons?: {
+        front_default: string | null;
+        front_female: string | null;
+      };
+    };
   };
 }
 
@@ -343,12 +349,27 @@ export const getPokemonByName = async (name: string): Promise<PokemonDetail> => 
   return response.json();
 };
 
+// Utility function to extract Pokemon ID from PokeAPI URL
+const extractPokemonIdFromUrl = (url: string): number => {
+  const matches = url.match(/\/pokemon\/(\d+)\//);
+  return matches ? parseInt(matches[1], 10) : 1;
+};
+
 export const getPokemons = async (limit: number = 20, offset: number = 0) => {
   const response = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${offset}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch Pokemon list: ${response.status}`);
   }
-  return response.json();
+  const data = await response.json();
+  
+  // Add ID field to each Pokemon by extracting from URL
+  return {
+    ...data,
+    results: data.results.map((pokemon: any) => ({
+      ...pokemon,
+      id: extractPokemonIdFromUrl(pokemon.url)
+    }))
+  };
 };
 
 export const getPokemonSpecies = async (pokemonId: number): Promise<PokemonSpecies> => {
