@@ -6,12 +6,12 @@ import Ionicons from '@expo/vector-icons/Ionicons'; // Keep if you want icons
 // Import your screen components
 import PokedexView from '../components/pokedex/PokedexView';
 import TeamBuilder from '../components/teambuilder/TeamBuilder';
-import DeckBuilder from '../components/tcg/DeckBuilder';
+import TCGView from '../components/tcg/TCGView';
 
 // Define the type for the drawer parameters (optional but good practice)
 export type RootDrawerParamList = {
   Pokedex: undefined; // undefined means no params passed to the route
-  DeckBuilder: undefined;
+  TCG: undefined;
   TeamBuilder: undefined;
 };
 
@@ -58,10 +58,10 @@ const AppNavigator: React.FC = () => {
         }}
       />
       <Drawer.Screen
-        name='DeckBuilder'
-        component={DeckBuilder} // Make sure this component exists and is imported
+        name='TCG'
+        component={TCGView}
         options={{
-          title: 'TCG Deck Builder',
+          title: 'TCG Collection',
           // drawerIcon: ({ color, size }) => (
           //   <Ionicons name="albums-outline" size={size} color={color} />
           // ),
