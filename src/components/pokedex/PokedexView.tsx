@@ -25,6 +25,8 @@ import Animated, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
+import CachedImage from '../common/CachedImage';
+import { imageCache, GENERATION_RANGES } from '../../utils/imageCache';
 import {
   getPokemons,
   getPokemonByName,
@@ -259,15 +261,11 @@ const AnimatedPokemonCard: React.FC<{
         
         {/* Mini Pokemon Sprite */}
         <View style={styles.miniSpriteContainer}>
-          <Image
-            source={{ 
-              uri: getMiniSpriteUrl(item.id || 1)
-            }}
+          <CachedImage
+            uri={getMiniSpriteUrl(item.id || 1)}
             style={styles.miniSprite}
             resizeMode="contain"
-            onError={() => {
-              // Fallback to regular sprite if current style fails
-            }}
+            showLoadingIndicator={false}
           />
         </View>
         
@@ -599,16 +597,26 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const getMiniSpriteUrl = (pokemonId: number): string => {
     switch (spriteStyle) {
       case 'party':
-        // Gen 3-8 party/box icons - using Diamond/Pearl style as representative
-        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/diamond-pearl/${pokemonId}.png`;
+        // Gen IV Diamond/Pearl sprites only exist for Pokémon #1-493
+        // For later generations, fallback to HOME sprites
+        if (pokemonId <= 493) {
+          return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-iv/diamond-pearl/${pokemonId}.png`;
+        } else {
+          return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
+        }
       case 'animated':
-        // Gen 5 animated sprites (Black/White)
-        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemonId}.gif`;
+        // Gen V Black/White animated sprites only exist for Pokémon #1-649
+        // For later generations, fallback to HOME sprites
+        if (pokemonId <= 649) {
+          return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemonId}.gif`;
+        } else {
+          return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
+        }
       case 'home':
-        // Modern Pokémon HOME sprites
+        // Modern Pokémon HOME sprites (available for all Pokémon)
         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
       case 'gen9':
-        // Official artwork (Gen 9 style)
+        // Official artwork (available for all Pokémon)
         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`;
       default:
         return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonId}.png`;
@@ -670,9 +678,18 @@ const PokedexView: React.FC<PokedexViewProps> = ({
   const [showVersionPicker, setShowVersionPicker] = useState<boolean>(false);
 
   useEffect(() => {
+    // Initialize image cache
+    imageCache.initialize().then(() => {
+      console.log('📦 Image cache initialized');
+      // Clean up expired cache entries on startup
+      imageCache.clearExpired().catch(err =>
+        console.warn('Failed to clear expired cache:', err)
+      );
+    });
+
     fetchPokemons();
     loadFavorites();
-    
+
     // Test direct network connectivity on app start
     testNetworkConnectivity();
   }, []);
@@ -806,28 +823,42 @@ const PokedexView: React.FC<PokedexViewProps> = ({
 
   const fetchPokemons = async (offset = 0) => {
     setLoading(true);
-    
+
     // Offline-first approach: use demo data immediately, then try network
     if (offset === 0) {
       const demoPokemons = getDemoPokemons();
       setPokemonList(demoPokemons);
       setLoading(false);
     }
-    
+
     try {
-      console.log(`Attempting to fetch Pokemon list from network (offset: ${offset})`);
-      const response = await getPokemons(20, offset);
-      console.log('Network fetch successful, updating with real data');
-      
-      setPokemonList((prev) =>
-        offset === 0 ? response.results : [...prev, ...response.results]
+      console.log(`Attempting to fetch all Pokemon from network...`);
+      // Load all Pokemon at once (1025 total) for better filtering experience
+      const response = await getPokemons(1025, 0);
+      console.log('Network fetch successful, loaded all Pokemon');
+
+      setPokemonList(response.results);
+      setPage(0);
+
+      // Generation-aware preloading: First 60 from each generation (9 × 60 = 540 images)
+      // This ensures all generation filters have cached images ready
+      const spriteUrls = GENERATION_RANGES.flatMap(genRange => {
+        const count = Math.min(60, genRange.count); // Preload up to 60 per generation
+        return Array.from(
+          { length: count },
+          (_, i) => getMiniSpriteUrl(genRange.start + i)
+        );
+      });
+
+      console.log(`📥 Preloading ${spriteUrls.length} sprites (60 per generation)...`);
+      imageCache.preloadBatch(spriteUrls, 20).catch(err =>
+        console.warn('Failed to preload sprites:', err)
       );
-      setPage(Math.floor(offset / 20));
     } catch (error: any) {
       console.warn('Network unavailable, using offline demo data:', error.message);
-      
+
       // Only add demo data if we don't already have it
-      if (offset === 0 && pokemonList.length === 0) {
+      if (pokemonList.length === 0) {
         const demoPokemons = getDemoPokemons();
         setPokemonList(demoPokemons);
       }
@@ -1381,7 +1412,7 @@ const PokedexView: React.FC<PokedexViewProps> = ({
             getMiniSpriteUrl={getMiniSpriteUrl}
           />
         )}
-        onEndReached={() => fetchPokemons((page + 1) * 20)}
+        onEndReached={() => {}} // No pagination needed - all Pokemon loaded upfront
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           loading ? (
@@ -1457,10 +1488,11 @@ const PokedexView: React.FC<PokedexViewProps> = ({
                         accessibilityLabel={`Switch to ${form.displayName}`}
                         accessibilityHint={`Changes to ${form.displayName} form with different stats and abilities`}
                       >
-                        <Image
-                          source={{ uri: form.spriteUrl || form.artworkUrl }}
+                        <CachedImage
+                          uri={form.spriteUrl || form.artworkUrl || null}
                           style={styles.formSprite}
                           resizeMode="contain"
+                          showLoadingIndicator={false}
                         />
                         <Text style={[
                           styles.formName,
@@ -1504,22 +1536,15 @@ const PokedexView: React.FC<PokedexViewProps> = ({
               )}
 
               {/* Display the selected sprite */}
-              <Image
+              <CachedImage
                 key={`${selectedPokemon.name}-${selectedForm?.id || 'base'}-${selectedVersion}-${isShiny}-${showBack}-${showFemale}`}
-                source={{ 
-                  uri: selectedForm?.spriteUrl || selectedForm?.artworkUrl || 
-                       getCurrentSprite(selectedPokemon) || 
-                       selectedPokemon.sprites.front_default || undefined 
-                }}
+                uri={selectedForm?.spriteUrl || selectedForm?.artworkUrl ||
+                     getCurrentSprite(selectedPokemon) ||
+                     selectedPokemon.sprites.front_default || null}
+                fallbackUri={selectedPokemon.sprites.front_default || undefined}
                 style={styles.pokemonSprite}
                 resizeMode='contain'
-                onError={() => {
-                  console.log('🖼️ Image failed to load, will automatically try fallbacks on next render');
-                  // The image component will automatically retry with fallback logic
-                }}
-                onLoad={() => {
-                  console.log('✅ Image loaded successfully:', getCurrentSprite(selectedPokemon));
-                }}
+                showLoadingIndicator={true}
               />
 
               {/* Sprite Controls - Right in the modal! */}
