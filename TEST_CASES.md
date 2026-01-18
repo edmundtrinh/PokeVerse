@@ -77,6 +77,38 @@
 - **TC-058**: Modal scrolls smoothly with all new content sections
 - **TC-059**: Loading states don't interfere with user interactions
 
-*Generated: 2024-12-14*  
-*Updated: 2024-12-22*
-*Features: Search, Type Filters, Generation Filters, Favorites System, Animated Stats, Pokédex Data, Evolution Chains*
+## Image Caching (LRU)
+- **TC-060**: Images are cached after first load (verify no re-fetch on scroll back)
+- **TC-061**: Cache respects maximum size limit (750 images default)
+- **TC-062**: LRU eviction removes least recently used images when cache is full
+- **TC-063**: Cached images load faster than fresh network requests
+- **TC-064**: Cache survives app backgrounding (within session)
+- **TC-065**: Preloading loads 60 sprites per generation on app start
+- **TC-066**: Generation-aware preloading covers all 9 generations
+
+## Sprite Fallback Logic
+- **TC-067**: Gen IV (Diamond/Pearl) sprites show for Pokemon #1-493
+- **TC-068**: Pokemon #494+ fall back to Home sprites when Gen IV style selected
+- **TC-069**: Gen V (Black/White) animated sprites show for Pokemon #1-649
+- **TC-070**: Pokemon #650+ fall back to Home sprites when animated style selected
+- **TC-071**: No 404 errors displayed to user for missing sprites
+- **TC-072**: Fallback transitions are seamless (no loading flicker)
+
+## Upfront Data Loading
+- **TC-073**: All 1025 Pokemon load on app start
+- **TC-074**: Generation filtering is instant (no network delay)
+- **TC-075**: Type filtering is instant after initial load
+- **TC-076**: Search works immediately without additional API calls
+- **TC-077**: Memory usage remains stable with all Pokemon loaded
+
+## Android Platform
+- **TC-078**: App launches successfully on Android emulator (API 33+)
+- **TC-079**: Fast Refresh works on Android (Ctrl+M → Fast Refresh enabled)
+- **TC-080**: All touch interactions work correctly on Android
+- **TC-081**: Sprites load and display correctly on Android
+- **TC-082**: Cache system performs well on Android devices
+- **TC-083**: No platform-specific rendering issues
+
+*Generated: 2024-12-14*
+*Updated: 2025-01-18*
+*Features: Search, Type Filters, Generation Filters, Favorites System, Animated Stats, Pokédex Data, Evolution Chains, LRU Image Caching, Sprite Fallback, Android Support*

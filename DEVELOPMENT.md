@@ -389,8 +389,11 @@ src/
 
 ### 🔄 **Quick Start for Next Session**
 ```bash
-# Standard startup command
+# Standard startup command (iOS)
 npm run ios:dev
+
+# Android startup command
+npm run android:dev
 
 # If Metro issues: Cmd+D → Reload in simulator
 # If stuck: pkill -f expo && pkill -f metro && npm run ios:dev
@@ -398,4 +401,114 @@ npm run ios:dev
 
 ---
 
-*Last updated: September 26, 2025 - Session completed, next steps documented*
+## Image Caching Architecture (January 2025)
+
+### LRU Cache Implementation
+
+The app uses a custom LRU (Least Recently Used) cache for sprite images:
+
+**Location**: `src/utils/imageCache.ts`
+
+**Key Features**:
+- Maximum cache size: 750 images (~38 MB)
+- Automatic eviction of least recently used images
+- 7-day expiration for cached entries
+- Batch preloading with concurrency control
+
+**Configuration**:
+```typescript
+const DEFAULT_MAX_CACHE_SIZE = 750;
+const DEFAULT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+```
+
+### Generation-Aware Preloading
+
+On app startup, the cache preloads 60 sprites per generation (540 total):
+
+```typescript
+const GENERATION_RANGES = [
+  { gen: 'I', name: 'Kanto', start: 1, end: 151, count: 151 },
+  { gen: 'II', name: 'Johto', start: 152, end: 251, count: 100 },
+  // ... through Gen IX (Paldea)
+];
+
+// Preload first 60 from each generation
+const spriteUrls = GENERATION_RANGES.flatMap(genRange => {
+  const count = Math.min(60, genRange.count);
+  return Array.from({ length: count }, (_, i) => getMiniSpriteUrl(genRange.start + i));
+});
+```
+
+### Sprite Fallback Logic
+
+Not all sprites exist for all Pokémon. The app handles this gracefully:
+
+| Sprite Style | Available For | Fallback |
+|--------------|---------------|----------|
+| Gen IV (Diamond/Pearl) | #1-493 | Home sprites |
+| Gen V (Black/White Animated) | #1-649 | Home sprites |
+| Home | #1-1025 | Default |
+| Official Artwork | #1-1025 | Home sprites |
+
+**Implementation** (`PokedexView.tsx`):
+```typescript
+const getMiniSpriteUrl = (pokemonId: number): string => {
+  if (spriteStyle === 'party' && pokemonId > 493) {
+    return HOME_SPRITE_URL;
+  }
+  if (spriteStyle === 'animated' && pokemonId > 649) {
+    return HOME_SPRITE_URL;
+  }
+  // ... return generation-specific URL
+};
+```
+
+### CachedImage Component
+
+**Location**: `src/components/common/CachedImage.tsx`
+
+Wrapper component that integrates with the LRU cache:
+- Loading indicators during fetch
+- Fallback URL support
+- Cache hit/miss callbacks for debugging
+- Seamless integration with existing Image components
+
+---
+
+## Android Platform Support (January 2025)
+
+### Validated Environment
+- **Android Studio**: Latest version
+- **API Level**: 33 (Android 13) recommended
+- **Emulator**: Pixel device with hardware acceleration
+
+### Android-Specific Commands
+
+```powershell
+# Start with Android emulator
+npm run android
+
+# Development with cache clear
+npm run android:dev
+
+# Developer menu in emulator
+Ctrl+M
+```
+
+### Verified Features on Android
+- ✅ App launches and runs correctly
+- ✅ Fast Refresh works
+- ✅ All touch interactions functional
+- ✅ Sprite loading and caching
+- ✅ Generation filtering
+- ✅ Type filtering
+- ✅ Favorites system
+- ✅ Pokemon detail modals
+
+### Android Setup Documentation
+See [ANDROID_SETUP_CHECKLIST.md](./ANDROID_SETUP_CHECKLIST.md) for full setup instructions.
+See [RUN_ANDROID.md](./RUN_ANDROID.md) for running commands and troubleshooting.
+
+---
+
+*Last updated: January 18, 2025 - LRU caching and Android validation completed*

@@ -37,3 +37,7 @@ ios/
 *.p12
 *.key
 *.cer
+
+# Claude Code (per-user settings)
+CLAUDE.md
+.claude/

@@ -697,6 +697,90 @@ export type PokemonFormType =
 6. Cross-referencing prevents data inconsistencies
 7. Form metadata enriches user experience significantly
 
+### [2025-01-18] LRU Image Cache & Android Platform Validation
+**Feature:** Implemented LRU image caching system with generation-aware preloading and validated Android platform support
+
+**Problem:** Images were loading fresh every time, causing slow performance especially when filtering between generations. Additionally, app needed validation on Android platform after macOS/iOS development.
+
+**Decision Tree:**
+```
+Image Caching Approach:
+├── LRU Cache (CHOSEN)
+│   ✅ Automatic eviction of least used images
+│   ✅ Memory-efficient with configurable limits
+│   ✅ Fast O(1) cache hits
+│   ✅ Generation-aware preloading
+│
+├── Simple key-value cache
+│   ✅ Easy implementation
+│   ❌ No eviction strategy
+│   ❌ Memory grows unbounded
+│
+└── Third-party caching library
+    ✅ Feature-rich
+    ❌ Additional dependency
+    ❌ Less control over behavior
+```
+
+**Technical Implementation:**
+- Created `src/utils/imageCache.ts` with LRU eviction strategy
+- Built `src/components/common/CachedImage.tsx` component
+- Integrated with PokedexView for sprite preloading
+- Added generation-aware preloading (60 Pokémon per generation)
+
+**Cache Configuration:**
+```typescript
+const DEFAULT_MAX_CACHE_SIZE = 750;  // ~38 MB for typical sprites
+const DEFAULT_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+export const GENERATION_RANGES = [
+  { gen: 'I', name: 'Kanto', start: 1, end: 151, count: 151 },
+  { gen: 'II', name: 'Johto', start: 152, end: 251, count: 100 },
+  { gen: 'III', name: 'Hoenn', start: 252, end: 386, count: 135 },
+  { gen: 'IV', name: 'Sinnoh', start: 387, end: 493, count: 107 },
+  { gen: 'V', name: 'Unova', start: 494, end: 649, count: 156 },
+  { gen: 'VI', name: 'Kalos', start: 650, end: 721, count: 72 },
+  { gen: 'VII', name: 'Alola', start: 722, end: 809, count: 88 },
+  { gen: 'VIII', name: 'Galar', start: 810, end: 905, count: 96 },
+  { gen: 'IX', name: 'Paldea', start: 906, end: 1025, count: 120 },
+];
+```
+
+**Sprite Fallback Logic:**
+```typescript
+// Gen IV Diamond/Pearl sprites only exist for Pokémon #1-493
+if (spriteStyle === 'party' && pokemonId > 493) {
+  return HOME_SPRITE_URL;  // Fallback to Home sprites
+}
+
+// Gen V Black/White animated sprites only exist for Pokémon #1-649
+if (spriteStyle === 'animated' && pokemonId > 649) {
+  return HOME_SPRITE_URL;  // Fallback to Home sprites
+}
+```
+
+**Performance Improvements:**
+- Replaced lazy loading (20 at a time) with loading all 1025 Pokémon upfront
+- Generation filtering now instant (no API calls needed)
+- Preloads 60 sprites per generation (540 total) for smooth scrolling
+- LRU eviction keeps memory usage under ~40 MB
+
+**Android Platform Validation:**
+- Validated app runs correctly on Android emulator (API Level 33)
+- Fixed Device Manager navigation instructions in setup docs
+- Confirmed Fast Refresh works on Android
+- Verified sprite loading and caching works cross-platform
+
+**Lessons Learned:**
+1. LRU cache is ideal for image-heavy apps with limited memory
+2. Generation-aware preloading provides better UX than global preloading
+3. Sprite fallback logic essential - not all sprites exist for all Pokémon
+4. Loading all data upfront is faster than lazy loading for filtered views
+5. Android emulator performs well with recommended hardware acceleration
+6. Cache size of 750 images balances memory usage with hit rate
+
+---
+
 ### [2024-12-22] Evolution Chain Display Implementation
 **Feature:** Visual evolution chain display with sprites, names, and evolution triggers
 
@@ -880,14 +964,17 @@ useEffect(() => {
 ---
 
 ## Completed Features
-✅ **Search functionality** - Real-time Pokemon search by name and number  
-✅ **Type-based filtering** - Multi-select type filters with visual chips  
-✅ **Generation filters** - Filter by Pokemon generation with region names  
-✅ **Favorites system** - Local storage with heart icons and persistence  
-✅ **Enhanced details** - Animated stats visualization, Pokédx data, evolution chains  
-✅ **Interactive features** - Haptic feedback, pull-to-refresh, scroll-to-top  
-✅ **Visual polish** - Type-based card colors, press animations, loading states  
-✅ **Pokemon forms system** - Comprehensive multi-form support with 25+ forms  
+✅ **Search functionality** - Real-time Pokemon search by name and number
+✅ **Type-based filtering** - Multi-select type filters with visual chips
+✅ **Generation filters** - Filter by Pokemon generation with region names
+✅ **Favorites system** - Local storage with heart icons and persistence
+✅ **Enhanced details** - Animated stats visualization, Pokédx data, evolution chains
+✅ **Interactive features** - Haptic feedback, pull-to-refresh, scroll-to-top
+✅ **Visual polish** - Type-based card colors, press animations, loading states
+✅ **Pokemon forms system** - Comprehensive multi-form support with 25+ forms
+✅ **LRU Image caching** - Automatic cache eviction with generation-aware preloading
+✅ **Sprite fallback system** - Graceful handling of missing generation-specific sprites
+✅ **Android platform support** - Validated and tested on Android emulator  
 
 ## Next Features Pipeline
 1. **Pokemon cry sound effects** - Audio playback for authentic experience
@@ -931,6 +1018,5 @@ src/
 
 ---
 
-*Last updated: 2024-12-19*
-*Developer: Claude Code Assistant*
+*Last updated: 2025-01-18*
 *Project: PokeVerse v1.0*

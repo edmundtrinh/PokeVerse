@@ -15,11 +15,16 @@ Explore the complete world of Pokémon with our advanced Pokédex:
   - Pokémon descriptions and classification data
   - Height, weight, and habitat details
 - **Multiple Form Support**: View alternate forms for Pokémon like Deoxys, Rotom, and regional variants
-- **Sprite Customization**: 
+- **Sprite Customization**:
   - Choose from different generations and game versions
   - Toggle between normal and shiny variants
   - View front/back sprites and male/female differences
   - Support for animated sprites from Black/White
+  - Smart fallback system for generation-specific sprite availability
+- **Performance Optimizations**:
+  - LRU image caching for fast sprite loading
+  - Generation-aware preloading for smooth scrolling
+  - All 1025 Pokémon loaded upfront for instant filtering
 - **Personal Collection**: 
   - Mark favorite Pokémon with a heart system
   - Filter to view only your favorites
@@ -114,6 +119,8 @@ npm run web
 ## 🔄 Development Status
 
 - ✅ **Pokédex**: Fully featured and polished
+- ✅ **Image Caching**: LRU cache with smart preloading
+- ✅ **Cross-Platform**: Validated on iOS and Android
 - 🚧 **Trading Cards**: In development
 - 📋 **Team Builder**: Planned for future release
 - 🎨 **UI/UX**: Continuously improving
