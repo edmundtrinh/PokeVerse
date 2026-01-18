@@ -46,8 +46,8 @@
 
 ### 4️⃣ Create Virtual Device (Emulator)
 
-- [ ] Click **More Actions** → **Virtual Device Manager** (or Tools → Device Manager)
-- [ ] Click **Create Device**
+- [ ] Click **More Actions** → **Device Manager** (or Tools → Device Manager)
+- [ ] Click the **'+'** button (or **Create Device** button)
 - [ ] Select a device (recommended: **Pixel 5** or **Pixel 6**)
 - [ ] Click **Next**
 - [ ] Select system image: **Android 13.0 (API 33)** with Google APIs
