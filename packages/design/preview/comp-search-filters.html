@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 16px; }
+  .search { display: flex; align-items: center; gap: 10px; height: 44px; background: var(--surface-2);
+    border: 1px solid var(--border-strong); border-radius: var(--r-pill); padding: 0 16px; }
+  .search .ic { color: var(--ink-4); font-size: 18px; }
+  .search span.ph { color: var(--ink-4); font-size: 15px; }
+  .rail { display: flex; gap: 8px; margin-top: 14px; overflow: hidden; }
+  .gchip { padding: 9px 14px; border-radius: var(--r-chip); color: #fff; font-weight: 800; font-size: 13px;
+    border: 2px solid transparent; opacity: .7; text-shadow: 0 1px 2px rgba(0,0,0,.35); text-align: center; line-height: 1.15; }
+  .gchip small { display: block; font-size: 10px; font-weight: 600; opacity: .95; }
+  .gchip.sel { opacity: 1; border-color: #fff; box-shadow: var(--shadow-button); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="search"><i class="ic fa-solid fa-magnifying-glass"></i><span class="ph">Search name, number, or type…</span></div>
+  <div class="rail">
+    <span class="gchip sel" style="background:var(--gen-1-kanto)">Gen I<small>Kanto</small></span>
+    <span class="gchip" style="background:var(--gen-2-johto)">Gen II<small>Johto</small></span>
+    <span class="gchip" style="background:var(--gen-3-hoenn)">Gen III<small>Hoenn</small></span>
+    <span class="gchip" style="background:var(--gen-4-sinnoh)">Gen IV<small>Sinnoh</small></span>
+    <span class="gchip" style="background:var(--gen-8-galar)">Gen VIII<small>Galar</small></span>
+  </div>
+</div>
+</body>
+</html>

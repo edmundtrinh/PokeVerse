@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-soft); }
+  .wrap { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .field { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r-button); padding: 15px 16px; }
+  .field.focus { border-color: var(--brand-red); box-shadow: 0 0 0 3px var(--brand-red-tint); }
+  .ic { color: var(--ink-3); font-size: 18px; width: 20px; text-align: center; }
+  .txt { color: var(--ink-1); font-family: var(--font-terminal); font-size: 19px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
+  .ph { color: var(--ink-4); font-family: var(--font-terminal); font-size: 19px; line-height: 1; letter-spacing: .02em; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="field focus"><i class="ic fa-solid fa-envelope"></i><span class="txt">ash@pallet.town</span></div>
+  <div class="field"><i class="ic fa-solid fa-user"></i><span class="ph">Display name (optional)</span></div>
+</div>
+</body>
+</html>

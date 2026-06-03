@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-app); }
+  .wrap { padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+  /* Pokédex list card — type-tinted bg + border */
+  .card { display: flex; align-items: center; background: var(--surface); border-radius: var(--r-card);
+    padding: 14px 16px; box-shadow: var(--shadow-card); border: 1px solid var(--border-faint); }
+  .dexno { font-family: var(--font-pixel); color: var(--ink-4); font-size: 12px; width: 60px; text-align: center; }
+  .well { width: 56px; height: 56px; margin: 0 14px; display: flex; align-items: center; justify-content: center; }
+  .well img { max-width: 100%; max-height: 100%; }
+  .nm { flex: 1; font-family: var(--font-terminal); font-weight: 400; font-size: 22px; color: var(--ink-1); letter-spacing: .01em; line-height: 1; }
+  .ic { font-size: 22px; }
+  .heart { color: var(--heart); }
+  .arrow { color: var(--ink-4); font-size: 24px; font-weight: 300; margin-left: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" style="background:#F0803015;border-color:#F0803040">
+    <div class="dexno">#0006</div>
+    <div class="well"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png" alt=""></div>
+    <div class="nm">Charizard</div>
+    <i class="ic heart fa-solid fa-heart"></i>
+    <span class="arrow">&#8250;</span>
+  </div>
+  <div class="card" style="background:#6890F015;border-color:#6890F040">
+    <div class="dexno">#0009</div>
+    <div class="well"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png" alt=""></div>
+    <div class="nm">Blastoise</div>
+    <i class="ic fa-regular fa-heart" style="color:var(--ink-4)"></i>
+    <span class="arrow">&#8250;</span>
+  </div>
+</div>
+</body>
+</html>

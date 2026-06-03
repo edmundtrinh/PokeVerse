@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-app); }
+  .wrap { padding: 24px; display: flex; align-items: center; gap: 32px; }
+  /* Poké Ball mark — reconstructed in CSS (no source logo exists) */
+  .pokeball { position: relative; border-radius: 50%; background: var(--pokeball-white);
+    box-shadow: var(--shadow-hero); overflow: hidden; flex: none; }
+  .pokeball::before { content:""; position:absolute; inset:0; height:50%; background: var(--pokeball-red); }
+  .pokeball::after { content:""; position:absolute; top:50%; left:0; right:0; height:14%; transform: translateY(-50%); background: var(--pokeball-black); }
+  .btn { position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); border-radius:50%;
+    background: var(--pokeball-white); border: solid var(--pokeball-black); z-index:2; }
+  .big { width: 104px; height: 104px; }
+  .big .btn { width: 30px; height: 30px; border-width: 5px; }
+  .mid { width: 60px; height: 60px; }
+  .mid .btn { width: 18px; height: 18px; border-width: 3px; }
+  .sm { width: 36px; height: 36px; }
+  .sm .btn { width: 11px; height: 11px; border-width: 2px; }
+  .info { display: flex; flex-direction: column; gap: 6px; }
+  .wm { font-family: var(--font-display); font-weight: 900; font-size: 30px; color: var(--ink-1); letter-spacing: -0.01em; }
+  .wm b { color: var(--brand-red); }
+  .meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); }
+  .balls { display: flex; align-items: center; gap: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="balls">
+    <div class="pokeball big"><div class="btn"></div></div>
+    <div class="pokeball mid"><div class="btn"></div></div>
+    <div class="pokeball sm"><div class="btn"></div></div>
+  </div>
+  <div class="info">
+    <div class="wm"><b>Poké</b>Verse</div>
+    <div class="meta">The signature mark — built in code, not an icon font.</div>
+  </div>
+</div>
+</body>
+</html>

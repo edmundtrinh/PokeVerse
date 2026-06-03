@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 22px; }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 12px; }
+  .ball { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .ball svg { filter: drop-shadow(0 2px 3px rgba(0,0,0,.12)); }
+  .nm { font-size: 11px; font-weight: 700; color: var(--ink-2); }
+  .hex { font-family: var(--font-mono); font-size: 9px; color: var(--ink-4); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="grid">
+
+    <!-- Poké Ball -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b1"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b1)">
+          <rect x="0" y="0" width="56" height="28" fill="#EE1515"/>
+          <rect x="0" y="28" width="56" height="28" fill="#f0f0f0"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#222224"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Poké Ball</div><div class="hex">#EE1515</div>
+    </div>
+
+    <!-- Great Ball -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b2"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b2)">
+          <rect x="0" y="0" width="56" height="28" fill="#3B5CA8"/>
+          <rect x="0" y="28" width="56" height="28" fill="#f0f0f0"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#222224"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Great Ball</div><div class="hex">#3B5CA8</div>
+    </div>
+
+    <!-- Ultra Ball -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b3"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b3)">
+          <rect x="0" y="0" width="56" height="28" fill="#F2C12E"/>
+          <rect x="0" y="28" width="56" height="28" fill="#f0f0f0"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#222224"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Ultra Ball</div><div class="hex">#F2C12E</div>
+    </div>
+
+    <!-- Master Ball -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b4"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b4)">
+          <rect x="0" y="0" width="56" height="28" fill="#6E2C8F"/>
+          <rect x="0" y="28" width="56" height="28" fill="#f0f0f0"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#222224"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Master Ball</div><div class="hex">#6E2C8F</div>
+    </div>
+
+    <!-- Luxury Ball — black body, gold-edged red band, red/gold button -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b5"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b5)">
+          <rect x="0" y="0" width="56" height="56" fill="#26262A"/>
+          <rect x="0" y="21" width="56" height="1.8" fill="#D4AF37"/>
+          <rect x="0" y="22.8" width="56" height="10.4" fill="#C9352A"/>
+          <rect x="0" y="33.2" width="56" height="1.8" fill="#D4AF37"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#C9352A" stroke="#D4AF37" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Luxury Ball</div><div class="hex">#26262A</div>
+    </div>
+
+    <!-- Premier Ball — white body, thin red band, red-ringed button -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b6"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b6)">
+          <rect x="0" y="0" width="56" height="56" fill="#FAFAFA"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#E3350D"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#E3350D" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Premier Ball</div><div class="hex">#FAFAFA</div>
+    </div>
+
+    <!-- Timer Ball — white body, red rings on top, red equator -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b7"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b7)">
+          <rect x="0" y="0" width="56" height="56" fill="#f5f5f5"/>
+          <rect x="0" y="11" width="56" height="2.4" fill="#E0392A"/>
+          <rect x="0" y="17.4" width="56" height="2.4" fill="#E0392A"/>
+          <rect x="0" y="24.6" width="56" height="4.6" fill="#E0392A"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Timer Ball</div><div class="hex">#E0392A</div>
+    </div>
+
+    <!-- Repeat Ball — red top, yellow band above black equator -->
+    <div class="ball">
+      <svg width="54" height="54" viewBox="0 0 56 56">
+        <defs><clipPath id="b8"><circle cx="28" cy="28" r="27"/></clipPath></defs>
+        <g clip-path="url(#b8)">
+          <rect x="0" y="0" width="56" height="28" fill="#E03C12"/>
+          <rect x="0" y="28" width="56" height="28" fill="#f0f0f0"/>
+          <rect x="0" y="20.4" width="56" height="3.4" fill="#F2C12E"/>
+          <rect x="0" y="25.8" width="56" height="3" fill="#222224"/>
+        </g>
+        <circle cx="28" cy="28" r="27" fill="none" stroke="rgba(0,0,0,.15)" stroke-width="1.5"/>
+        <circle cx="28" cy="28" r="6.5" fill="#fff" stroke="#222224" stroke-width="2.6"/>
+      </svg>
+      <div class="nm">Repeat Ball</div><div class="hex">#E03C12</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

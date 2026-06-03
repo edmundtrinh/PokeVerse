@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PokéVerse — App UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #e9eaf0;
+    background-image: radial-gradient(circle at 30% 20%, #fff 0, transparent 55%), radial-gradient(circle at 80% 90%, #f6dada 0, transparent 50%);
+    font-family: 'Nunito', system-ui, sans-serif;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; padding: 28px; box-sizing: border-box;
+  }
+  #root { transform-origin: center center; }
+  @keyframes pvspin { to { transform: rotate(360deg); } }
+  @keyframes pvshimmer { 0%,100% { transform: translateX(-30%); opacity:.4; } 50% { transform: translateX(30%); opacity:.75; } }
+  input::placeholder { color: #9ca3af; }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="data.js"></script>
+<script type="text/babel" src="primitives.jsx"></script>
+<script type="text/babel" src="AuthScreen.jsx"></script>
+<script type="text/babel" src="Pokedex.jsx"></script>
+<script type="text/babel" src="DetailSheet.jsx"></script>
+<script type="text/babel" src="TCGScreen.jsx"></script>
+<script type="text/babel" src="App.jsx"></script>
+<script>
+  // Scale the phone frame to fit the viewport
+  function fitFrame() {
+    const root = document.getElementById('root');
+    if (!root || !root.firstChild) return;
+    const fh = 812, fw = 392, margin = 32;
+    const s = Math.min((window.innerHeight - margin) / fh, (window.innerWidth - margin) / fw, 1.25);
+    root.style.transform = `scale(${s})`;
+  }
+  window.addEventListener('resize', fitFrame);
+  const _fit = setInterval(fitFrame, 200);
+  setTimeout(() => clearInterval(_fit), 4000);
+</script>
+</body>
+</html>

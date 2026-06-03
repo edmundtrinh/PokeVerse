@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 22px 24px; }
+  .bars { display: flex; flex-direction: column; gap: 11px; }
+  .stat { display: flex; align-items: center; gap: 12px; }
+  .lbl { width: 64px; font-weight: 800; font-size: 12px; color: var(--ink-2); text-align: right; }
+  .track { flex: 1; height: 14px; background: var(--surface-2); border-radius: 7px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 7px; }
+  .hex { width: 58px; font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bars">
+    <div class="stat"><div class="lbl">HP</div><div class="track"><div class="fill" style="width:72%;background:var(--stat-hp)"></div></div><div class="hex">#ff5959</div></div>
+    <div class="stat"><div class="lbl">Attack</div><div class="track"><div class="fill" style="width:60%;background:var(--stat-attack)"></div></div><div class="hex">#f5ac78</div></div>
+    <div class="stat"><div class="lbl">Defense</div><div class="track"><div class="fill" style="width:48%;background:var(--stat-defense)"></div></div><div class="hex">#fae078</div></div>
+    <div class="stat"><div class="lbl">Sp. Atk</div><div class="track"><div class="fill" style="width:85%;background:var(--stat-spatk)"></div></div><div class="hex">#9db7f5</div></div>
+    <div class="stat"><div class="lbl">Sp. Def</div><div class="track"><div class="fill" style="width:55%;background:var(--stat-spdef)"></div></div><div class="hex">#a7db8d</div></div>
+    <div class="stat"><div class="lbl">Speed</div><div class="track"><div class="fill" style="width:78%;background:var(--stat-speed)"></div></div><div class="hex">#fa92b2</div></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-muted); }
+  .wrap { padding: 16px 20px; display: flex; gap: 14px; align-items: flex-end; }
+  .card { width: 96px; border-radius: var(--r-sheet); overflow: hidden; position: relative;
+    background: #111; box-shadow: var(--shadow-card); }
+  .card img { width: 100%; display: block; }
+  .holo { position: absolute; inset: 0; mix-blend-mode: color-dodge; }
+  .common .holo { background: none; }
+  .rare .holo { background: linear-gradient(120deg, transparent, rgba(255,215,0,.35), transparent); }
+  .holofoil .holo { background: linear-gradient(120deg, rgba(255,0,255,.3), rgba(0,255,255,.3), rgba(255,255,0,.3), rgba(255,0,0,.3), rgba(0,255,0,.3)); }
+  .secret .holo { background: linear-gradient(120deg, rgba(255,215,0,.4), rgba(255,20,147,.4), rgba(138,43,226,.4), rgba(0,191,255,.4)); }
+  .secret, .holofoil { box-shadow: 0 0 14px rgba(255,255,255,.5), var(--shadow-card); }
+  .nm { text-align: center; font-size: 11px; font-weight: 800; color: var(--ink-2); margin-top: 7px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div><div class="card common"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"><div class="holo"></div></div><div class="nm">Common</div></div>
+  <div><div class="card rare"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"><div class="holo"></div></div><div class="nm">Rare</div></div>
+  <div><div class="card holofoil"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png"><div class="holo"></div></div><div class="nm">Holo</div></div>
+  <div><div class="card secret"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"><div class="holo"></div></div><div class="nm">Secret Rare</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-app); }
+  .wrap { padding: 28px 24px; display: flex; gap: 22px; }
+  .sw { flex: 1; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .box { width: 100%; height: 60px; background: var(--surface); border-radius: 14px; }
+  .nm { font-weight: 800; font-size: 12px; color: var(--ink-1); }
+  .sub { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="sw"><div class="box" style="box-shadow:var(--shadow-button)"></div><div class="nm">Button</div><div class="sub">0 2 4 · .10</div></div>
+  <div class="sw"><div class="box" style="box-shadow:var(--shadow-card)"></div><div class="nm">Card</div><div class="sub">0 4 12 · .10</div></div>
+  <div class="sw"><div class="box" style="box-shadow:var(--shadow-pop)"></div><div class="nm">Popover</div><div class="sub">0 4 8 · .20</div></div>
+  <div class="sw"><div class="box" style="box-shadow:var(--shadow-hero)"></div><div class="nm">Hero</div><div class="sub">0 4 8 · .30</div></div>
+</div>
+</body>
+</html>

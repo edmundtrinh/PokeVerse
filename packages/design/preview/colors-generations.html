@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 18px 22px; }
+  .row { display: grid; grid-template-columns: 128px 1fr; align-items: center; gap: 14px; margin-bottom: 9px; }
+  .lab { text-align: right; }
+  .gen { font-weight: 800; font-size: 13px; color: var(--ink-1); line-height: 1.1; }
+  .reg { font-size: 11px; color: var(--ink-3); font-weight: 600; }
+  .bar { display: flex; height: 34px; border-radius: 9px; overflow: hidden; box-shadow: var(--shadow-button); }
+  .seg { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800;
+    color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.45); letter-spacing: .01em; }
+  .seg.dark-txt { color: #2b2b2e; text-shadow: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="row">
+    <div class="lab"><div class="gen">Gen I</div><div class="reg">Kanto</div></div>
+    <div class="bar">
+      <div class="seg" style="background:var(--ver-red)">Red</div>
+      <div class="seg" style="background:var(--ver-blue)">Blue</div>
+      <div class="seg dark-txt" style="background:var(--ver-yellow)">Yellow</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen II</div><div class="reg">Johto</div></div>
+    <div class="bar">
+      <div class="seg dark-txt" style="background:var(--ver-gold)">Gold</div>
+      <div class="seg dark-txt" style="background:var(--ver-silver)">Silver</div>
+      <div class="seg" style="background:var(--ver-crystal)">Crystal</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen III</div><div class="reg">Hoenn</div></div>
+    <div class="bar">
+      <div class="seg" style="background:var(--ver-ruby)">Ruby</div>
+      <div class="seg" style="background:var(--ver-sapphire)">Sapphire</div>
+      <div class="seg" style="background:var(--ver-emerald)">Emerald</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen IV</div><div class="reg">Sinnoh</div></div>
+    <div class="bar">
+      <div class="seg dark-txt" style="background:var(--ver-diamond)">Diamond</div>
+      <div class="seg dark-txt" style="background:var(--ver-pearl)">Pearl</div>
+      <div class="seg dark-txt" style="background:var(--ver-platinum)">Platinum</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen V</div><div class="reg">Unova</div></div>
+    <div class="bar" style="border:1px solid var(--border)">
+      <div class="seg" style="background:var(--ver-black)">Black</div>
+      <div class="seg dark-txt" style="background:var(--ver-white)">White</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen VI</div><div class="reg">Kalos</div></div>
+    <div class="bar">
+      <div class="seg" style="background:var(--ver-x)">X · Xerneas</div>
+      <div class="seg" style="background:var(--ver-y)">Y · Yveltal</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen VII</div><div class="reg">Alola</div></div>
+    <div class="bar">
+      <div class="seg dark-txt" style="background:var(--ver-sun)">Sun</div>
+      <div class="seg" style="background:var(--ver-moon)">Moon</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="lab"><div class="gen">Gen VIII</div><div class="reg">Galar</div></div>
+    <div class="bar">
+      <div class="seg" style="background:var(--ver-sword)">Sword</div>
+      <div class="seg" style="background:var(--ver-shield)">Shield</div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom:0">
+    <div class="lab"><div class="gen">Gen IX</div><div class="reg">Paldea</div></div>
+    <div class="bar">
+      <div class="seg" style="background:var(--ver-scarlet)">Scarlet</div>
+      <div class="seg" style="background:var(--ver-violet)">Violet</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

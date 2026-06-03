@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 20px 24px; }
+  .card { background: var(--surface); }
+  .stat { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .lbl { width: 70px; font-weight: 800; font-size: 13px; color: var(--ink-2); text-align: right; }
+  .val { width: 32px; font-family: var(--font-pixel); font-size: 11px; color: var(--ink-1); }
+  .track { flex: 1; height: 12px; background: var(--surface-2); border-radius: 6px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap card">
+  <div class="stat"><div class="lbl">HP</div><div class="val">78</div><div class="track"><div class="fill" style="width:31%;background:var(--stat-hp)"></div></div></div>
+  <div class="stat"><div class="lbl">Attack</div><div class="val">84</div><div class="track"><div class="fill" style="width:33%;background:var(--stat-attack)"></div></div></div>
+  <div class="stat"><div class="lbl">Defense</div><div class="val">78</div><div class="track"><div class="fill" style="width:31%;background:var(--stat-defense)"></div></div></div>
+  <div class="stat"><div class="lbl">Sp. Atk</div><div class="val">109</div><div class="track"><div class="fill" style="width:43%;background:var(--stat-spatk)"></div></div></div>
+  <div class="stat"><div class="lbl">Sp. Def</div><div class="val">85</div><div class="track"><div class="fill" style="width:33%;background:var(--stat-spdef)"></div></div></div>
+  <div class="stat"><div class="lbl">Speed</div><div class="val">100</div><div class="track"><div class="fill" style="width:39%;background:var(--stat-speed)"></div></div></div>
+</div>
+</body>
+</html>

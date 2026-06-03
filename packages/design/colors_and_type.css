@@ -1,0 +1,211 @@
+/* ============================================================
+   PokéVerse Design System — Colors & Type
+   Source of truth: edmundtrinh/PokeVerse (React Native + Expo)
+   - Brand red #f44336 pulled from App.tsx / navigation headers
+   - Type palette pulled from PokedexView getTypeColor()
+   - Stat palette pulled from PokedexView getStatColor()
+   - Theme accents pulled from UserContext BINDER_COLORS
+   ============================================================ */
+
+/* Webfonts: the app ships with React Native system fonts. For the
+   design system we adopt Nunito (rounded, friendly = the "modern 3D"
+   register) + Press Start 2P (Game Boy pixel = the "retro 2D" register).
+   Loaded from Google Fonts CDN — see /fonts note in README. */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,600&family=Pixelify+Sans:wght@400;500;600;700&family=VT323&family=Press+Start+2P&display=swap');
+
+:root {
+  /* ---------------------------------------------------------
+     BRAND — the Pokédex red runs through every header, primary
+     button, and active state in the app.
+     --------------------------------------------------------- */
+  --brand-red:        #f44336;  /* primary — headers, CTAs, active tabs */
+  --brand-red-press:  #d32f2f;  /* pressed / active border */
+  --brand-red-dark:   #b71c1c;  /* deep accents */
+  --brand-red-tint:   #fdecea;  /* 8% wash backgrounds */
+
+  /* Poké Ball construction colors (the literal device) */
+  --pokeball-red:     #ee1515;
+  --pokeball-white:   #ffffff;
+  --pokeball-black:   #222224;
+  --pokeball-shine:   #f0f0f0;
+
+  /* ---------------------------------------------------------
+     NEUTRALS — the app's grayscale, lifted from RN styles
+     --------------------------------------------------------- */
+  --bg-app:    #f9fafb;  /* screen background */
+  --bg-muted:  #f5f5f5;  /* TCG screen / secondary surfaces */
+  --bg-soft:   #f8f9fa;  /* auth / drawer header */
+  --surface:   #ffffff;  /* cards, sheets, inputs */
+  --surface-2: #f3f4f6;  /* search field, inset fields */
+
+  --border:        #e5e7eb;  /* hairline dividers */
+  --border-strong: #d1d5db;  /* input borders */
+  --border-faint:  #f3f4f6;  /* card borders */
+
+  --ink-1: #1f2937;  /* primary text — pokémon names, headings */
+  --ink-2: #374151;  /* body text */
+  --ink-3: #6b7280;  /* secondary / captions */
+  --ink-4: #9ca3af;  /* tertiary — numbers, arrows, placeholders */
+
+  --heart:   #ef4444;  /* favorite heart fill */
+  --success: #4caf50;
+  --info:    #2196f3;
+  --warning: #ff9800;
+
+  /* ---------------------------------------------------------
+     POKÉMON TYPE PALETTE — canonical, from getTypeColor()
+     Used for type chips, card tints (15% bg / 40% border), filters
+     --------------------------------------------------------- */
+  --type-normal:   #A8A878;
+  --type-fire:     #F08030;
+  --type-water:    #6890F0;
+  --type-electric: #F8D030;
+  --type-grass:    #78C850;
+  --type-ice:      #98D8D8;
+  --type-fighting: #C03028;
+  --type-poison:   #A040A0;
+  --type-ground:   #E0C068;
+  --type-flying:   #A890F0;
+  --type-psychic:  #F85888;
+  --type-bug:      #A8B820;
+  --type-rock:     #B8A038;
+  --type-ghost:    #705898;
+  --type-dragon:   #7038F8;
+  --type-dark:     #705848;
+  --type-steel:    #B8B8D0;
+  --type-fairy:    #EE99AC;
+
+  /* ---------------------------------------------------------
+     STAT PALETTE — from getStatColor(), animated stat bars
+     --------------------------------------------------------- */
+  --stat-hp:      #ff5959;
+  --stat-attack:  #f5ac78;
+  --stat-defense: #fae078;
+  --stat-spatk:   #9db7f5;
+  --stat-spdef:   #a7db8d;
+  --stat-speed:   #fa92b2;
+
+  /* ---------------------------------------------------------
+     THEME ACCENTS — from BINDER_COLORS (binder / collection theming)
+     --------------------------------------------------------- */
+  --theme-fire-red:      #f44336;
+  --theme-water-blue:    #2196f3;
+  --theme-grass-green:   #4caf50;
+  --theme-electric-yel:  #ffeb3b;
+  --theme-psychic-purp:  #9c27b0;
+  --theme-fighting-org:  #ff9800;
+  --theme-fairy-pink:    #e91e63;
+  --theme-ground-brown:  #795548;
+  --theme-dark-black:    #424242;
+  --theme-steel-silver:  #9e9e9e;
+
+  /* ---------------------------------------------------------
+     GENERATION ACCENTS — symbolic of each region's mainline GAME
+     VERSION colors (not the app's arbitrary chip colors, which
+     live in the UI-kit data layer). Each --gen-* is the region's
+     single most-iconic version color; the --ver-* tokens give the
+     full version palette behind it.
+     --------------------------------------------------------- */
+  /* Gen I · Kanto — Red / Blue / Yellow */
+  --ver-red: #EE1515;   --ver-blue: #3B4CCA;   --ver-yellow: #FFCB05;
+  --gen-1-kanto:  var(--ver-red);
+  /* Gen II · Johto — Gold / Silver / Crystal */
+  --ver-gold: #D4AF37;  --ver-silver: #BFC1C2; --ver-crystal: #38B6CE;
+  --gen-2-johto:  var(--ver-gold);
+  /* Gen III · Hoenn — Ruby / Sapphire / Emerald */
+  --ver-ruby: #B81D2C;  --ver-sapphire: #0F52BA; --ver-emerald: #16A34A;
+  --gen-3-hoenn:  var(--ver-emerald);
+  /* Gen IV · Sinnoh — Diamond / Pearl / Platinum */
+  --ver-diamond: #8FD6E8; --ver-pearl: #F2A6C2; --ver-platinum: #A7ADB5;
+  --gen-4-sinnoh: var(--ver-platinum);
+  /* Gen V · Unova — Black / White */
+  --ver-black: #2B2B2E;  --ver-white: #ECEDEF;
+  --gen-5-unova:  var(--ver-black);
+  /* Gen VI · Kalos — X (Xerneas blue) / Y (Yveltal red) */
+  --ver-x: #1565C0;      --ver-y: #D81E3F;
+  --gen-6-kalos:  var(--ver-x);
+  /* Gen VII · Alola — Sun (Solgaleo gold) / Moon (Lunala indigo) */
+  --ver-sun: #F2942B;    --ver-moon: #5C61C9;
+  --gen-7-alola:  var(--ver-sun);
+  /* Gen VIII · Galar — Sword (Zacian cyan) / Shield (Zamazenta crimson) */
+  --ver-sword: #00A7C4;  --ver-shield: #C62B49;
+  --gen-8-galar:  var(--ver-sword);
+  /* Gen IX · Paldea — Scarlet / Violet */
+  --ver-scarlet: #E0452C; --ver-violet: #8B46C6;
+  --gen-9-paldea: var(--ver-scarlet);
+
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------- */
+  --font-pixel:   'Press Start 2P', monospace;          /* retro Game Boy headings, Pokédex numerals */
+  --font-display: 'Pixelify Sans', 'Press Start 2P', monospace;  /* blocky terminal/retro display headings — weights 400/500 */
+  --font-terminal:'VT323', ui-monospace, monospace;     /* readable CRT-terminal face — Pokémon names, labels (runs small, size up ~20%) */
+  --font-body:    'Nunito', system-ui, sans-serif;      /* body & UI — weights 400/600/700, the modern register */
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Type scale (px) — RN app runs 11→32; we extend up for web/marketing */
+  --fs-pixel-sm: 12px;
+  --fs-pixel-md: 16px;
+  --fs-pixel-lg: 24px;
+
+  --fs-caption: 12px;   /* disclaimers, sub-labels */
+  --fs-small:   14px;   /* secondary text, chips */
+  --fs-body:    16px;   /* default body, inputs, buttons */
+  --fs-h4:      18px;   /* list item names, drawer name */
+  --fs-h3:      20px;   /* section heads, pokémon list name */
+  --fs-h2:      24px;   /* screen titles */
+  --fs-h1:      32px;   /* hero / logo wordmark */
+  --fs-display: 48px;   /* marketing hero */
+
+  --lh-tight: 1.15;
+  --lh-snug:  1.3;
+  --lh-body:  1.5;
+
+  /* Weights — the app leans on bold/extrabold for personality */
+  --w-regular:  400;
+  --w-semibold: 600;
+  --w-bold:     700;
+  --w-extra:    800;
+  --w-black:    900;
+
+  /* ---------------------------------------------------------
+     RADII / SHADOW / SPACING — measured from RN StyleSheets
+     --------------------------------------------------------- */
+  --r-chip:   16px;   /* type / generation chips */
+  --r-pill:   22px;   /* search field, mode buttons */
+  --r-card:   16px;   /* pokémon list cards, dropdowns */
+  --r-button: 12px;   /* auth buttons, primary CTA */
+  --r-sheet:  10px;   /* holo card */
+  --r-round:  9999px; /* poké-ball, avatars */
+
+  /* Elevation — RN shadowOpacity/elevation translated to box-shadow */
+  --shadow-card:   0 4px 12px rgba(0,0,0,0.10);   /* list cards (elevation 6) */
+  --shadow-button: 0 2px 4px rgba(0,0,0,0.10);    /* social buttons (elevation 3) */
+  --shadow-pop:    0 4px 8px rgba(0,0,0,0.20);    /* dropdown list (elevation 10) */
+  --shadow-hero:   0 4px 8px rgba(0,0,0,0.30);    /* poké-ball logo (elevation 8) */
+
+  /* 4pt spacing rhythm (RN uses 4/8/12/16/20/24) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT DEFAULTS — opt in by adding class "pv"
+   to a container, or copy these rules into your artifact.
+   ============================================================ */
+.pv { font-family: var(--font-body); color: var(--ink-2); font-size: var(--fs-body); line-height: var(--lh-body); }
+.pv h1, .pv .h1 { font-family: var(--font-display); font-weight: 500; font-size: var(--fs-h1); color: var(--ink-1); line-height: var(--lh-tight); letter-spacing: 0; }
+.pv h2, .pv .h2 { font-family: var(--font-display); font-weight: 500; font-size: var(--fs-h2); color: var(--ink-1); line-height: var(--lh-snug); }
+.pv h3, .pv .h3 { font-family: var(--font-display); font-weight: 400; font-size: var(--fs-h3); color: var(--ink-1); }
+.pv h4, .pv .h4 { font-family: var(--font-display); font-weight: 400; font-size: var(--fs-h4); color: var(--ink-1); }
+.pv p  { margin: 0 0 var(--sp-4); }
+.pv small, .pv .caption { font-size: var(--fs-caption); color: var(--ink-3); }
+.pv .pixel  { font-family: var(--font-pixel); line-height: 1.4; }
+.pv .dexno  { font-family: var(--font-pixel); color: var(--ink-4); font-size: var(--fs-pixel-sm); letter-spacing: 0.02em; }
+.pv code, .pv .mono { font-family: var(--font-mono); font-size: var(--fs-small); }

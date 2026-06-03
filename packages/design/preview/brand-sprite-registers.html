@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--surface); }
+  .wrap { padding: 20px 24px; display: flex; gap: 20px; }
+  .reg { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 10px;
+    background: var(--bg-app); border: 1px solid var(--border); border-radius: 16px; padding: 16px; }
+  .well { width: 96px; height: 96px; display: flex; align-items: center; justify-content: center; }
+  .well img { max-width: 100%; max-height: 100%; }
+  .pixel img { image-rendering: pixelated; width: 80px; height: 80px; }
+  .nm { font-weight: 800; font-size: 13px; color: var(--ink-1); }
+  .sub { font-size: 11px; color: var(--ink-3); text-align: center; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="reg pixel">
+    <div class="well"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/6.gif" alt="Charizard pixel"></div>
+    <div class="nm">Retro · 2D</div>
+    <div class="sub">Bright pixel sprites, nearest-neighbor, transparent. Gen I–V.</div>
+  </div>
+  <div class="reg">
+    <div class="well"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png" alt="Charizard HOME"></div>
+    <div class="nm">Modern · 3D</div>
+    <div class="sub">Soft, rounded, muted HOME &amp; official-artwork renders.</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
+<style>
+  body { margin: 0; font-family: var(--font-body); background: var(--bg-soft); }
+  .wrap { padding: 22px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .row { display: flex; gap: 12px; align-items: center; }
+  .ic { font-size: 17px; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 18px;
+    border-radius: var(--r-button); font-weight: 700; font-size: 15px; box-shadow: var(--shadow-button); border: none; cursor: pointer; }
+  .primary { background: var(--brand-red); color: #fff; flex: 1; }
+  .apple { background: #000; color: #fff; flex: 1; }
+  .google { background: #fff; color: var(--ink-3); border: 1px solid #ddd; flex: 1; }
+  .email { background: #fff; color: var(--brand-red); border: 1px solid var(--brand-red); flex: 1; }
+  .guest { background: transparent; color: var(--ink-3); text-decoration: underline; box-shadow: none; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="row">
+    <button class="btn primary"><i class="ic fa-solid fa-check"></i> Continue</button>
+    <button class="btn apple"><i class="fa-brands fa-apple"></i> Continue with Apple</button>
+  </div>
+  <div class="row">
+    <button class="btn google"><i class="fa-brands fa-google"></i> Continue with Google</button>
+    <button class="btn email"><i class="ic fa-solid fa-envelope"></i> Continue with Email</button>
+  </div>
+  <div class="row" style="justify-content:center"><button class="btn guest">Continue as Guest</button></div>
+</div>
+</body>
+</html>
