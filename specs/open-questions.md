@@ -373,14 +373,19 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **Collection value: from the user's own purchase prices (decided 12:58).** There's no licensing issue.
     - "Actual" value counts owned cards.
     - "Projected" value also counts wishlist cards, at an optional user-entered target price (proposed).
-  - **eBay panel focus:** the latest auctions and listings, mostly graded cards but raw ones too. Filters for graded/raw, grader and grade, auction vs Buy It Now, and ending-soonest.
-  - **Default marketplace by region** (proposed):
+  - **eBay panel (v2), decided 14:03: all of the following.**
+    - **Filters and sorting:** a Graded / Raw toggle, grader and grade filters, auction vs Buy It Now, and sorting by ending soonest, newly listed, or price.
+    - **Rows:** photo, title, current bid or price, time left, and shipping.
+    - **Freshness:** it uses the region's eBay site, refreshes when opened with an "as of" time, is cached briefly on our server within eBay's rules, and is shown separately from other data.
+  - **eBay link-outs, like the TCGplayer link:** "View listings on eBay" and "View recently sold on eBay", which opens eBay's own sold-listings search. No sold data comes through the API.
+  - **Default marketplace by region: decided 14:03 (automatic first):**
     - It follows the device's region setting, with no location permission. US and Canada get TCGplayer first, the UK and EU get Cardmarket first, and everywhere else gets both.
     - Each card shows a primary "View on …" button plus a "More" menu with the other marketplaces and "Search eBay".
     - Settings → Preferences has an override: Auto, TCGplayer, or Cardmarket.
     - eBay searches use the matching eBay site.
+- **"Current value" like Collectr's (owner, 14:03: use live sources whenever possible):** research into licensed, free, non-commercial live price sources is underway (2026-09-29). Until one exists, values come from purchase prices, optional target prices, and user-entered values.
 - **Still to plan:**
-  - the eBay panel's layout, and how it refreshes within eBay's caching rules
+  - how the eBay panel refreshes within eBay's caching rules
   - multi-currency purchase prices, and whether collection totals get currency conversion
 
 ## Decided
