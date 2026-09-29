@@ -208,7 +208,7 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **Everywhere:** load images on the device from PokeAPI's sprite project through commit-pinned jsDelivr URLs (GitHub raw as the fallback), and cache them on the device only. Never commit or mirror them.
   - **Credits:** credit the fan artists, and send courtesy notes to Smogon and Kyle Dove before launch.
   - **Don't hotlink Showdown.**
-- **Owner's call, still open: do store builds show Pokémon images by default?**
+- **Decided 2026-09-29 14:41: store builds show Pokémon images by default,** with a remote "images off" switch (a Remote Config flag), so a takedown or review issue can be handled without a new build. The options that were considered:
   - **Images on by default:** the most delightful. The risk is app-review rejection or a takedown.
   - **Images off by default, with a "Show Pokémon images" toggle:** lower review risk. The app looks plain until the toggle is on.
   - **Text- and type-icon-first:** the lowest risk, and the least delight.
@@ -234,6 +234,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Aptabase | Privacy-first and open source, with mobile SDKs | Smaller project |
 | Our own anonymous daily "ping" counter | Minimal and fully ours | Build and maintain it |
 
+- **Decided 2026-09-29 14:41:** crash reports get their own switch, separate from the product-analytics opt-out, on by default and anonymous. Web cookie consent is shown only where the law requires it (EU/UK), with analytics off there until the visitor consents.
 - **Owner's direction (2026-09-29):** yes to product analytics from the start. Track broadly, so that anything useful for future analysis is recorded, even before every report is built. The event catalog lives in the [tracking plan](../docs/analytics/tracking-plan.md). Raw events are exported so they can be analyzed later.
 - **Recommendation:**
   - Crashes and performance go to Sentry.
@@ -303,6 +304,10 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 - **Recommendation:** P3 first, for the reasons in the [roadmap](roadmap.md#why-p3-battle-hub-comes-before-p4-accounts). If shared teams or Replica submissions turn out to be must-haves at launch, interleave a minimal P4 slice.
 
+- **Decided 2026-09-29 14:41 (owner):**
+  - TCG v2 moves ahead of the Battle hub. The new order: P3 TCG v2 (collection, binders, dex progress, and the TCGdex migration before 2027-01-31), P4 Battle hub, P5 Accounts and sync, P6 Delight and launch.
+  - The value-before-accounts logic above still holds, since accounts stay after both.
+
 ## OQ-12: Accounts for users under 13
 
 - **Question:** can people under 13 create accounts in v1, or do they stay in guest mode?
@@ -317,6 +322,10 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 - **Recommendation:** no accounts for under-13s in v1. Revisit parental consent after P6, if younger players ask for sync.
 - **Decided 2026-09-29:** guest mode only for under-13s in v1 (see Decided below).
+- **Refined 14:41:**
+  - A neutral age-band question is asked **once per install** at first launch, in production builds only, and never repeated.
+  - A development flag skips it, for example `EXPO_PUBLIC_SKIP_AGE_GATE=1` or a dev-menu toggle (proposed).
+  - Under-13 guests get essential-only analytics.
 
 ## OQ-13: Canonical species key
 
@@ -341,6 +350,11 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **Slugs** are derived from PokeAPI's form names where possible (PokeAPI already models the Champions forms), with manual overrides.
   - **Cosmetic forms** are flagged separately from battle-relevant forms.
   - **Why it's sound:** the games themselves identify a Pokémon by dex number plus a form index, but The Pokémon Company doesn't publish those IDs. Our key mirrors that model, with readable form names.
+- **Extended 2026-09-29 14:41: our own keys for the other game entities too.**
+  - **Moves, abilities, items, natures/Stat Alignments, and types:** kebab-case slugs we control, such as `earthquake`, `rough-skin`, `choice-scarf`, `jolly`, and `dragon`. They match PokeAPI's naming style, and the crosswalk maps each one to its Showdown ID (`choicescarf`, `roughskin`).
+  - **Formats and regulations:** our own IDs, such as `champions-vgc-reg-mc`.
+  - **Cards:** TCGdex card IDs stay primary, with a crosswalk to legacy pokemontcg.io IDs and marketplace product IDs.
+  - **Showdown IDs:** the battle engine translates to them only at its boundary.
 
 ## OQ-14: Card price sources and logos
 
@@ -397,9 +411,9 @@ These are decisions the maintainer still has to make. Each one lists its options
   - no price snapshots committed, and no public price endpoint
   - every price stores its source, fetch time, and license basis
   - everything is labeled "estimate, not an appraisal"
-- **Owner decisions needed:**
-  - (1) join EPN without affiliate links, to unlock the eBay panel, or keep eBay to link-outs
-  - (2) send the permission emails (drafts can be prepared)
+- **Owner defaults taken (2026-09-29 14:41):**
+  - (1) Join EPN without affiliate links when the eBay panel is built in v2. It's an account requirement, not a revenue source.
+  - (2) Permission emails to PokemonPriceTracker and Cardmarket are drafted privately for the owner to send.
 - **Still to plan:**
   - how the eBay panel refreshes within eBay's caching rules
   - multi-currency purchase prices, and whether collection totals get currency conversion
@@ -410,4 +424,6 @@ When a question is settled, move it here with the date, the outcome, and a link 
 
 - **2026-09-29, OQ-4 (tabs):** Pokédex → TCG → Battle → Profile, with a Champions / Showdown dropdown inside Battle (Champions is the default). Subtitles live on the pages. Users can reorder the tabs in Settings → Preferences, and the first tab is the launch screen.
 - **2026-09-29, OQ-13 (species key):** our own key (dex number + form slug) is primary; PokeAPI, Showdown, and TCGdex IDs live in a reference crosswalk.
+- **2026-09-29, OQ-7 (images in store builds):** on by default, with a remote "images off" switch.
+- **2026-09-29, OQ-11 (roadmap order):** P3 TCG v2 → P4 Battle hub → P5 Accounts and sync.
 - **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).

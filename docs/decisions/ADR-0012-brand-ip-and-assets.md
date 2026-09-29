@@ -42,6 +42,7 @@
      - They load on the device from the PokeAPI sprite project, through commit-pinned jsDelivr URLs with GitHub raw as the fallback.
      - They're cached only on the device, with an optional offline pack the user starts, downloaded slowly. We don't host or mirror copies.
      - This is the same separation Pokémon Showdown uses: it keeps images out of its code repository.
+   - **Store builds show images by default (owner, 2026-09-29),** with a remote "images off" switch (a Remote Config flag) for takedowns or review issues.
    - **Guardrail:** a CI check rejects image files outside our own UI assets.
    - **Credits screen:**
      - The Pokémon Company's copyright line.
