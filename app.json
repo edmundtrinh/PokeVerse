@@ -26,6 +26,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
+    },
+    "web": {
+      "bundler": "webpack",
+      "favicon": "./assets/favicon.png"
     }
   }
 }
