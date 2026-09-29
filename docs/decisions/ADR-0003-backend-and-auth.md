@@ -43,7 +43,7 @@
 - **Must-haves before any account feature ships:**
   - in-app account deletion that also deletes the user's data
   - a privacy policy and Terms of Service on our domain, linked from sign-in and settings
-  - an age gate with COPPA-aware defaults: store an age band, never a birth date, and give users under 13 no public profiles or public sharing
+  - an age gate with COPPA-aware defaults: store an age band, never a birth date. In v1, users under 13 get no account at all. They use guest mode, with data kept on the device, until a verifiable parental-consent flow exists. That matches the PRD and the data model, and it's pending the owner's confirmation in [open questions](../../specs/open-questions.md).
   - security rules with emulator tests in CI, App Check, and budget alerts
 
 ## Consequences

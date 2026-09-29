@@ -20,6 +20,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | [OQ-9](#oq-9-showdown-login-battle-client) | Showdown-login battle client | Not in v1; revisit after P6 | Nothing yet | After P6 |
 | [OQ-10](#oq-10-replica-code-moderation) | Replica code moderation | Curated in P3; structured, pre-moderated submissions in P4 | CHA-5, security rules, Terms | Before P4 |
 | [OQ-11](#oq-11-battle-hub-p3-or-accounts-p4-first) | Battle hub (P3) or accounts (P4) first | P3 first | Roadmap order | Before P3 starts |
+| [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | No accounts for under-13s in v1; guest mode on the device only | ADR-0003, the age gate, privacy policy, P4 | Before P4 |
 
 ## OQ-1: Final backend pick
 
@@ -253,6 +254,20 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Interleave: P3's core, a minimal P4, then P3's community features | Some of both | More context switching for one maintainer |
 
 - **Recommendation:** P3 first, for the reasons in the [roadmap](roadmap.md#why-p3-battle-hub-comes-before-p4-accounts). If shared teams or Replica submissions turn out to be must-haves at launch, interleave a minimal P4 slice.
+
+## OQ-12: Accounts for users under 13
+
+- **Question:** can people under 13 create accounts in v1, or do they stay in guest mode?
+- **Blocks:** the age gate and account flow in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md), the data model's `child` handling, the privacy policy, and store age ratings.
+- **Decide by:** before P4.
+
+| Option | For | Against |
+|---|---|---|
+| **No accounts under 13 in v1** (proposed default) | No personal data collected from children; the simplest COPPA posture; guest mode still gives them every feature on one device | Children can't sync between devices |
+| Private-only child accounts with verifiable parental consent | Sync for younger fans | A consent flow is real work and has legal requirements (verify with COPPA guidance) |
+| Accounts for everyone, with no age gate | Simplest to build | Not acceptable for an audience that skews young |
+
+- **Recommendation:** no accounts for under-13s in v1. Revisit parental consent after P6, if younger players ask for sync.
 
 ## Decided
 

@@ -75,7 +75,7 @@
 
 ## Sources
 
-- [Expo SDK 55 changelog](https://expo.dev/changelog/sdk-55): Expo Router additions (Native Tabs, `Stack.Toolbar`, experimental SplitView), and removal of the legacy architecture
+- [Expo SDK 55 changelog](https://expo.dev/changelog/sdk-55): Expo Router additions (a new Native Tabs API, `Stack.Toolbar`, experimental SplitView) and the legacy architecture's removal. Native Tabs first appeared, as unstable, in SDK 54.
 - [Expo Router: Native tabs](https://docs.expo.dev/router/advanced/native-tabs/)
 - [Expo Router: static rendering](https://docs.expo.dev/router/web/static-rendering/)
 - [Apple: Preparing your app for iPhone Duo](https://developer.apple.com/documentation/technologyoverviews/preparing-your-app-for-iphone-duo)
