@@ -1,0 +1,38 @@
+components:
+  - changed-files:
+      - any-glob-to-any-file: 'components/**'
+
+screens:
+  - changed-files:
+      - any-glob-to-any-file: 'screens/**'
+
+services:
+  - changed-files:
+      - any-glob-to-any-file: 'services/**'
+
+navigation:
+  - changed-files:
+      - any-glob-to-any-file: 'navigation/**'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.md'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'package-lock.json'
+
+config:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tsconfig*.json'
+          - 'babel.config.js'
+          - 'metro.config.js'
+          - 'tailwind.config.js'
+          - 'app.json'
