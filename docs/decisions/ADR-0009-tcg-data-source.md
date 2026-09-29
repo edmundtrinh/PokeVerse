@@ -28,26 +28,12 @@
 - **Deadline: off pokemontcg.io by 2027-01-31**, a month before it shuts down. The migration is data-layer work, so it can run ahead of the rest of Phase 5 if earlier phases run long.
 - **Prices** (revised 2026-09-29 after the feasibility research; see [OQ-14](../../specs/open-questions.md#oq-14-card-price-sources-and-logos)):
   - **The owner's wish list:** TCGplayer, eBay, PSA, Collectr, and DoubleHolo, labeled the way other collecting apps label sources. Each source is used only where its terms permit.
-  - **v1 (P5):** per-card prices from TCGdex.
-    - TCGdex carries TCGplayer prices (USD, via the tcgcsv mirror) and Cardmarket prices (EUR).
-    - They're fetched only when a user opens a card, and cached briefly.
-    - The pipeline does **not** republish them as a bulk price bundle or build a price history, because neither company has licensed its data to us.
-  - **Display:**
-    - separate, never-blended rows, each with the price type, currency, an "as of" date, and a link out
-    - sources named in **plain text**, plus a notice: "Prices from TCGplayer (via TCGdex) and Cardmarket (via TCGdex). Not affiliated with or endorsed by TCGplayer, Cardmarket, eBay, or PSA."
-    - logos only where a program explicitly grants them
-  - **Link-outs:** "View on TCGplayer", "View on Cardmarket", "Search sold listings on eBay", and PSA cert or population pages.
-    - They're plain links, not affiliate links, which keeps the project non-commercial.
-    - Joining the TCGplayer affiliate program or the eBay Partner Network would unlock official logos and assets, but it earns commission. That's the owner's call.
-  - **v2:** eBay's Browse API (active listings) through a server function, cached no more than 6 hours, in its own panel. Graded prices come from PriceCharting under a commercial license with written permission, or from a paid provider.
-  - **Also:** ask TCGplayer and Cardmarket for written permission in parallel.
-  - **Not used:**
-    - eBay sold data (restricted)
-    - PSA prices (no API; scraping is banned)
-    - Collectr (its terms ban competing products)
-    - DoubleHolo (no API)
-    - any scraping
-  - **Swappable:** every source sits behind a `PriceProvider` interface. If the gray area becomes unacceptable, prices are deferred, and binders and decks still work.
+  - **Owner's direction (2026-09-29, 12:50). Pricing is still being planned; this is the current direction, not final.**
+    - **TCGplayer and Cardmarket:** link-outs only, "View on TCGplayer" and "View on Cardmarket". They go to the card's product page when TCGdex provides the marketplace's product ID, otherwise to a marketplace search built from the card name, set, and number. We show **no price numbers** from either (unlicensed), and we don't use TCGdex's or tcgcsv's copies of their prices.
+    - **eBay:** current listings only, no sold prices. That's v2, through eBay's Browse API from a server function, cached no more than 6 hours, in its own panel.
+    - **Skipped:** PriceCharting, PSA, Collectr, DoubleHolo, and any scraping.
+    - **Affiliate programs:** undecided, leaning no, to keep the project free and non-commercial. Links are plain links, and sources appear as plain-text names. Official logos need a partner grant.
+  - **Swappable:** marketplace links and any future price source sit behind a `MarketplaceProvider` interface. Binders and decks never depend on prices.
 - **Map the old IDs.** The pipeline builds a pokemontcg.io → TCGdex ID map, and a one-time migration rewrites saved binders and decks. Cards that don't map are flagged to the user, never dropped.
 - **Card images load from TCGdex's image CDN at first**, as TCGdex documents it (verify its terms). If traffic grows, the pipeline moves them to our CDN, under the same IP rules as sprites ([ADR-0012](ADR-0012-brand-ip-and-assets.md)).
 - **Add a `CardRepository` interface in `packages/pokedata`**, so the source can change again without touching screens.
@@ -61,7 +47,7 @@
 
 **Costs and risks**
 - **ID migration work**, including the binder data in the pending local changes.
-- **Prices are daily at best,** and they're a gray area. TCGplayer's and Cardmarket's terms restrict how their price data is shown. tcgcsv is unofficial, run by one person, and could disappear. The price feature must degrade cleanly, source by source, to "prices unavailable".
+- **No in-app TCGplayer or Cardmarket prices.** Link-outs avoid the licensing gray area, but users leave the app to see a price. eBay listings (v2) add live numbers under eBay's own API terms. Anything price-related must degrade cleanly, source by source.
 - **Cardmarket's terms** require written agreement before displaying its prices (verify). That's one reason to request permission early.
 - **Be a good TCGdex citizen:** ingest from the GitHub repository, and don't hammer its API or image CDN at scale.
 - **Schedule risk:** Phase 5 comes after Phases 3 and 4. The roadmap tracks the 2027-01-31 target, and the migration starts early if needed.

@@ -12,7 +12,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | [OQ-1](#oq-1-final-backend-pick) | Final backend pick | Firebase now; Supabase if the reachability constraint goes away | ADR-0003, P4 | Before P4 |
 | [OQ-2](#oq-2-styling-library) | Styling library | Deeper desk comparison, then a hands-on spike; if both pass, pick the stable one | ADR-0006, all new UI | P1 spike |
 | [OQ-3](#oq-3-store-safe-brand-name-and-domain) | Store-safe brand name and domain | Choose in P1, before buying a domain or creating store records | The custom domain, P1 web deploy, P4 auth domains, P6 | Before the P1 web deploy |
-| [OQ-4](#oq-4-champions-and-showdown-tab-naming-and-default) | Tab naming and default | **Decided 2026-09-29:** Pokédex → TCG → VGC → Smogon (+ Profile), user-reorderable; exact labels to confirm | P1 routes, P3 copy | Labels before P3 design |
+| [OQ-4](#oq-4-champions-and-showdown-tab-naming-and-default) | Tab naming and default | **Decided 2026-09-29:** Pokédex → TCG → Battle (Champions ▾ / Showdown) → Profile; user-reorderable | n/a | Done |
 | [OQ-5](#oq-5-license) | License | MIT, once the maintainer confirms he's cleared to license the code | The LICENSE file; outside contributions | As soon as possible |
 | [OQ-6](#oq-6-smogon-sets-and-analyses-permission) | Smogon sets and analyses | Ask first; meanwhile show usage stats, our own derived builds, and links | SD-3, meta pages | Before P3 |
 | [OQ-7](#oq-7-sprite-source-and-permission-for-store-builds) | Sprite source for store builds | PokeAPI sprites for web; ask for permission before stores, or go text-first | P6 store submission | Before P6 |
@@ -120,12 +120,12 @@ These are decisions the maintainer still has to make. Each one lists its options
   - Teams are shared across both tabs and tagged by ruleset.
   - After the first launch, remember the last tab used.
   - Both names refer to other parties' products. That's fine inside the app, but keep them out of the app's name and icon ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)).
-- **Decided 2026-09-29 (owner), superseding the recommendation above:**
-  - **Tabs:** four top-level content tabs, in this default order: **Pokédex → TCG → VGC (Champions) → Smogon (Showdown and Smogon singles)**, plus Profile.
-  - **Reordering:** users can reorder the content tabs in Settings → Preferences, and the first tab is the screen the app opens to.
-  - **Labels:** "VGC" and "Smogon" are proposed; the exact wording is still to confirm. Possible subtitles: "VGC · Champions" and "Smogon · Showdown".
-  - **Shared engine:** both battle tabs share one team engine and one team list, tagged by ruleset.
-  - These names describe other parties' programs and communities, so they stay out of the app's name and icon.
+- **Decided 2026-09-29 (owner; revised 12:50), superseding the recommendation above:**
+  - **Tabs:** top-level tabs **Pokédex → TCG → Battle → Profile**, with short labels and no subtitles in the tab bar.
+  - **Battle:** it has two sections, **Champions** (the default) and **Showdown**, switched by a dropdown in the Battle header (for example "Champions ▾"). Each page carries its own subtitle, such as "Champions · VGC Reg M-C" or "Showdown · Smogon singles".
+  - **Behavior:** both sections share one team engine and one team list. The app remembers the last section used, and deep links are `/battle/champions` and `/battle/showdown`.
+  - **Reordering:** users can reorder Pokédex, TCG, and Battle in Settings → Preferences. The first tab is the launch screen, and Profile stays last.
+  - **Names:** "Champions" and "Showdown" name other parties' products. That's fine inside the app, but they stay out of the app's name and icon.
 
 ## OQ-5: License
 
@@ -336,16 +336,20 @@ These are decisions the maintainer still has to make. Each one lists its options
 | PriceCharting | A paid API with graded prices (PSA, BGS, CGC). App use needs a commercial license and written permission. | The best route to graded prices, with approval |
 
 - **Logos:** show a logo only where a program explicitly grants it (eBay's Partner Network, or a PriceCharting license). Elsewhere, use the source's name as plain text plus a non-affiliation notice. Apps like Dex show marketplace logos, but whether they have permission is unknown.
-- **Recommendation:**
-  - **v1 (P5):** TCGdex's TCGplayer and Cardmarket prices, in separate labeled rows with an "as of" date, plus link-outs. No bulk price dumps, no price history, no scraping, and a swappable provider interface.
-  - **v2:** eBay live listings, and graded prices if a PriceCharting license (or a paid alternative) works out.
-  - **Also:** ask TCGplayer and Cardmarket for written permission.
-  - **Fallback:** if the gray area is unacceptable, defer prices entirely. Binders and decks work without them.
+- **Owner's direction (2026-09-29, 12:50). Planning continues before a final decision.**
+  - **TCGplayer and Cardmarket:** link-outs only, "View on TCGplayer" and "View on Cardmarket", to the card's product page when we have its ID, otherwise to a search for the card name, set, and number. We show **no price numbers** from either, because we have no license to them.
+  - **eBay:** current listings only, no sold prices, in v2 through eBay's Browse API from a server function.
+  - **Skipped:** PriceCharting, PSA, Collectr, and DoubleHolo.
+  - **Affiliate programs:** undecided, leaning no, to keep the app completely free and non-commercial. Without a partner grant, sources appear as plain-text names, not logos.
+- **Still to plan:**
+  - whether v1 shows any prices at all, or only link-outs plus the user's own purchase prices
+  - eBay's display and caching rules
+  - how link-outs look per region (TCGplayer for US users, Cardmarket for EU users)
 
 ## Decided
 
 When a question is settled, move it here with the date, the outcome, and a link to the ADR or PR that records it.
 
-- **2026-09-29, OQ-4 (tabs):** Pokédex → TCG → VGC (Champions) → Smogon (Showdown), plus Profile. Users can reorder the content tabs in Settings → Preferences, and the first tab is the launch screen. The exact labels are still to confirm.
+- **2026-09-29, OQ-4 (tabs):** Pokédex → TCG → Battle → Profile, with a Champions / Showdown dropdown inside Battle (Champions is the default). Subtitles live on the pages. Users can reorder the tabs in Settings → Preferences, and the first tab is the launch screen.
 - **2026-09-29, OQ-13 (species key):** our own key (dex number + form slug) is primary; PokeAPI, Showdown, and TCGdex IDs live in a reference crosswalk.
 - **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).

@@ -22,11 +22,13 @@ A non-profit, open-source Pokémon companion app built with React Native and Exp
 - **Deck builder:** card search, and adding or removing cards.
 - **Binder planner and saved binders:** in progress.
 - **Card data source:** moving from the Pokémon TCG API, which goes offline on 2027-03-01, to TCGdex. See the [decisions](docs/decisions/).
+- **Marketplace links (planned):** "View on TCGplayer" and "View on Cardmarket" for each card. Current eBay listings come later.
 
-### ⚔️ Competitive tabs (planned)
-- **VGC (Champions):** team building with Stat Points and Stat Alignment, regulation info, meta picks and builds, and damage calcs for Pokémon Champions, the official VGC game.
-- **Smogon (Showdown):** Scarlet/Violet and Smogon singles team building, Showdown and PokéPaste import/export, usage stats, and a quick "test it on Showdown".
-- **Tabs:** the default order is Pokédex → TCG → VGC → Smogon. You'll be able to reorder the tabs in Settings, and the first one is where the app opens.
+### ⚔️ Battle (planned)
+- **Champions:** team building with Stat Points and Stat Alignment, regulation info, meta picks and builds, and damage calcs for Pokémon Champions, the official VGC game.
+- **Showdown:** Scarlet/Violet and Smogon singles team building, Showdown and PokéPaste import/export, usage stats, and a quick "test it on Showdown".
+- **Switching:** pick Champions or Showdown from the dropdown at the top of the Battle tab.
+- **Tab order:** the default is Pokédex → TCG → Battle, and you can reorder the tabs in Settings. The first tab is where the app opens.
 
 ### 📱 Everywhere you are (planned)
 - Accounts (Apple, Google, email) with teams, binders, and Pokédex progress synced across devices.
