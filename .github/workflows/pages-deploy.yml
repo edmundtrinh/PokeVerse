@@ -43,6 +43,8 @@ jobs:
 
       - name: Export for web
         if: steps.web-deps.outputs.missing != 'true'
+        env:
+          PUBLIC_URL: /PokeVerse/
         run: npx expo export:web
 
       - name: Upload Pages artifact
