@@ -1,7 +1,7 @@
 # Roadmap
 
-- **Last updated:** 2026-09-28
-- **Related:** [PRD](PRD.md), [open questions](open-questions.md), [decisions (ADRs)](../docs/decisions/README.md), [tech-stack review](../docs/reviews/2026-09-28-tech-stack-review.md)
+- **Last updated:** 2026-09-29
+- **Related:** [PRD](PRD.md), [open questions](open-questions.md), [decisions (ADRs)](../docs/decisions/README.md), [tech-stack review](../docs/reviews/2026-09-28-tech-stack-review.md), [tracking plan](../docs/analytics/tracking-plan.md)
 
 Phases run roughly in order, and each ends at a gate that CI or a checklist can prove. Dates appear only where the outside world sets them; this is a spare-time project, so the phases have no deadlines of their own. The one exception is the TCG data migration, which has a hard external deadline.
 
@@ -12,11 +12,11 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 | Phase | Theme | Outcomes | Gate | Status |
 |---|---|---|---|---|
 | **P0** | Stabilize and modernize | Pull; docs and agents; SDK 57; critical bugs fixed; tests and CI | CI green for web, Android, and iOS bundles | **In progress** |
-| **P1** | Foundation | Monorepo; Expo Router and Native Tabs; tokens and the styling ADR; data pipeline v1; expo-image; TanStack Query; `PokedexView` split; honest errors; Sentry; web deploy | Web preview live; Pokédex correct and usable offline | Not started |
+| **P1** | Foundation | Monorepo; Expo Router and Native Tabs, in the user's order; tokens and the styling ADR; data pipeline v1 with species keys; expo-image; TanStack Query; `PokedexView` split; honest errors; Sentry and analytics; web deploy | Web preview live; Pokédex correct and usable offline; app shell passes | Not started |
 | **P2** | iOS 27 and devices | SDK 58; scene lifecycle; native header items; the `fold-aware` module; adaptive screens; device QA | iPhone Duo and Fold checklist passes | Not started |
-| **P3** | Battle hub v1, saved locally | Shared team engine; Champions tab; Showdown tab | Legality and calculator suites pass; paste round-trips intact | Not started |
+| **P3** | Battle hub v1, saved locally | Shared team engine; the Battle tab's Champions and Showdown sections | Legality and calculator suites pass; paste round-trips intact | Not started |
 | **P4** | Accounts and sync | Firebase Auth; Firestore; local-first sync; account deletion; privacy policy and Terms; age gate | Security-rules tests pass; sign-in E2E passes on all 3 platforms | Not started |
-| **P5** | TCG v2 | Move to TCGdex; binder planner; holo effects via DeviceMotion; binder spreads | **Off pokemontcg.io by 2027-01-31** | Not started |
+| **P5** | TCG v2 | Move to TCGdex; binder planner with three views; holo effects via DeviceMotion; marketplace link-outs | **Off pokemontcg.io by 2027-01-31** | Not started |
 | **P6** | Delight and launch | Motion, haptics, and sound; Live Activities and widgets; accessibility; performance budgets; store-safe brand; beta | Budgets met; app review passes | Not started |
 
 - **P2 can overlap the end of P1.**
@@ -47,16 +47,17 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 ### P1: Foundation
 
 - Monorepo with npm workspaces and Turborepo ([ADR-0010](../docs/decisions/ADR-0010-monorepo.md)).
-- Expo Router, with the native stack and Native Tabs ([ADR-0001](../docs/decisions/ADR-0001-universal-app-expo-router.md)).
-- `@pokeverse/tokens`, plus the styling spike (Uniwind vs NativeWind 5), which settles [ADR-0006](../docs/decisions/ADR-0006-styling-and-tokens.md).
-- Data pipeline v1 in GitHub Actions: the Pokédex index with real types, and resized sprites, published to our domain ([ADR-0004](../docs/decisions/ADR-0004-static-game-data-pipeline.md)).
+- Expo Router, with the native stack and Native Tabs ([ADR-0001](../docs/decisions/ADR-0001-universal-app-expo-router.md)): Pokédex, TCG, Battle, and Profile, with the three content tabs reorderable in Settings → Preferences (PRD APP-1).
+- `@pokeverse/tokens`, plus the styling decision: the deeper comparison, then the hands-on spike ([research spikes](#research-spikes)), which settle [ADR-0006](../docs/decisions/ADR-0006-styling-and-tokens.md).
+- Data pipeline v1 in GitHub Actions: the Pokédex index with real types, keyed by our species keys with a reference crosswalk ([OQ-13](open-questions.md#oq-13-canonical-species-key)), and an image-availability manifest, published to our domain ([ADR-0004](../docs/decisions/ADR-0004-static-game-data-pipeline.md)). Pokémon images load on the device from the PokeAPI sprite project and are never hosted by us; the sprite research concluded 2026-09-29 ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)).
 - expo-image and TanStack Query ([ADR-0007](../docs/decisions/ADR-0007-state-and-data-fetching.md)).
 - Split `PokedexView` using the split table in the review; add honest error and empty states; delete the invented data.
-- Sentry.
+- Sentry, and the analytics wrapper with the first events from the [tracking plan](../docs/analytics/tracking-plan.md), the opt-out, and a privacy policy that covers them (PRD APP-2).
 - Web deploy on Firebase Hosting (Netlify is the runner-up), on a custom domain once the name is chosen ([ADR-0005](../docs/decisions/ADR-0005-web-hosting.md), [OQ-3](open-questions.md#oq-3-store-safe-brand-name-and-domain)).
 - The disclaimer and the credits screen ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)).
 - Remove the portrait lock.
-- **Gate:** the web preview is live, and the Pokédex is correct and usable offline (PRD DEX-1 to DEX-8).
+- **Gate:** the web preview is live, the Pokédex is correct and usable offline (PRD DEX-1 to DEX-8), and the app shell passes (APP-1 and APP-2).
+- **Decide first:** the analytics vendor ([OQ-8](open-questions.md#oq-8-analytics-tool)), before the first events ship.
 
 ### P2: iOS 27 and devices
 
@@ -70,12 +71,13 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 
 ### P3: Battle hub v1, saved locally
 
-- A Hermes spike first, for `@pkmn` and `@smogon/calc`.
-- `packages/battle`: the shared team engine with its ruleset adapter ([ADR-0008](../docs/decisions/ADR-0008-battle-engine.md)).
-- **Champions tab:** the regulation hub, the Stat Point editor, the bring-and-pick planner, the calculator (generation 0), usage and meta pages, and a curated Replica code library.
-- **Showdown tab:** the SV builder, pastes and PokéPaste, Smogon usage (and sets, if permitted), the calculator, and "Test on Showdown".
+- A Hermes spike first, for `@pkmn` and `@smogon/calc` ([research spikes](#research-spikes)).
+- `packages/battle`: the shared team engine with its ruleset adapter ([ADR-0008](../docs/decisions/ADR-0008-battle-engine.md)), and one team list for both sections.
+- **The section switcher:** a native menu in the Battle header ("Champions ▾") that reopens the last section used, plus the deep links `/battle/champions` and `/battle/showdown` (PRD BAT-5).
+- **Champions section:** the regulation hub, the Stat Point editor, the bring-and-pick planner, the calculator (generation 0), usage and meta pages, and a curated Replica code library.
+- **Showdown section:** the SV builder, pastes and PokéPaste, Smogon usage (and sets, if permitted), the calculator, and "Test on Showdown".
 - **Gate:** the legality and calculator suites pass, and paste round-trips are intact.
-- **Decide first:** tab naming ([OQ-4](open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)) and Smogon permission ([OQ-6](open-questions.md#oq-6-smogon-sets-and-analyses-permission)).
+- **Decide first:** Smogon permission ([OQ-6](open-questions.md#oq-6-smogon-sets-and-analyses-permission)). The tabs and Battle's two sections were decided on 2026-09-29 ([OQ-4](open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)).
 
 ### P4: Accounts and sync
 
@@ -83,16 +85,18 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 - In-app account deletion, the privacy policy and Terms, the age gate, and security-rules tests.
 - Replica code submissions, with moderation ([OQ-10](open-questions.md#oq-10-replica-code-moderation)).
 - **Gate:** security-rules tests pass, and sign-in E2E passes on all three platforms.
-- **Decide first:** the backend ([OQ-1](open-questions.md#oq-1-final-backend-pick)) and analytics ([OQ-8](open-questions.md#oq-8-analytics-tool)), because the privacy policy has to name them.
+- **Decide first:** the backend ([OQ-1](open-questions.md#oq-1-final-backend-pick)), because the privacy policy has to name it. The P4 policy extends the one from P1, which already covers analytics ([OQ-8](open-questions.md#oq-8-analytics-tool)).
 
 ### P5: TCG v2
 
-- Move to TCGdex ([ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md)).
-- The binder planner, from the maintainer's pending changes.
+- Move card data to TCGdex: the catalog, images, and set lists ([ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md)).
+- The binder planner, from the maintainer's pending changes: double-sided pages, 50 by default and added or removed one at a time, and three views: single page, binder view, and continuous grid (PRD TCG-2).
 - Holo effects through one shared DeviceMotion hook.
-- Binder spreads on foldables.
+- Binder view on foldables and iPhone Duo, with the fold as the spine.
+- Marketplace link-outs, "View on TCGplayer" and "View on Cardmarket", which are the current direction for prices, and collection value from the user's own purchase prices (PRD TCG-6). eBay's current listings follow in v2.
 - **Gate:** off pokemontcg.io by **2027-01-31**.
 - **Don't let this slip.** The data migration is data-layer work, so it can start early, as a side task during P2–P4.
+- **Decide first:** card price sources ([OQ-14](open-questions.md#oq-14-card-price-sources-and-logos)), informed by the price-source research ([research spikes](#research-spikes)).
 
 ### P6: Delight and launch
 
@@ -102,6 +106,17 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 - A beta on TestFlight and Play internal testing.
 - **Gate:** the budgets are met, and app review passes.
 
+## Research spikes
+
+Short, time-boxed investigations that answer a question before the work that depends on it. Each one ends with a written recommendation in the open question or ADR it feeds.
+
+| Spike | What it answers | Feeds | Fits in |
+|---|---|---|---|
+| **Styling evaluation:** a deeper desk comparison of NativeWind 5 and Uniwind (maintainers, licensing, compatibility, performance evidence, open issues), then the hands-on spike on a real screen | Which Tailwind v4 library we use | [OQ-2](open-questions.md#oq-2-styling-library), [ADR-0006](../docs/decisions/ADR-0006-styling-and-tokens.md) | The comparison can start now. The spike opens P1, and it can run in a scratch SDK 57 app if the repo's upgrade isn't done. |
+| **Sprite sourcing and licensing:** how Pokémon Showdown sources, hosts, and serves its images, and on what terms | Where our sprites come from, at what sizes, and with whose permission | [OQ-7](open-questions.md#oq-7-sprite-source-and-permission-for-store-builds), [ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md), the pipeline's sprite step | P1, before data pipeline v1 publishes sprites |
+| **Card price-source feasibility:** link formats for the TCGplayer and Cardmarket link-outs, eBay's Browse API for the v2 listings, and whether any permitted source can show price numbers | What TCG-6 can show. Pricing may be deferred if no permitted source works. | [OQ-14](open-questions.md#oq-14-card-price-sources-and-logos), [ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md), PRD TCG-6 | Any time before P5, alongside the early TCGdex migration work |
+| **Hermes performance** of `@pkmn` and `@smogon/calc`: bundle size, parse time, and memory on a mid-range Android phone | Whether the battle packages run well enough on devices | [ADR-0008](../docs/decisions/ADR-0008-battle-engine.md) | Opens P3 |
+
 ## Now / Next / Later
 
 **Now (P0)**
@@ -109,16 +124,19 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 - The SDK 57 upgrade on `chore/expo-sdk-57`, waiting on the maintainer's pending local changes.
 - The critical fixes that ride with it: the missing TCG modules, the cold-start data wipe, and HoloCard.
 - Tests that run, and CI on every PR.
+- The styling comparison, a desk study that doesn't need the upgrade ([research spikes](#research-spikes)).
 - **To decide:** the license ([OQ-5](open-questions.md#oq-5-license)).
 
 **Next (P1, then P2, overlapping)**
-- The foundation: monorepo, Expo Router, tokens, data pipeline v1, and the web preview.
+- The foundation: monorepo, Expo Router with the four tabs, tokens, data pipeline v1 with species keys, analytics, and the web preview.
+- The styling spike and the sprite research ([research spikes](#research-spikes)).
 - iOS 27 and devices: SDK 58, `fold-aware`, and adaptive screens for iPhone Duo and foldables.
-- **To decide:** the styling library ([OQ-2](open-questions.md#oq-2-styling-library)), the name and domain ([OQ-3](open-questions.md#oq-3-store-safe-brand-name-and-domain)), and the order of P3 and P4 ([OQ-11](open-questions.md#oq-11-battle-hub-p3-or-accounts-p4-first)).
+- **To decide:** the styling library ([OQ-2](open-questions.md#oq-2-styling-library)), the name and domain ([OQ-3](open-questions.md#oq-3-store-safe-brand-name-and-domain)), the analytics vendor ([OQ-8](open-questions.md#oq-8-analytics-tool)), and the order of P3 and P4 ([OQ-11](open-questions.md#oq-11-battle-hub-p3-or-accounts-p4-first)).
 
 **Later (P3–P6)**
 - Battle hub v1, then accounts and sync, then TCG v2 (off pokemontcg.io by 2027-01-31), then delight and launch.
-- **To decide:** tab naming, Smogon permission, the backend, analytics, Replica moderation, sprites for store builds, and a battle client ([OQ-4](open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default), [OQ-6](open-questions.md#oq-6-smogon-sets-and-analyses-permission), [OQ-1](open-questions.md#oq-1-final-backend-pick), [OQ-8](open-questions.md#oq-8-analytics-tool), [OQ-10](open-questions.md#oq-10-replica-code-moderation), [OQ-7](open-questions.md#oq-7-sprite-source-and-permission-for-store-builds), [OQ-9](open-questions.md#oq-9-showdown-login-battle-client)).
+- The price-source research, any time before P5 ([research spikes](#research-spikes)).
+- **To decide:** Smogon permission, the backend, Replica moderation, card price sources, sprites for store builds, and a battle client ([OQ-6](open-questions.md#oq-6-smogon-sets-and-analyses-permission), [OQ-1](open-questions.md#oq-1-final-backend-pick), [OQ-10](open-questions.md#oq-10-replica-code-moderation), [OQ-14](open-questions.md#oq-14-card-price-sources-and-logos), [OQ-7](open-questions.md#oq-7-sprite-source-and-permission-for-store-builds), [OQ-9](open-questions.md#oq-9-showdown-login-battle-client)).
 
 ## Why P3 (battle hub) comes before P4 (accounts)
 
@@ -148,3 +166,4 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 ## Changelog
 
 - **2026-09-28:** Created from the 2026-09-28 tech review. P0 is in progress: the pull is done, the docs are in progress, and the SDK 57 upgrade is waiting on the maintainer's pending local changes.
+- **2026-09-29:** Recorded the owner's decisions. P1 gets reorderable tabs (Pokédex, TCG, Battle, and Profile), species keys in data pipeline v1, and analytics from the start. P3 gets the Battle tab's section switcher. P5 gets double-sided binder pages with three views, marketplace link-outs as the current direction for prices, and collection value from purchase prices. Added the research spikes: styling, sprites, and card price sources.

@@ -1,8 +1,8 @@
 # Architecture overview
 
-- **As of:** 2026-09-28
-- **Status:** Part 1 (as-is) describes `main` on that date. Part 2 (target) is the working plan from the [tech-stack review](../reviews/2026-09-28-tech-stack-review.md); most of it is recorded in Proposed ADRs under [`docs/decisions/`](../decisions/).
-- **Related:** [data model](data-model.md) · [device layouts](device-layouts.md) · [test strategy](../testing/test-strategy.md) · [roadmap](../../specs/roadmap.md) · [open questions](../../specs/open-questions.md)
+- **As of:** 2026-09-28. Part 2 was updated on 2026-09-29 with the owner's decisions on tabs, species keys, and analytics.
+- **Status:** Part 1 (as-is) describes `main` on 2026-09-28. Part 2 (target) is the working plan from the [tech-stack review](../reviews/2026-09-28-tech-stack-review.md); most of it is recorded in Proposed ADRs under [`docs/decisions/`](../decisions/).
+- **Related:** [data model](data-model.md) · [device layouts](device-layouts.md) · [test strategy](../testing/test-strategy.md) · [tracking plan](../analytics/tracking-plan.md) · [roadmap](../../specs/roadmap.md) · [open questions](../../specs/open-questions.md)
 
 Line references (`file:line`) point at `main` as of 2026-09-28. Two TCG components, `BinderPlanner.tsx` and `SavedBinders.tsx`, live on the maintainer's other machine and haven't been pushed yet. This doc gets updated when they land.
 
@@ -194,21 +194,24 @@ Full value shapes, TypeScript models, and the migration plan are in the [data mo
 ```mermaid
 flowchart LR
   subgraph CI["GitHub Actions: data pipeline"]
-    ING["Ingest: Showdown data + champions mod,<br/>PokeAPI api-data, Smogon stats,<br/>TCGdex, curated regulations"] --> BLD["Normalize, validate with zod,<br/>version"]
+    ING["Ingest: Showdown data + champions mod,<br/>PokeAPI api-data, Smogon stats,<br/>TCGdex, curated regulations"] --> BLD["Normalize to our species keys,<br/>build the crosswalk,<br/>validate with zod, version"]
   end
-  BLD --> CDN[("Versioned data bundles +<br/>resized sprites on our domain<br/>Firebase Hosting / R2")]
+  BLD --> CDN[("Versioned data bundles +<br/>image-availability manifest<br/>on our domain: Firebase Hosting / R2")]
   subgraph APP["Expo Router universal app: iOS, Android, web"]
-    UI["Dex / Battle: Champions + Showdown /<br/>TCG / Profile"] --> ST["TanStack Query +<br/>local store: MMKV / SQLite"]
+    UI["Tabs: Pokédex / TCG /<br/>Battle: Champions + Showdown /<br/>Profile"] --> ST["TanStack Query +<br/>local store: MMKV / SQLite"]
   end
   ST -->|cached reads| CDN
   ST <-->|"sync teams, binders, dex progress"| FS[("Cloud Firestore")]
   UI --> AU["Firebase Auth:<br/>Apple, Google, email link"]
-  UI --> OB["Sentry"]
-  FN["Cloud Functions:<br/>PokéPaste proxy, share links,<br/>account deletion"] --- FS
+  UI --> OB["Sentry:<br/>crashes, performance"]
+  UI --> AN["analytics.track wrapper:<br/>Firebase Analytics (proposed)"]
+  AN --> BQ[("BigQuery:<br/>raw event export")]
+  FN["Cloud Functions:<br/>PokéPaste proxy, share links,<br/>account deletion, eBay listings (v2)"] --- FS
 ```
 
 - **Browsing never calls a third-party Pokémon API.** Ingestion runs in CI on a schedule and on demand, and the app reads our CDN and our Firestore project. The only direct third-party calls are ones the user starts, such as importing a PokéPaste link.
 - **Pokémon media stays out of the repo.** The pipeline fetches and resizes sprites and publishes them to our CDN, so the repository's license only covers our code ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)).
+- **Analytics is anonymous and vendor-neutral.** Screens call our `analytics.track(event, props)` wrapper, never a vendor SDK, and raw events are exported to BigQuery for later analysis. The [tracking plan](../analytics/tracking-plan.md) lists every event and the privacy rules they follow.
 
 ### 2.3 Monorepo layout
 
@@ -248,20 +251,22 @@ flowchart LR
 
 | Plane | What's in it | Where it lives | Written by | Freshness |
 |---|---|---|---|---|
-| **Static game data** | Dex index (1,025 species with real types), forms, moves, abilities, items, learnsets per format, Champions regulations and item pools, usage stats, TCG sets and cards, resized sprites | Versioned, immutable files on our CDN; cached on the device indefinitely | The data pipeline in GitHub Actions ([ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md)) | Scheduled runs (regulations change about every 12 weeks, ranked seasons monthly, Smogon stats monthly), plus manual runs for urgent fixes |
+| **Static game data** | Dex index (1,025 species with real types) and forms, keyed by our species keys, plus the crosswalk to other sources' IDs; moves, abilities, items, learnsets per format, Champions regulations and item pools, usage stats, TCG sets and cards, and an image-availability manifest. Pokémon images aren't hosted by us: the device loads them from the PokeAPI sprite project through commit-pinned URLs and caches them ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)). | Versioned, immutable files on our CDN; cached on the device indefinitely | The data pipeline in GitHub Actions ([ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md)) | Scheduled runs (regulations change about every 12 weeks, ranked seasons monthly, Smogon stats monthly), plus manual runs for urgent fixes |
 | **User data** | Profile, preferences, teams, binders, dex progress, favorites | The local store first (SQLite + MMKV); Firestore when signed in | The app ([data model](data-model.md)) | Instant locally; synced when online |
-| **Serverless compute** | PokéPaste export proxy (its `/create` endpoint doesn't allow cross-origin calls), share links for published teams, account deletion, moderation and vote tallies | Cloud Functions | Triggered by the app, by Firestore events, or on a schedule | On demand |
+| **Serverless compute** | PokéPaste export proxy (its `/create` endpoint doesn't allow cross-origin calls), share links for published teams, account deletion, moderation and vote tallies; in v2, a card's current eBay listings through eBay's Browse API, cached ([PRD TCG-6](../../specs/PRD.md#53-tcg)) | Cloud Functions | Triggered by the app, by Firestore events, or on a schedule | On demand |
 
 **Bundle layout** (a sketch; names are settled in ADR-0004):
 
 ```text
-https://data.<our-domain>/v1/manifest.json              short cache; names the current build and each file's hash
-https://data.<our-domain>/v1/<buildId>/dex-index.json   immutable (Cache-Control: public, max-age=31536000, immutable)
-https://data.<our-domain>/v1/<buildId>/species/<id>.json
+https://data.<our-domain>/v1/manifest.json                        short cache; names the current build and each file's hash
+https://data.<our-domain>/v1/<buildId>/dex-index.json             immutable (Cache-Control: public, max-age=31536000, immutable)
+https://data.<our-domain>/v1/<buildId>/crosswalk.json             species key → PokeAPI, Showdown, and TCGdex IDs and display names
+https://data.<our-domain>/v1/<buildId>/species/<dex number>.json  one species, with all its forms
 https://data.<our-domain>/v1/<buildId>/formats/<format>.json
-https://img.<our-domain>/sprites/<size>/<id>.webp
+https://img.<our-domain>/sprites/<size>/<species key>.webp        for example 6.webp or 6-mega-x.webp
 ```
 
+- **Species keys name every Pokémon and form** in the bundles: the National Dex number plus a form slug, such as `6`, `6-mega-x`, or `37-alola` (decided 2026-09-29, [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)). The crosswalk is for reference only; nothing stores another source's ID as a key ([data model §2.2](data-model.md#22-identifiers)).
 - **Two kinds of version.** `v1` is the schema version: a breaking change publishes `v2` next to it, and older app builds keep reading `v1`. `buildId` identifies content, and a new build is picked up the next time the app checks the manifest.
 - **Publishing is gated.** Every file is validated with zod and count checks (for example, exactly 1,025 species) before upload. A failed check blocks the publish, and apps keep the last good build ([test strategy §4](../testing/test-strategy.md#43-contract-tests-data-pipeline-and-backend)).
 - **Offline-first.** Once a bundle and its sprites are cached, browsing needs no network.
@@ -290,20 +295,26 @@ flowchart TB
 ```text
 apps/app/src/app/
   _layout.tsx                    providers (query client, local store, theme), error boundary
-  (tabs)/_layout.tsx             Native Tabs on iOS and Android; custom rail or sidebar where needed
+  index.tsx                      /                            redirects to the first tab in the user's order
+  (tabs)/_layout.tsx             Native Tabs on iOS and Android, in the user's order; custom rail or sidebar where needed
   (tabs)/dex/index.tsx           /dex                         list, search, filters
-  (tabs)/dex/[id].tsx            /dex/25                      detail; pre-rendered for all 1,025 species
-  (tabs)/battle/_layout.tsx      Champions (default) | Showdown
-  (tabs)/battle/champions/...    /battle/champions            regulation hub, team builder, calc, meta
-  (tabs)/battle/showdown/...     /battle/showdown             SV builder, paste import/export, usage, calc
+  (tabs)/dex/[key].tsx           /dex/6, /dex/6-mega-x        detail by species key; pre-rendered for all 1,025 species
   (tabs)/tcg/index.tsx           /tcg                         binders and decks
   (tabs)/tcg/binders/[id].tsx    /tcg/binders/<id>            one binder (client-rendered)
-  (tabs)/profile/index.tsx       /profile                     sign-in, sync status, settings, account deletion
+  (tabs)/battle/_layout.tsx      header menu (Champions ▾ | Showdown); reopens the last section used
+  (tabs)/battle/champions/...    /battle/champions            regulation hub, team builder, calc, meta
+  (tabs)/battle/showdown/...     /battle/showdown             SV builder, paste import/export, usage, calc
+  (tabs)/profile/index.tsx       /profile                     sign-in, sync status, settings (including tab order), account deletion
   t/[id].tsx                     /t/<id>                      a shared team (publicTeams)
   +html.tsx                      web only: meta tags, viewport-fit=cover, manifest link
   +not-found.tsx
 ```
 
+- **Tabs follow the user's order** (decided 2026-09-29, [OQ-4](../../specs/open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)). Pokédex, TCG, and Battle come first by default, in that order, and users can reorder them in Settings → Preferences; Profile is always last.
+  - The tab layout reads the saved order from the MMKV preferences cache before its first render, so the bar never flashes the default order. Verify that Native Tabs accept an order chosen at runtime.
+  - `/` redirects to the first tab, which is also the launch screen. Verify how that redirect renders in the static web export.
+- **Pokémon routes use the species key** ([data model §2.2](data-model.md#22-identifiers)). `/dex/6` opens Charizard with a form selector, and `/dex/6-mega-x` opens that form directly. Species pages are pre-rendered; a form's URL opens its species page with the form selected (proposed).
+- **Battle is one tab with two sections.** `(tabs)/battle/_layout.tsx` owns the header menu that switches between Champions (the default) and Showdown, and reopens the last section used. Deep links pick a section directly. Both sections read the same team list from `packages/battle`, tagged by ruleset.
 - Per-Pokémon "meta picks and builds" pages are static too; where they sit in the tree is decided in P3.
 - Per-user pages (your teams and binders) render on the client and aren't pre-rendered.
 - Navigation containers per platform are specified in [device layouts §5](device-layouts.md#5-navigation-per-platform).
@@ -353,7 +364,7 @@ Some vendor dashboards and preview domains are unreachable from restricted netwo
 | Netlify (runner-up) | Generous free tier and simple static deploys. Expo's Netlify adapter, only needed for API routes, is marked "subject to breaking changes"; the static export doesn't need it. |
 | EAS Hosting | The tightest Expo integration (`eas deploy`, API routes). The free tier has request limits, and custom domains need a paid plan (verify). |
 | Vercel | Excellent developer experience, and its free Hobby plan is for non-commercial use, which fits a non-profit project. Its strengths are Next.js features; for an Expo static export it's static hosting. |
-| Cloudflare R2 + CDN | No egress fees, so it's the best cost at scale. Use it for sprites and data bundles regardless of where the web app lives. Put it behind our custom domain; public `r2.dev` URLs are meant for development (verify). |
+| Cloudflare R2 + CDN | No egress fees, so it's the best cost at scale. Use it for data bundles regardless of where the web app lives. Pokémon images aren't hosted by us ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)). Put it behind our custom domain; public `r2.dev` URLs are meant for development (verify). |
 
 The decision is [ADR-0005](../decisions/ADR-0005-web-hosting.md). Buy a store-safe custom domain early ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)).
 
@@ -422,16 +433,17 @@ GitHub Actions is free for public repositories, so CI and the data pipeline cost
 | Expo SDK 49, legacy architecture | SDK 57 now, then SDK 58 once stable (built for iOS 27 and iPhone Duo) | P0, P2 | [ADR-0002](../decisions/ADR-0002-expo-sdk-upgrade-path.md) |
 | No CI; tests can't run | CI gates on every PR; repaired suites | P0 | [Test strategy](../testing/test-strategy.md) |
 | Cold-start wipe; login gate | Wait for storage before rendering, never overwrite on login, keep data on sign-out; then no gate at all | P0, then P1 | [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md) |
-| Drawer, `Modal` screens, and mode switches | Expo Router: native stack, Native Tabs, URLs | P1 | [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md) |
+| Drawer, `Modal` screens, and mode switches | Expo Router: native stack, Native Tabs in the user's order, URLs | P1 | [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md) |
 | One package | npm workspaces + Turborepo | P1 | [ADR-0010](../decisions/ADR-0010-monorepo.md) |
-| Runtime PokeAPI fan-out, demo data, 540 prefetches | CI-built data bundles on our CDN; honest errors | P1 | [ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md) |
+| Runtime PokeAPI fan-out, demo data, 540 prefetches | CI-built data bundles on our CDN, keyed by our species keys; honest errors | P1 | [ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md) |
 | URL-only "LRU" and RN `Image` | expo-image with a disk cache | P1 | [Tech review](../reviews/2026-09-28-tech-stack-review.md) |
 | 2,823-line `PokedexView`, 25 `useState`s, one Context | Split screens and hooks; TanStack Query + Zustand | P1 | [ADR-0007](../decisions/ADR-0007-state-and-data-fetching.md) |
 | AsyncStorage blobs, two favorites stores | Versioned local store with migrations | P1 (local), P4 (sync) | [Data model](data-model.md) |
 | Hardcoded styles; NativeWind unused | `@pokeverse/tokens` + Tailwind v4 (Uniwind or NativeWind 5, after a spike) | P1 | [ADR-0006](../decisions/ADR-0006-styling-and-tokens.md) |
 | No web build | Static export, PWA, deployed to our domain | P1 | [ADR-0005](../decisions/ADR-0005-web-hosting.md) |
+| No crash reporting or analytics | Sentry, plus anonymous events through our `analytics.track` wrapper | P1 | [Tracking plan](../analytics/tracking-plan.md) |
 | Portrait lock, fixed sizes | Lock removed; then window classes, posture, and adaptive components | P1 (lock), P2 (layouts) | [ADR-0011](../decisions/ADR-0011-adaptive-layouts-and-foldables.md), [device layouts](device-layouts.md) |
-| Unrouted `TeamBuilder` stub | `packages/battle`, with Champions and Showdown tabs | P3 | [ADR-0008](../decisions/ADR-0008-battle-engine.md) |
+| Unrouted `TeamBuilder` stub | `packages/battle`, behind one Battle tab with Champions and Showdown sections | P3 | [ADR-0008](../decisions/ADR-0008-battle-engine.md) |
 | Simulated sign-in | Firebase Auth, Firestore sync, account deletion, age gate | P4 | [ADR-0003](../decisions/ADR-0003-backend-and-auth.md) |
 | pokemontcg.io (offline 2027-03-01) | TCGdex through the pipeline; off pokemontcg.io by 2027-01-31 | P5 | [ADR-0009](../decisions/ADR-0009-tcg-data-source.md) |
 | "PokeVerse" name; hotlinked assets | Store-safe brand, disclaimer, assets built in the pipeline | P6 | [ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md) |

@@ -2,7 +2,7 @@
 
 - **Status:** Proposed
 - **Date:** 2026-09-28
-- **Related:** [ADR-0002](ADR-0002-expo-sdk-upgrade-path.md) (upgrade path), [ADR-0005](ADR-0005-web-hosting.md) (hosting), [ADR-0010](ADR-0010-monorepo.md) (monorepo), [ADR-0011](ADR-0011-adaptive-layouts-and-foldables.md) (adaptive layouts), [architecture overview](../architecture/overview.md)
+- **Related:** [ADR-0002](ADR-0002-expo-sdk-upgrade-path.md) (upgrade path), [ADR-0005](ADR-0005-web-hosting.md) (hosting), [ADR-0008](ADR-0008-battle-engine.md) (battle engine), [ADR-0010](ADR-0010-monorepo.md) (monorepo), [ADR-0011](ADR-0011-adaptive-layouts-and-foldables.md) (adaptive layouts), [architecture overview](../architecture/overview.md), [OQ-4](../../specs/open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default) (tabs)
 
 ## Context
 
@@ -27,12 +27,14 @@
 - **Navigation uses native containers:**
   - iOS and Android: the native stack and Native Tabs.
   - Web: bottom tabs at phone widths, and a sidebar from 840 px ([ADR-0011](ADR-0011-adaptive-layouts-and-foldables.md)).
-  - The top-level tabs follow the pillars: Pokédex, Battle (Champions and Showdown), TCG, and Profile. The [architecture overview](../architecture/overview.md) has the route map.
+  - **Tabs** (decided by the owner on 2026-09-29, [OQ-4](../../specs/open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)): the top-level tabs follow the pillars, with short, simple labels. By default they're Pokédex, TCG, Battle, and Profile. Users can reorder the first three in Settings → Preferences. The first tab is the screen the app opens to, and Profile stays last.
+  - **Battle has two sections,** Champions (the default) and Showdown, on one shared team engine ([ADR-0008](ADR-0008-battle-engine.md)). A native menu in the Battle header switches between them, not a second row of tabs. Battle reopens on the last section used, and deep links (`/battle/champions`, `/battle/showdown`) open a section directly.
+  - The [architecture overview](../architecture/overview.md) has the route map.
 - **Web output is static** (`"web": { "output": "static" }`). Each public route is pre-rendered to HTML at build time and served from our own domain ([ADR-0005](ADR-0005-web-hosting.md)). There are no Expo API routes at first; the few server tasks live in Cloud Functions ([ADR-0003](ADR-0003-backend-and-auth.md)).
 - **Continuous Native Generation:** `ios/` and `android/` are generated, never committed. Native code goes only in config plugins or local Expo Modules under `modules/`.
 - **Sequencing:** finish the SDK 57 upgrade on React Navigation 7 first ([ADR-0002](ADR-0002-expo-sdk-upgrade-path.md)). Then, in Phase 1, move to Expo Router:
   - the drawer becomes tabs
-  - Pokémon detail becomes a route with a URL (for example `/dex/25`)
+  - Pokémon detail becomes a route with a URL built from our species key: `/dex/6` for a species, with a form selector, and `/dex/6-mega-x` for a form ([OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key))
   - the login gate goes away: every screen works signed out, and sign-in is a screen you open when you want sync
 
 ## Consequences
@@ -45,7 +47,8 @@
 
 **Costs and risks**
 - **Desktop polish takes deliberate work.** Web runs on react-native-web, so hover states, focus rings, keyboard shortcuts, and multi-pane layouts aren't free.
-- **Some APIs we rely on are young or marked `unstable_`:** Native Tabs, and `unstable_headerLeftItems` / `unstable_headerRightItems`. Pin versions and cover the key flows with end-to-end tests.
+- **Some APIs we rely on are young or marked `unstable_`:** Native Tabs, `unstable_headerLeftItems` / `unstable_headerRightItems`, and `Stack.Toolbar`. The Battle section menu uses whichever of the header APIs supports menus on SDK 58 (verify). Pin versions and cover the key flows with end-to-end tests.
+- **A user-chosen tab order** means the tab layout reads a stored preference before its first render (from MMKV, [ADR-0007](ADR-0007-state-and-data-fetching.md)), and Native Tabs have to accept an order chosen at runtime (verify).
 - **Only public pages are pre-rendered.** Per-user pages (your teams and binders) render on the client.
 - **Everything must work on web, or degrade cleanly there.**
   - Every dependency needs web support or a web fallback.
@@ -56,6 +59,7 @@
 **Follow-ups**
 - The route map and navigation structure go in the [architecture overview](../architecture/overview.md).
 - Replace the drawer, the `Modal` screens, and the login gate during the Phase 1 migration.
+- Build the tab-order preference and its screen in Settings → Preferences (PRD APP-1) with the tabs in Phase 1, and the Battle section menu (PRD BAT-5) in Phase 3.
 
 ## Alternatives considered
 

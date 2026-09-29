@@ -1,6 +1,6 @@
 # Device layouts
 
-- **As of:** 2026-09-28
+- **As of:** 2026-09-28. Updated on 2026-09-29 with the owner's decisions on tabs, the Battle section menu, and binder views.
 - **Status:** Proposed. The decision is [ADR-0011](../decisions/ADR-0011-adaptive-layouts-and-foldables.md), and the work lands in roadmap phase P2 ("iOS 27 and devices").
 - **Related:** [device research](../research/2026-09-28-devices.md) · [architecture overview](overview.md) · [test strategy](../testing/test-strategy.md) · platform guides for [iOS](../../.claude/skills/ios-platform/SKILL.md) and [Android](../../.claude/skills/android-platform/SKILL.md)
 
@@ -221,7 +221,7 @@ Switching arrangements never loses state ([rule 5](#the-rules-in-one-screen)): s
 
 ## 5. Navigation per platform
 
-The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md)). Battle holds two top tabs: Champions (the default) and Showdown.
+The top-level tabs are **Pokédex, TCG, Battle, and Profile**, in that default order, with short, simple labels ([ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md)). Users can reorder the first three in Settings → Preferences, and every container below shows the saved order; Profile stays last. Battle has two sections, Champions (the default) and Showdown, switched from a menu in the Battle header rather than a second row of tabs.
 
 | Platform | Compact | Medium | Expanded and large |
 |---|---|---|---|
@@ -235,12 +235,14 @@ The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../dec
 - **Native Tabs render a `UITabBarController`**, with Liquid Glass on iOS 26+ ([Expo: native tabs](https://docs.expo.dev/router/advanced/native-tabs/)). Import them from `expo-router/unstable-native-tabs` on SDK 55–57, and from `expo-router/native-tabs`, which is stable, on SDK 58.
 - **System containers go vertical on iPhone Duo automatically.** We draw no custom tab bars or JS headers for primary navigation.
 - **Header buttons are native bar items.** Use the native stack's `unstable_headerLeftItems` and `unstable_headerRightItems`, which Expo Router's `Stack` passes through to React Navigation ([React Navigation: native stack](https://reactnavigation.org/docs/native-stack-navigator/)). They're iOS only and experimental. Each item gets an icon and a label, per the HIG. `Stack.Toolbar` ([Expo docs](https://docs.expo.dev/router/advanced/stack-toolbar/)) is the alternative: alpha on SDK 57 and stable in SDK 58. Confirm which of the two renders into iPhone Duo's vertical bars (verify on SDK 58).
+- **The Battle section switcher is a native header menu item.** Its label is the current section with a chevron, such as "Champions ▾", and it opens a menu. As a system bar item, it moves to the vertical bar with the other items on iPhone Duo, so it gets an icon and a label like the rest. Build it with whichever of the native stack's header items or `Stack.Toolbar` supports menus on SDK 58 (verify).
 - **Today's settings button** (`App.tsx:22-36`) is a custom `headerRight` view, which is exactly the kind that stays horizontal.
 
 ### Android
 
 - **Compact:** Native Tabs render Material bottom navigation, which allows at most 5 tabs; we use 4. Following Material 3's adaptive default ([ADR-0011](../decisions/ADR-0011-adaptive-layouts-and-foldables.md)), the bottom bar is also used when the height is compact or the device is in tabletop posture.
 - **Medium and up:** otherwise, a navigation rail. Native Tabs don't document a rail, so we build it with Expo Router's headless tabs (`Tabs`, `TabList`, `TabTrigger`, and `TabSlot` from `expo-router/ui`, [experimental](https://docs.expo.dev/router/advanced/custom-tabs/)) and switch by window class. Verify that switching layouts keeps navigation state.
+- **The Battle section switcher** is a dropdown menu from the header, with the same label (verify the component).
 - **Also:** support predictive back, and draw edge to edge, which is mandatory on Android 16+.
 
 ### Web
@@ -250,6 +252,7 @@ The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../dec
   - a rail from 600 to 839 px
   - a sidebar from 840 px
 - Every screen has a URL.
+- **The Battle section switcher is a standard dropdown:** a menu button that works with a keyboard and a screen reader.
 - **Desktop adds** keyboard shortcuts, visible focus rings, and hover states. Nothing depends on hover alone.
 
 ## 6. Screen-by-screen playbook
@@ -261,11 +264,17 @@ The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../dec
 | **Pokédex** | 2–3 column grid with bottom tabs; detail pushes a screen | 3 columns with the side tab bar | List and detail side by side, split at the fold | **Tabletop:** artwork on top, stats below the fold. **Book:** the same as flat. | Three panes: list, detail, and an inspector (forms, sprites, comparison) |
 | **Team builder** | One editor; pickers in sheets | One editor; toolbar items on the side | Team list next to the member editor | **Book:** the team on the left, the calculator on the right. **Tabletop:** a live stat preview above, the editor below. | Team list, editor, and calculator; paste import from the keyboard |
 | **Damage calc** | Stacked: attacker, defender, and a pinned result | Stacked, with the result pinned at the top | Attacker and defender side by side, results across the top | **Tabletop: "DS mode"**: results on the top half, controls on the bottom | Side by side, with a history of recent calcs |
-| **TCG binder** | One 3×3 page at a time; swipe to turn | One page; toolbar on the side | **A two-page spread, with the fold as the binder's spine** | **Book:** the spread, held like a real binder. **Tabletop:** the page on top, the card picker below. | Spread plus a card-search panel |
+| **TCG binder: single page** | One page at a time; swipe to turn | One page; toolbar on the side | The page in one pane; the card picker or card detail in the other | **Book:** the same split, at the hinge. **Tabletop:** the page on top, the card picker below. | The page plus a card-search panel |
+| **TCG binder: binder view** | Spreads scaled to fit; roomiest in landscape, where two 3×3 pages fit side by side (proposed) | Spreads scaled to fit; toolbar on the side | **A two-page spread, with the fold as the binder's spine** | **Book:** the spread, held like a real binder. **Tabletop:** the spread on top, the card picker below. | The spread plus a card-search panel |
+| **TCG binder: continuous grid** | The binder's columns (3 for a 3×3 binder), with rows flowing and no page breaks | The same; toolbar on the side | The grid in one pane, keeping its columns; card detail in the other | **Book:** the same split, at the hinge. **Tabletop:** the grid on top, the card picker below. | The grid plus a card-search panel |
 | **Meta/usage** | List | List | List plus the selected set's detail | **Book:** list and detail. **Tabletop:** chart on top, list below. | Table with charts and filters |
 
 - **Every cell keeps the same functionality.** Only the arrangement changes, as the HIG asks.
+- **The team builder, damage calc, and meta rows cover both Battle sections,** Champions and Showdown, because they share one engine.
+- **Which view a binder opens in is the user's choice,** from a preference, and switching views never moves a card ([data model: binders](data-model.md#binders)).
+- **Spreads pair pages the way a physical binder does:** the first spread is the blank inside front cover and page 1, and each later spread is the back of one sheet and the front of the next ([pages, sheets, and spreads](data-model.md#pages-sheets-and-spreads)).
 - **The binder spread uses `AdaptiveGrid`'s even-column rule:** with two 3×3 pages across the fold, it's 6 columns with the gutter on the spine.
+- **The continuous grid keeps the binder's column count, even when it's odd** (3 for 3×3). On a foldable it stays inside one pane, so no column straddles the fold (proposed).
 
 ## 7. Delight moments
 
@@ -274,7 +283,7 @@ The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../dec
 | iPhone 18 Pro / Pro Max | A Live Activity in the Dynamic Island for tournament rounds or a ranked-season countdown | A widget extension through a config plugin (P6) |
 | iPhone 18 Pro / Pro Max | Liquid Glass native tabs, 120 Hz motion, and haptics on key actions | Native Tabs; Reanimated on the UI thread |
 | iPhone 18 Pro / Pro Max | Later: press Camera Control to scan a card | Camera work (later) |
-| iPhone Duo and Folds | Open the phone like a binder: the spread appears as it unfolds | `AdaptiveSplit` / `AdaptiveGrid` with the hinge |
+| iPhone Duo and Folds | In binder view, open the phone like a binder: the spread appears as it unfolds | `AdaptiveSplit` / `AdaptiveGrid` with the hinge |
 | iPhone Duo and Folds | A DS-style tabletop mode for the damage calculator | `usePosture()` tabletop |
 | iPhone Duo and Folds | State kept intact when you fold or unfold, mid-edit | [Rule 5](#the-rules-in-one-screen) |
 | Galaxy Z Flip8 | A quick calculator in Flex Mode | Tabletop posture |
@@ -297,8 +306,10 @@ The top-level tabs are **Pokédex, Battle, TCG, and Profile** ([ADR-0001](../dec
 **Device QA checklist.** The P2 gate is "iPhone Duo + Fold checklist passes". The [test strategy](../testing/test-strategy.md#6-device-test-matrix) schedules when it runs:
 - [ ] Fold and unfold on every top-level screen: scroll position, selection, and input survive.
 - [ ] Nothing important sits under the hinge or a camera, and no tap target straddles the fold.
-- [ ] On the Duo's outer display, tab bars and toolbars move to the side, and header items show an icon and a label and overflow in order.
+- [ ] On the Duo's outer display, tab bars and toolbars move to the side, and header items, including the Battle section menu, show an icon and a label and overflow in order.
+- [ ] The tab bar, the rail, and the sidebar all show the saved tab order, with Profile last.
 - [ ] Grids use even column counts across a fold.
+- [ ] Binder view: the spine sits on the fold, and page 1 opens on the right of the first spread.
 - [ ] Landscape phones (compact height) never show three panes.
 - [ ] The narrowest multitasking width (Split View, Android multi-window) still works as compact.
 - [ ] A desktop browser window resizes smoothly from 320 px to full width.

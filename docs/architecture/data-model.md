@@ -1,6 +1,6 @@
 # Data model
 
-- **As of:** 2026-09-28
+- **As of:** 2026-09-28. §2 onward was updated on 2026-09-29 with the owner's decisions on species keys, binder pages and views, and new preferences.
 - **Status:** §1 describes what `main` stores today. Everything from §2 on is the **proposed** target. None of it exists in code yet. It follows [ADR-0003](../decisions/ADR-0003-backend-and-auth.md) (backend and auth), [ADR-0007](../decisions/ADR-0007-state-and-data-fetching.md) (state and storage), and [ADR-0008](../decisions/ADR-0008-battle-engine.md) (battle engine).
 - **Related:** [architecture overview](overview.md) · [test strategy](../testing/test-strategy.md) · [battle-ecosystem research](../research/2026-09-28-battle-ecosystem.md) · [open questions](../../specs/open-questions.md)
 
@@ -136,7 +136,7 @@ interface PokemonTeamMember {
 - **One document per aggregate:** a profile, a team, a binder, a dex entry, a favorite. Sync resolves conflicts per document, so the document is the unit of "last write wins" ([§3.4](#34-conflict-notes)).
 - **Every document carries** `schemaVersion`, `createdAt`, `updatedAt`, and an optional `deletedAt` tombstone. Synced documents also carry `serverUpdatedAt`, set by the server.
 - **IDs are generated on the client** (random UUIDs from `expo-crypto`), so creating things offline needs no server round-trip. Firestore's best practices also discourage monotonically increasing IDs.
-- **Game data is referenced by stable IDs** from the data bundle, never by display name.
+- **Game data is referenced by stable IDs** from the data bundle, never by display name. Pokémon and their forms use our own species key ([§2.2](#22-identifiers)).
 - **Collect as little as possible.** Firestore stores no email (Firebase Auth holds it), no birth date (only an age band), and no location. Public surfaces show a display name only when the owner has opted in and isn't a child.
 
 ### 2.2 Identifiers
@@ -144,15 +144,46 @@ interface PokemonTeamMember {
 | ID | Format | Example | Source |
 |---|---|---|---|
 | `uid` | Firebase Auth user ID, or `local` before sign-in | n/a | Firebase Auth |
-| `speciesId` | Showdown-style ID of the base species: lowercase letters and digits | `garchomp`, `mrmime` | Data bundle; the same convention as `@pkmn`'s `toID()` |
-| `formId` | Showdown-style forme suffix, or `null` for the base form | `alola`, `mega`, `megax` | Data bundle |
-| `dexNumber` | National Pokédex number, 1–1025 | `445` | Data bundle |
-| `moveId`, `abilityId`, `itemId`, `natureId`, `typeId` | Showdown-style IDs | `earthquake`, `roughskin`, `choicescarf`, `jolly`, `dragon` | Data bundle |
+| `speciesKey` | **Our own key for a Pokémon or form** (decided 2026-09-29): the National Dex number, then a hyphen and a form slug for any form other than the default. Lowercase letters, digits, and hyphens. | `6`, `6-mega-x`, `37-alola`, `445-mega-z` | The data pipeline. It's the primary key everywhere. |
+| `dexNumber` | National Pokédex number, 1–1025: the part of a `speciesKey` before the first hyphen | `445` | Data bundle |
+| `moveId`, `abilityId`, `itemId`, `natureId`, `typeId` | Showdown-style IDs, for now ([§7](#7-open-questions)) | `earthquake`, `roughskin`, `choicescarf`, `jolly`, `dragon` | Data bundle |
 | `format` | Our stable format ID; the bundle maps each to its Showdown format where one exists | `champions-vgc-reg-mc`, `gen9ou` | Data bundle |
 | `cardId` | TCGdex card ID ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)) | n/a | Data bundle. Today's pokemontcg.io IDs need a mapping step (verify how many differ). |
 
-- **Routes use the dex number** (`/dex/25`, [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md)); documents use `speciesId`. The dex index in the bundle maps between them.
-- **Why Showdown-style IDs (under review, [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)):** the battle engine, paste import and export, `@smogon/calc`, and usage stats all speak them, so teams round-trip without translation. The dex number stays on dex entries for sorting. The recommended alternative keeps Showdown IDs as one column in a crosswalk rather than the key itself.
+#### Species keys
+
+Decided 2026-09-29 ([OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)). Every document, ID, and route that names a Pokémon uses our key.
+
+- **The shape:** the National Dex number for the default form, plus a form slug for every other form.
+
+  | Key | Pokémon or form |
+  |---|---|
+  | `6`, `6-mega-x`, `6-mega-y`, `6-gmax` | Charizard, its two Mega Evolutions, and its Gigantamax form |
+  | `150-mega-x`, `150-mega-y` | Mewtwo's two Mega Evolutions |
+  | `445-mega`, `445-mega-z` | Mega Garchomp, and Champions' Mega Garchomp Z |
+  | `359-mega`, `359-mega-z` | Absol's Mega and Mega Z forms |
+  | `448-mega`, `448-mega-z` | Lucario's Mega and Mega Z forms |
+  | `37-alola` | Alolan Vulpix |
+  | `128-paldea-combat` | Paldean Tauros, Combat Breed |
+  | `479-wash` | Wash Rotom |
+  | `892-rapid-strike` | Urshifu, Rapid Strike Style |
+
+- **Why our own key:** The Pokémon Company publishes only the National Dex number. The games themselves identify a Pokémon by dex number plus a form index, but those indexes aren't published, so our key mirrors that model with readable form names. No third party can break it, it's easy to read, and it works in URLs.
+- **Form slugs** come from PokeAPI's form names where possible, minus the species name: `charizard-mega-x` gives `mega-x`. PokeAPI already models the Champions forms. A manual override table in the pipeline covers names that differ between sources or read badly; for example, PokeAPI's `tauros-paldea-combat-breed` becomes `128-paldea-combat` (verify each name against PokeAPI). Once published, a key never changes meaning.
+- **Battle-relevant or cosmetic:** each form in the bundle carries a `cosmetic` flag. Vivillon's patterns are cosmetic; Megas, regional forms, and Rotom's appliance forms aren't. Dex progress can track cosmetic forms later.
+- **The crosswalk is for reference only.** The pipeline generates a table that maps each key to PokeAPI names and IDs, Showdown IDs, TCGdex references, and display names. No document stores those IDs as keys: when a source renames something, we fix the crosswalk, never user data. A sketch of a few rows:
+
+  | Key | Display name | PokeAPI name | Showdown ID | Cosmetic |
+  |---|---|---|---|---|
+  | `6-mega-x` | Mega Charizard X | `charizard-mega-x` | `charizardmegax` | No |
+  | `445-mega-z` | Mega Garchomp Z | `garchomp-mega-z` | `garchompmegaz` (verify) | No |
+  | `37-alola` | Alolan Vulpix | `vulpix-alola` | `vulpixalola` | No |
+  | `666-polar` | Vivillon, Polar Pattern | `vivillon-polar` | `vivillonpolar` | Yes |
+
+  The real table also carries PokeAPI's numeric IDs and the TCGdex references (verify every value when the pipeline generates it).
+- **The battle engine converts at its boundary.** `packages/battle` turns keys into Showdown IDs only where it calls `@smogon/calc` and `@pkmn`, and turns Showdown names back into keys when it imports a paste.
+- **Routes use the key too:** `/dex/6` opens Charizard with a form selector, and `/dex/6-mega-x` opens that form directly ([architecture overview §2.5](overview.md#25-client-architecture-and-route-map)).
+- **Dex entries still copy the dex number** for sorting, because keys sort as text (`10` before `2`).
 
 ### 2.3 Entity-relationship diagram
 
@@ -193,8 +224,7 @@ erDiagram
     timestamp updatedAt
   }
   TEAM_MEMBER {
-    string species FK "speciesId"
-    string form
+    string species FK "speciesKey, form included"
     string ability
     string item
     string[] moves "up to 4"
@@ -207,11 +237,11 @@ erDiagram
     string color
     string[] tags
     string gridSize "columns x rows"
-    int pageCount
+    int pageCount "a page is one side of a sheet"
     timestamp updatedAt
   }
   BINDER_PAGE {
-    int pageIndex "0-based"
+    int pageIndex "0-based, even means a sheet front"
   }
   BINDER_SLOT {
     int slotIndex "row-major"
@@ -220,7 +250,7 @@ erDiagram
     map purchasePrice "optional"
   }
   DEX_ENTRY {
-    string speciesId PK "Showdown-style ID"
+    string speciesKey PK "our key, such as 25"
     int dexNumber
     bool seen
     bool caught
@@ -231,7 +261,7 @@ erDiagram
   FAVORITE {
     string id PK "kind_refId"
     string kind "species or card"
-    string refId
+    string refId "speciesKey or cardId"
     timestamp createdAt
   }
   PUBLIC_TEAM {
@@ -281,10 +311,14 @@ Common fields (`schemaVersion`, `createdAt`, `updatedAt`, `serverUpdatedAt`, `de
 | `defaultSpriteVersion` | string | `'best'` | Exists, never read |
 | `showShinyByDefault` | boolean | `false` | Exists, never read |
 | `enableHaptics` | boolean | `true` | Exists, never read (haptics always fire) |
-| `enablePriceTracking` | boolean | `false` | Exists, never read |
+| `enablePriceTracking` | boolean | `false` | Exists, never read. Market prices are link-outs only for now, and collection value comes from purchase prices ([PRD TCG-6](../../specs/PRD.md#53-tcg)), so this may be dropped. |
 | `spriteStyle` | `'party' \| 'animated' \| 'home' \| 'gen9'` | `'home'` | Component state only (`PokedexView.tsx:514`), reset on every launch |
-| `defaultRuleset` | `'champions' \| 'sv'` | `'champions'` | New; Champions is the default Battle tab |
+| `tabOrder` | `('dex' \| 'tcg' \| 'battle')[]` | `['dex', 'tcg', 'battle']` | New (decided 2026-09-29): the order of the content tabs, set in Settings → Preferences. The first is the launch screen. Profile is always last, so it isn't listed. Each tab appears exactly once; on read, unknown IDs are dropped and missing ones are appended in the default order, so adding a tab never breaks a saved order. "Restore default" writes the default. |
+| `battleSection` | `'champions' \| 'showdown'` | `'champions'` | New (decided 2026-09-29): the Battle section used last, so Battle reopens there. Deep links override it. |
+| `binderView` | `'page' \| 'binder' \| 'continuous'` | `'page'` (proposed; verify) | New (decided 2026-09-29): single page, binder view, or continuous grid ([binders](#binders)) |
 | `motion` | `'system' \| 'reduced'` | `'system'` | New; lets people calm the holo and gyroscope effects even when the OS setting is off |
+| `marketplace` | `'auto' \| 'tcgplayer' \| 'cardmarket'` | `'auto'` | New (proposed, 2026-09-29): which marketplace gets a card's primary "View on …" button. `auto` follows the device's region setting, with no location permission ([PRD TCG-6](../../specs/PRD.md#53-tcg)). |
+| `analytics` | `'on' \| 'off'` | `'on'` | New: the opt-out in Settings ([tracking plan](../analytics/tracking-plan.md)). When two copies disagree, `'off'` wins, so signing in never turns tracking back on. |
 
 #### teams
 
@@ -310,8 +344,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
 
 | Field | Type | Rules |
 |---|---|---|
-| `species` | `speciesId` | Must exist in the data bundle |
-| `form` | `formId` or `null` | A forme of `species`, such as `alola`; `null` for the base form |
+| `species` | `speciesKey` | Must exist in the data bundle. The key names the form too, such as `37-alola`, so there's no separate form field. |
 | `nickname` | string or `null` | Up to 12 characters (verify the in-game limit); no control characters |
 | `ability` | `abilityId` | Legal for the species and form in the format |
 | `item` | `itemId` or `null` | In the format's item pool; Champions pools are limited |
@@ -325,7 +358,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
 |---|---|---|
 | `statPoints` | `{ hp, atk, def, spa, spd, spe }` | Each an integer 0–32; total at most 66 |
 | `statAlignment` | `natureId` | One of the 25 natures, which Champions calls Stat Alignment |
-| `megaForm` | `formId` or `null` | The Mega forme reached in battle. Needs the matching Mega Stone as `item`, and must be legal in the regulation. |
+| `megaForm` | `speciesKey` or `null` | The Mega form reached in battle, such as `6-mega-x` or `445-mega-z`. It has the same dex number as `species`, needs the matching Mega Stone as `item`, and must be legal in the regulation. |
 | level | not stored | Fixed at 50 |
 | IVs | not stored | Fixed at 31 |
 
@@ -361,7 +394,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
 | `color` | string | A `BINDER_COLORS` id (`red`, `blue`, …) | |
 | `tags` | string[] | Up to 20, each 1–30 characters | `SUGGESTED_TAGS` are suggestions, not a closed list |
 | `gridSize` | `'2x2' \| '3x3' \| '3x4' \| '4x4'` | Columns × rows; the standard 4-, 9-, 12-, and 16-pocket pages (decided 2026-09-29) | Today's code also has `'4x3'` and `'5x5'`; the migration in [§4](#4-migration-from-todays-keys) maps them |
-| `pageCount` | integer | 1–200; a new binder starts at 50 (decided 2026-09-29) | Users add or remove pages. Removing a page that holds cards asks whether to move those cards or remove them. The 200 cap is proposed, to keep the document well under Firestore's size limit. |
+| `pageCount` | integer | 1–200; a new binder starts at 50, which is 25 sheets (decided 2026-09-29) | A page is one side of a sheet ([below](#pages-sheets-and-spreads)). Users add or remove single pages (decided 2026-09-29). Removing a page that holds cards asks whether to move those cards or remove them. The 200 cap is proposed, to keep the document well under Firestore's size limit. |
 | `pages` | `BinderPage[]` | Only pages that hold cards; `pageIndex` unique | |
 
 - **`BinderPage`:** `{ pageIndex, slots }`. `pageIndex` is an integer from 0 to `pageCount − 1`; the UI shows `pageIndex + 1`. `slots` holds only filled slots, with unique `slotIndex`.
@@ -373,20 +406,52 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
   | `cardId` | `cardId` | Exists in the data bundle |
   | `cardName` | string | Copied from the bundle so an offline binder can still show it |
   | `rarity` | string | As published by the source; normalized to an enum later |
-  | `purchasePrice` | `{ amount, currency }`, optional | `amount` is an integer in minor units (cents); `currency` is an ISO 4217 code |
+  | `purchasePrice` | `{ amount, currency }`, optional | `amount` is an integer in minor units (cents); `currency` is an ISO 4217 code. Collection value sums these ([PRD TCG-6](../../specs/PRD.md#53-tcg)); how totals handle mixed currencies is still being planned ([OQ-14](../../specs/open-questions.md#oq-14-card-price-sources-and-logos)). |
   | `dateAdded` | timestamp | |
 
 - **Changing `gridSize` is an explicit reflow.** Cards keep their reading order (page, then slot) and are laid into the new grid, and `pageCount` grows if needed. Stored indices are never reinterpreted.
 - **Size check:** the worst case is 200 pages × 16 slots (4×4) = 3,200 cards. At a rough 150–200 bytes per slot, that's about 0.5–0.65 MB, under Firestore's 1 MiB document limit (an estimate). If binders outgrow it, pages move to a `binders/{id}/pages/{pageIndex}` subcollection.
 
+##### Pages, sheets, and spreads
+
+Decided 2026-09-29. A binder works like a physical one.
+
+- **A page is one side of a sheet,** and every sheet has two sides. Page 1 is the front of sheet 1, page 2 is its back, page 3 is the front of sheet 2, and so on. Sheets aren't stored: a page's 0-based sheet index is ⌊`pageIndex` / 2⌋, and even page indices are fronts.
+- **50 pages by default,** which is 25 sheets. Users add or remove single pages. With an odd count, the last sheet's back is blank: it holds no cards and isn't numbered.
+- **Adding or removing a page in the middle** shifts every later page by one index. Those pages change sides and pair into different spreads, but their slots stay the same. It's one write, like a grid reflow.
+- **Spreads** pair facing pages the way a binder opens. For a 50-page binder:
+
+  | Spread | Left | Right |
+  |---|---|---|
+  | 1 | Inside front cover (blank) | Page 1, the front of sheet 1 |
+  | 2 | Page 2, the back of sheet 1 | Page 3, the front of sheet 2 |
+  | … | … | … |
+  | 25 | Page 48, the back of sheet 24 | Page 49, the front of sheet 25 |
+  | 26 | Page 50, the back of sheet 25 | Inside back cover |
+
+  In general, page *p* (that's `pageIndex` + 1) sits on spread ⌊*p* / 2⌋ + 1: on the right when *p* is odd, and on the left when it's even. When the count is even, the last spread ends with the inside back cover.
+
+##### Views
+
+Decided 2026-09-29. The three views show the same pages, so switching views never moves a card: `pageIndex` and `slotIndex` mean the same thing in every view.
+
+| View | `binderView` | What it shows |
+|---|---|---|
+| Single page | `page` | One page at a time |
+| Binder view | `binder` | The spreads above, turning like a physical binder. On foldables and iPhone Duo's inner display, the fold is the spine ([device layouts §6](device-layouts.md#6-screen-by-screen-playbook)). |
+| Continuous grid | `continuous` | Every page's slots in one scrolling grid, with no page breaks. It keeps the grid's columns (3 for 3×3), and the rows flow on: page 2's first row follows page 1's last. |
+
+- **Which view opens:** the user's `binderView` preference ([users](#users)).
+- **Each binder can also remember the view it was last opened in.** That last view stays on the device (MMKV, keyed by binder ID), not in the binder document, so switching views never rewrites a synced binder or creates a conflict copy ([§3.4](#34-conflict-notes)) (proposed).
+
 #### dex progress
 
-`users/{uid}/dex/{speciesId}`. A document exists only once a species has some progress; no document means unseen.
+`users/{uid}/dex/{speciesKey}`. A document exists only once a species has some progress; no document means unseen.
 
 | Field | Type | Rules |
 |---|---|---|
-| *(document ID)* | `speciesId` | |
-| `dexNumber` | integer | 1–1025; copied for sorting |
+| *(document ID)* | `speciesKey` | In v1, the default form's key, such as `25` |
+| `dexNumber` | integer | 1–1025; copied for sorting, because keys sort as text |
 | `seen` | boolean | |
 | `caught` | boolean | `caught` implies `seen` |
 | `shiny` | boolean | A shiny was caught |
@@ -394,7 +459,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
 | `firstSeenAt` | timestamp, optional | |
 | `caughtAt` | timestamp, optional | Only when caught |
 
-Tracking forms separately (regional forms, Megas) is an [open question](#7-open-questions).
+Keys already name every form, so tracking forms separately needs no new IDs. Which forms get their own progress is an [open question](#7-open-questions); cosmetic forms, such as Vivillon's patterns, can come later.
 
 #### favorites
 
@@ -402,9 +467,9 @@ Tracking forms separately (regional forms, Megas) is an [open question](#7-open-
 
 | Field | Type | Rules |
 |---|---|---|
-| *(document ID)* | `<kind>_<refId>` | For example `species_pikachu`. Deterministic, so favoriting twice is a no-op. |
+| *(document ID)* | `<kind>_<refId>` | For example `species_25`. Deterministic, so favoriting twice is a no-op. |
 | `kind` | `'species' \| 'card'` | v1 uses `species`; cards arrive with TCG v2 (P5) |
-| `refId` | `speciesId` or `cardId` | Exists in the data bundle |
+| `refId` | `speciesKey` or `cardId` | Exists in the data bundle |
 | `createdAt` | timestamp | |
 | `deletedAt` | timestamp, optional | Un-favoriting writes a tombstone, so the removal syncs |
 
@@ -457,7 +522,7 @@ The device is the source of truth for what you see. Firestore is the sync and ba
 | Store | Holds | Why |
 |---|---|---|
 | **SQLite** (`expo-sqlite`) | User documents (profile, teams, binders, dex, favorites), the outbox, sync cursors; optionally an indexed copy of the dex for search | Transactions: a document and its outbox entry commit together. Queries. |
-| **MMKV** (`react-native-mmkv` 4) | Small synchronous values: a preferences cache, feature flags, the migration marker, and TanStack Query's persisted cache for small queries | Synchronous reads at startup, with no flash of defaults |
+| **MMKV** (`react-native-mmkv` 4) | Small synchronous values: a preferences cache (including the tab order and the analytics opt-out), feature flags, the migration marker, the anonymous analytics install ID, each binder's last view, and TanStack Query's persisted cache for small queries | Synchronous reads at startup, with no flash of defaults |
 | **Files** (`expo-file-system`) and the `expo-image` cache | Immutable data bundles, keyed by content hash; sprites | Large and immutable |
 
 - **Web:** check `expo-sqlite`'s web support and MMKV's web backend on SDK 57 before relying on them (verify); IndexedDB is the fallback.
@@ -535,7 +600,7 @@ sequenceDiagram
 - **Teams and binders keep a conflict copy.** Each local edit records `baseUpdatedAt`, the version it started from. If a pull finds that both sides changed since that base, the newer `updatedAt` wins the document, and the other version is saved as a new document named "<name> (conflict copy)". Nothing effortful is lost silently.
 - **Binders are the biggest documents,** so they're the likeliest to collide. If that happens in practice, move pages to their own documents.
 - **Dex entries and favorites are tiny,** so last-write-wins is effectively per item, and toggles converge.
-- **Preferences can merge per field** instead of per document; it's cheap because the map is flat.
+- **Preferences can merge per field** instead of per document; it's cheap because the map is flat. The analytics opt-out is the exception: `'off'` always wins.
 - **Clock skew:** `updatedAt = max(now, previous + 1)` keeps an edit ordered after the version it edited, even on a device whose clock runs slow. Pull cursors use `serverUpdatedAt` (server time) only.
 - **Schema skew:** a client never overwrites a document whose `schemaVersion` is newer than it understands. Instead it shows "Update the app to edit this." The rules also refuse any write that lowers `schemaVersion`.
 
@@ -569,7 +634,7 @@ flowchart TD
 
 - **It runs before any screen reads user data,** behind the splash screen. That also removes today's hydration race by construction.
 - **The originals are removed only after the new store commits.** Values that can't be parsed or resolved stay in the backup, and they're reported once without personal data.
-- **Mapping IDs needs the dex index.** Each build embeds a small seed bundle, generated by the pipeline and never committed ([ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md)). It includes the ID map (dex number ↔ `speciesId` ↔ name), so the migration also works on a first launch that's offline.
+- **Mapping IDs needs the dex index.** Each build embeds a small seed bundle, generated by the pipeline and never committed ([ADR-0004](../decisions/ADR-0004-static-game-data-pipeline.md)). It includes the crosswalk (species key ↔ dex number ↔ names, [§2.2](#species-keys)), so the migration also works on a first launch that's offline.
 
 | Legacy | v1 | Rule |
 |---|---|---|
@@ -577,10 +642,10 @@ flowchart TD
 | `UserProfile.email`, `avatar`, `authProvider`, `id` | dropped | Simulated identity. Real identity comes from Firebase Auth in P4. |
 | `UserProfile.preferences` | `profile.preferences` | Missing fields get schema defaults |
 | `UserProfile.createdAt` | `profile.migratedFrom.legacyCreatedAt` | |
-| `@pokemon_favorites` (`number[]`) | `favorites/species_<speciesId>` | Dex number → `speciesId` through the ID map |
-| `UserProfile.favorites` (`string[]`) | `favorites/species_<speciesId>`, merged with the row above | Each string is resolved as a dex number first, then as a name |
-| `UserProfile.caughtPokemon[]` | `dex/{speciesId}` | `caught = seen = true`; `isShiny` → `shiny`; `ballType` kept if it's a `POKEBALL_TYPES` id; `dateSpotted` → `firstSeenAt`; `dateCaught` → `caughtAt` |
-| `UserProfile.savedBinders[]` | `binders/{id}` | IDs, name, color, tags, `gridSize`, and dates are kept. `position` → `pageIndex = ⌊position / slotsPerPage⌋`, `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. That assumes a 0-based, page-major encoding (verify against `BinderPlanner.tsx`). `purchasePrice` → `{ amount: round(price × 100), currency: 'USD' }` (assumes USD; verify). Legacy grid sizes: `'4x3'` becomes `'3x4'` if it meant 4 rows × 3 columns (verify against `BinderPlanner.tsx`), and `'5x5'` becomes `'4x4'` with a reflow that adds pages. |
+| `@pokemon_favorites` (`number[]`) | `favorites/species_<speciesKey>` | A dex number is already the key of that species' default form, so `25` becomes `species_25` |
+| `UserProfile.favorites` (`string[]`) | `favorites/species_<speciesKey>`, merged with the row above | Each string is resolved as a dex number first, then as a name through the crosswalk |
+| `UserProfile.caughtPokemon[]` | `dex/{speciesKey}` | `pokemonId` is resolved the same way; `caught = seen = true`; `isShiny` → `shiny`; `ballType` kept if it's a `POKEBALL_TYPES` id; `dateSpotted` → `firstSeenAt`; `dateCaught` → `caughtAt` |
+| `UserProfile.savedBinders[]` | `binders/{id}` | IDs, name, color, tags, `gridSize`, and dates are kept. `pageCount` becomes the larger of 50 and one more than the highest `pageIndex` in use (proposed). `position` → `pageIndex = ⌊position / slotsPerPage⌋`, `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. That assumes a 0-based, page-major encoding (verify against `BinderPlanner.tsx`). `purchasePrice` → `{ amount: round(price × 100), currency: 'USD' }` (assumes USD; verify). Legacy grid sizes: `'4x3'` becomes `'3x4'` if it meant 4 rows × 3 columns (verify against `BinderPlanner.tsx`), and `'5x5'` becomes `'4x4'` with a reflow that adds pages. |
 | `@image_cache_metadata` | dropped | Obsolete once expo-image lands |
 
 ### 4.3 First sign-in (P4)
@@ -589,7 +654,7 @@ flowchart TD
 - **The account already has cloud data** (for example, a second device):
   - dex entries and favorites merge per document (last write wins)
   - teams and binders from both sides are all kept, because their IDs never collide
-  - preferences: the cloud copy wins (verify that this feels right in testing)
+  - preferences: the cloud copy wins (verify that this feels right in testing), except that an analytics opt-out on either side stays `'off'`
 - **The data wipe can't happen again.** Signing in never replaces local data with an empty profile, and signing out never deletes it ([§3.2](#32-local-schema-sketch)).
 
 ---
@@ -626,11 +691,12 @@ Types come from schemas (`type Team = z.infer<typeof Team>`), so there's one sou
 | `members` | At most 6 | Shape |
 | `moves` | At most 4, unique; each in the learnset for the format | Shape; legality |
 | `teraType` | SV only: one of the 18 types, or Stellar | Shape |
-| `megaForm` | Champions only: a Mega forme of `species` that's legal in the regulation, with the matching Mega Stone held | Legality |
+| `species`, `megaForm` | A species key: a dex number with an optional form slug, and it must exist in the bundle's crosswalk | Shape; legality |
+| `megaForm` | Champions only: a Mega form with the same dex number as `species`, legal in the regulation, with the matching Mega Stone held | Legality |
 | `item`, `ability` | In the format's pools, and legal for the species | Legality |
 | `nickname` | Up to 12 characters (verify), no control characters. Public teams are also filtered for profanity and personal information. | Shape; Function |
 | Team `name`, `notes` | 1–60 characters; up to 2,000 | Shape |
-| Binder indices | `pageIndex` 0–99 and below `pageCount`; `slotIndex` below columns × rows; each (page, slot) pair unique | Shape |
+| Binder indices | `pageIndex` 0–199 and below `pageCount`; `slotIndex` below columns × rows; each (page, slot) pair unique | Shape |
 | `purchasePrice` | `amount` a non-negative integer in minor units; `currency` a three-letter ISO 4217 code | Shape |
 | Replica code | 10 characters after normalization (verify the alphabet) | Shape |
 | Every document | `schemaVersion` known to this app; `updatedAt` present | Shape |
@@ -642,8 +708,11 @@ A sketch in zod 4. The real schemas live in `packages/battle`.
 ```ts
 import { z } from 'zod';
 
-const Id = z.string().regex(/^[a-z0-9]+$/); // Showdown-style IDs
-const SpeciesId = Id, FormId = Id, AbilityId = Id, ItemId = Id, MoveId = Id, NatureId = Id;
+const Id = z.string().regex(/^[a-z0-9]+$/); // Showdown-style IDs for moves, abilities, items, and natures, for now
+// Our species key: the dex number, plus a form slug for any other form (6, 6-mega-x, 37-alola).
+// This checks the shape only; the bundle's crosswalk checks that the key exists.
+const SpeciesKey = z.string().regex(/^[1-9][0-9]{0,3}(-[a-z0-9]+)*$/);
+const AbilityId = Id, ItemId = Id, MoveId = Id, NatureId = Id;
 const TeraType = z.enum([
   'normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground',
   'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy', 'stellar',
@@ -659,8 +728,7 @@ const Evs = statTable(252).refine((s) => total(s) <= 510, { message: 'At most 51
 const Ivs = statTable(31);
 
 const MemberBase = z.object({
-  species: SpeciesId,
-  form: FormId.nullable(),
+  species: SpeciesKey, // names the form too, such as 37-alola
   nickname: z.string().max(12).nullable(),
   ability: AbilityId,
   item: ItemId.nullable(),
@@ -674,7 +742,7 @@ const MemberBase = z.object({
 export const ChampionsMember = MemberBase.extend({
   statPoints: StatPoints,
   statAlignment: NatureId,
-  megaForm: FormId.nullable(),
+  megaForm: SpeciesKey.nullable(), // a Mega form's key, such as 6-mega-x
 });
 
 export const SvMember = MemberBase.extend({
@@ -793,8 +861,10 @@ Firestore rules aren't filters: a list query has to include the same constraints
 
 Settled answers become ADR updates; the shared list is [specs/open-questions.md](../../specs/open-questions.md).
 
-- **The canonical species key: reopened 2026-09-29.** Showdown isn't an official source, so the owner doesn't want its IDs to be the source of truth. The recommendation is our own key, built from the official National Dex number plus a form slug we control, with a crosswalk to other sources. The Showdown-style IDs in this document are placeholders until that's decided. See [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key).
-- **Form-level dex tracking.** Should regional forms and Megas get their own progress, as Pokémon HOME tracks them?
+- **The canonical species key: decided 2026-09-29.** Our own key, the National Dex number plus a form slug, is the primary key in every document and ID. The crosswalk to PokeAPI, Showdown, and TCGdex is for reference only ([§2.2](#species-keys), [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)).
+- **Keys for moves, abilities, items, and natures.** The species-key decision doesn't cover them, so they stay Showdown-style for now. Should they get keys of our own too?
+- **Form-level dex tracking.** Keys already name every form. Which forms get their own progress in v1, such as regional forms and Megas, as Pokémon HOME tracks them? Cosmetic forms can come later (owner, 2026-09-29).
+- **The default binder view.** Single page is proposed.
 - **Binder encoding today.** What does `'4x3'` mean, and is `position` 0-based and page-major? Confirm when `BinderPlanner.tsx` lands.
 - **The currency of legacy `purchasePrice`.** Assumed USD.
 - **Moderation workload.** Auto-approve after automated checks, with reports afterwards, or review everything first?
