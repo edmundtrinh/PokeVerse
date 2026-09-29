@@ -19,14 +19,14 @@
 emulator -avd <your_avd_name>
 
 # Then in your project directory:
-cd 'c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse'
+cd 'C:\path\to\PokeVerse'
 npm run android
 ```
 
 ### Option 2: Let Expo Start Emulator
 
 ```powershell
-cd 'c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse'
+cd 'C:\path\to\PokeVerse'
 npm run android
 # This will automatically start your default AVD if none is running
 ```
@@ -105,7 +105,7 @@ After setup, verify everything works:
 ```powershell
 # Check Android SDK
 echo $env:ANDROID_HOME
-# Should output: C:\Users\ETrinh1\AppData\Local\Android\Sdk
+# Should output: C:\Users\<you>\AppData\Local\Android\Sdk
 
 # Check ADB
 adb --version

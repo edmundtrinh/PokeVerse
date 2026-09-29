@@ -40,7 +40,7 @@ If Fast Refresh stops working:
 
 1. **Check the URL in terminal:**
    - ✅ Good: `exp://127.0.0.1:8081` or `exp://localhost:8081`
-   - ❌ Bad: `exp://10.0.0.15:8081` (LAN URL)
+   - ❌ Bad: `exp://192.168.1.20:8081` (LAN URL)
 
 2. **Open Developer Menu in simulator:**
    - iOS: `Cmd+D` or `Device > Shake`

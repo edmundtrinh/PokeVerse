@@ -1,46 +1,57 @@
-# OSX
+# OS
 .DS_Store
+Thumbs.db
 
-# Node modules
+# Dependencies
 node_modules/
-npm-debug.log
-yarn-error.log
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
 
 # Expo
 .expo/
 dist/
 web-build/
 
-# TypeScript
+# Native projects are generated (continuous native generation)
+android/
+ios/
+
+# Build output and coverage
+build/
+coverage/
 *.tsbuildinfo
 
-# Environment variables
+# Environment variables (commit .env.example only)
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-# Android/IntelliJ
-build/
+# Android / IntelliJ
 .idea
 .gradle
 local.properties
 *.iml
 *.hprof
-android/
 
-# iOS
-ios/
+# iOS signing material
 *.mobileprovision
 *.p8
 *.p12
 *.key
 *.cer
 
-# Claude Code (per-user settings)
+# Local-only notes and agent settings (never commit)
+*.local.md
+# AGENTS.md is the canonical instructions file; a CLAUDE.md shim stays local
 CLAUDE.md
-.claude/
+.claude/settings.local.json
+.claude/launch.json
+.claude/worktrees/
+.claude/agent-memory/
+.claude/agent-memory-local/
 
 # Test coverage
 coverage/
