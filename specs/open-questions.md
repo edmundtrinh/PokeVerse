@@ -10,9 +10,9 @@ These are decisions the maintainer still has to make. Each one lists its options
 | # | Question | Recommendation | Blocks | Decide by |
 |---|---|---|---|---|
 | [OQ-1](#oq-1-final-backend-pick) | Final backend pick | Firebase now; Supabase if the reachability constraint goes away | ADR-0003, P4 | Before P4 |
-| [OQ-2](#oq-2-styling-library) | Styling library | Spike both; if both pass, pick the one that's stable | ADR-0006, all new UI | P1 spike |
+| [OQ-2](#oq-2-styling-library) | Styling library | Deeper desk comparison, then a hands-on spike; if both pass, pick the stable one | ADR-0006, all new UI | P1 spike |
 | [OQ-3](#oq-3-store-safe-brand-name-and-domain) | Store-safe brand name and domain | Choose in P1, before buying a domain or creating store records | The custom domain, P1 web deploy, P4 auth domains, P6 | Before the P1 web deploy |
-| [OQ-4](#oq-4-champions-and-showdown-tab-naming-and-default) | Champions/Showdown tab naming and default | "Champions" (default) and "Showdown"; shared teams | P3 navigation and copy | Before P3 design |
+| [OQ-4](#oq-4-champions-and-showdown-tab-naming-and-default) | Tab naming and default | **Decided 2026-09-29:** Pokédex → TCG → VGC → Smogon (+ Profile), user-reorderable; exact labels to confirm | P1 routes, P3 copy | Labels before P3 design |
 | [OQ-5](#oq-5-license) | License | MIT, once the maintainer confirms he's cleared to license the code | The LICENSE file; outside contributions | As soon as possible |
 | [OQ-6](#oq-6-smogon-sets-and-analyses-permission) | Smogon sets and analyses | Ask first; meanwhile show usage stats, our own derived builds, and links | SD-3, meta pages | Before P3 |
 | [OQ-7](#oq-7-sprite-source-and-permission-for-store-builds) | Sprite source for store builds | PokeAPI sprites for web; ask for permission before stores, or go text-first | P6 store submission | Before P6 |
@@ -21,8 +21,8 @@ These are decisions the maintainer still has to make. Each one lists its options
 | [OQ-10](#oq-10-replica-code-moderation) | Replica code moderation | Curated in P3; structured, pre-moderated submissions in P4 | CHA-5, security rules, Terms | Before P4 |
 | [OQ-11](#oq-11-battle-hub-p3-or-accounts-p4-first) | Battle hub (P3) or accounts (P4) first | P3 first | Roadmap order | Before P3 starts |
 | [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | **Decided 2026-09-29:** guest mode only in v1 | n/a | Done |
-| [OQ-13](#oq-13-canonical-species-key) | Canonical species key | Our own key: National Dex number + our form slug, with a crosswalk | Data model, data pipeline, battle engine | Before the P1 data pipeline |
-| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | Pending feasibility research | ADR-0009, TCG-6, P5 | Before P5 |
+| [OQ-13](#oq-13-canonical-species-key) | Canonical species key | **Decided 2026-09-29:** our own key (dex number + form slug) is primary; the other sources are reference-only | n/a | Done |
+| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | v1: TCGdex's TCGplayer and Cardmarket prices, text-labeled, with link-outs; v2: eBay listings, and PriceCharting if licensed; or defer | ADR-0009, TCG-6, P5 | Before P5 |
 
 ## OQ-1: Final backend pick
 
@@ -69,6 +69,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | **`StyleSheet` plus tokens** (fallback) | No dependencies | Verbose, with no responsive variants |
 
 - **Recommendation:** run the spike on one real screen (a Pokédex row and the detail header). If both pass, choose the one with a stable release: Uniwind, as of 2026-09-28. Pick NativeWind 5 instead if it has shipped a stable release by then and does better on the criteria.
+- **Owner (2026-09-29):** still undecided. A deeper desk comparison runs first (maintainers, licensing, compatibility, performance evidence, open issues), then the hands-on spike. The spike can run in a scratch Expo SDK 57 app, so it doesn't have to wait for the repo's upgrade.
 
 ## OQ-3: Store-safe brand name and domain
 
@@ -119,6 +120,12 @@ These are decisions the maintainer still has to make. Each one lists its options
   - Teams are shared across both tabs and tagged by ruleset.
   - After the first launch, remember the last tab used.
   - Both names refer to other parties' products. That's fine inside the app, but keep them out of the app's name and icon ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)).
+- **Decided 2026-09-29 (owner), superseding the recommendation above:**
+  - **Tabs:** four top-level content tabs, in this default order: **Pokédex → TCG → VGC (Champions) → Smogon (Showdown and Smogon singles)**, plus Profile.
+  - **Reordering:** users can reorder the content tabs in Settings → Preferences, and the first tab is the screen the app opens to.
+  - **Labels:** "VGC" and "Smogon" are proposed; the exact wording is still to confirm. Possible subtitles: "VGC · Champions" and "Smogon · Showdown".
+  - **Shared engine:** both battle tabs share one team engine and one team list, tagged by ruleset.
+  - These names describe other parties' programs and communities, so they stay out of the app's name and icon.
 
 ## OQ-5: License
 
@@ -198,7 +205,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Aptabase | Privacy-first and open source, with mobile SDKs | Smaller project |
 | Our own anonymous daily "ping" counter | Minimal and fully ours | Build and maintain it |
 
-- **Owner's direction (2026-09-29):** yes to product analytics from the start.
+- **Owner's direction (2026-09-29):** yes to product analytics from the start. Track broadly, so that anything useful for future analysis is recorded, even before every report is built. The event catalog lives in the [tracking plan](../docs/analytics/tracking-plan.md). Raw events are exported so they can be analyzed later.
 - **Recommendation:**
   - Crashes and performance go to Sentry.
   - Product events go through our own small `analytics.track(event, props)` wrapper, so the vendor can be swapped. Proposed vendor: Firebase Analytics, which is in the same project and console as the backend, free, and reachable by maintainers. Mixpanel or Amplitude are alternatives if its reports prove too limited.
@@ -300,6 +307,11 @@ These are decisions the maintainer still has to make. Each one lists its options
   - The data pipeline generates a crosswalk that maps each key to PokeAPI names and IDs, Showdown IDs, TCGdex references, and display names.
   - Saved documents store only our key. If a source renames something, we fix the crosswalk, never user data.
   - The battle engine converts to Showdown IDs at its edge when it calls `@smogon/calc` or `@pkmn`.
+- **Decided 2026-09-29 (owner):** our own key is primary, and the other sources are reference-only, through the crosswalk.
+  - **Forms get distinct keys**, including multiple Megas and Champions' Mega Z forms: `6-mega-x` and `6-mega-y`, `150-mega-x` and `150-mega-y`, and `445-mega` vs `445-mega-z`, `359-mega` vs `359-mega-z`, `448-mega` vs `448-mega-z`.
+  - **Slugs** are derived from PokeAPI's form names where possible (PokeAPI already models the Champions forms), with manual overrides.
+  - **Cosmetic forms** are flagged separately from battle-relevant forms.
+  - **Why it's sound:** the games themselves identify a Pokémon by dex number plus a form index, but The Pokémon Company doesn't publish those IDs. Our key mirrors that model, with readable form names.
 
 ## OQ-14: Card price sources and logos
 
@@ -311,11 +323,29 @@ These are decisions the maintainer still has to make. Each one lists its options
   - TCGplayer isn't granting new API access.
   - API keys can't ship inside the app, so keyed sources need our pipeline or a server function.
   - Logos are trademarks. Use them only where a source's API, partner, or affiliate terms allow; otherwise show the source's name and a link.
-  - Feasibility, terms, and logo rules for each source are being researched (2026-09-29).
-- **Recommendation:** pending that research.
+- **Research findings (2026-09-29):**
+
+| Source | What's possible | Verdict |
+|---|---|---|
+| TCGplayer | The API is closed to new developers. Its prices reach us unofficially through TCGdex (via the one-person tcgcsv mirror). The affiliate program is open for "view on TCGplayer" links. | Show through TCGdex with attribution (a gray area); link out |
+| Cardmarket | Its daily price guide is free to download, and TCGdex includes it. Its terms require written agreement to display prices (verify). | Show through TCGdex with attribution (a gray area); ask for permission |
+| eBay | The Browse API (active listings) is open. Sold-price data is restricted. The Partner Network allows official logos and tracked links. | v2: a "live listings" panel through a server function, cached no more than 6 h |
+| PSA | The public API covers cert lookups only, with no prices. Its site terms ban scraping. | Link out only (cert and population pages) |
+| Collectr | Discretionary API; its terms ban building competing products (verify). | Avoid |
+| DoubleHolo | No API or partner program found. | Avoid (a plain link at most) |
+| PriceCharting | A paid API with graded prices (PSA, BGS, CGC). App use needs a commercial license and written permission. | The best route to graded prices, with approval |
+
+- **Logos:** show a logo only where a program explicitly grants it (eBay's Partner Network, or a PriceCharting license). Elsewhere, use the source's name as plain text plus a non-affiliation notice. Apps like Dex show marketplace logos, but whether they have permission is unknown.
+- **Recommendation:**
+  - **v1 (P5):** TCGdex's TCGplayer and Cardmarket prices, in separate labeled rows with an "as of" date, plus link-outs. No bulk price dumps, no price history, no scraping, and a swappable provider interface.
+  - **v2:** eBay live listings, and graded prices if a PriceCharting license (or a paid alternative) works out.
+  - **Also:** ask TCGplayer and Cardmarket for written permission.
+  - **Fallback:** if the gray area is unacceptable, defer prices entirely. Binders and decks work without them.
 
 ## Decided
 
 When a question is settled, move it here with the date, the outcome, and a link to the ADR or PR that records it.
 
+- **2026-09-29, OQ-4 (tabs):** Pokédex → TCG → VGC (Champions) → Smogon (Showdown), plus Profile. Users can reorder the content tabs in Settings → Preferences, and the first tab is the launch screen. The exact labels are still to confirm.
+- **2026-09-29, OQ-13 (species key):** our own key (dex number + form slug) is primary; PokeAPI, Showdown, and TCGdex IDs live in a reference crosswalk.
 - **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).
