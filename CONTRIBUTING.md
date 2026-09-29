@@ -10,6 +10,7 @@ Thanks for your interest! PokéVerse is a non-profit, open-source Pokémon compa
   - Credit data sources (PokeAPI, Smogon, Pokémon Showdown, TCGdex) wherever their data appears.
 - **Public repo:** never commit secrets, API keys, personal absolute paths, email addresses, or machine-specific notes. Keep local notes in `*.local.md` files, which are gitignored.
 - **Licensing:** there's no license yet (MIT is planned). Please open an issue before you start a large contribution.
+- **How contributions work:** the maintainer is the project's main developer and the only person with write access. Outside changes come in only as pull requests from forks. The maintainer reviews every PR, and may decline changes that don't fit the roadmap. Opening an issue first is the best way to check.
 
 ## Getting set up
 
