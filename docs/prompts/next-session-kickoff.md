@@ -43,7 +43,7 @@ A. **Land the Expo SDK 49 → 57 upgrade** on chore/expo-sdk-57.
 B. **Foundation.**
    - Structure: monorepo (npm workspaces + Turborepo); Expo Router with native stack + Native Tabs.
    - Styling: tokens package, plus a styling spike (Uniwind vs NativeWind 5) recorded as an ADR.
-   - Data: data pipeline v1 in GitHub Actions (dex index with real types, resized sprites, served from our domain); expo-image; TanStack Query.
+   - Data: data pipeline v1 in GitHub Actions (dex index with real types keyed by our species keys, plus an image-availability manifest); Pokémon images load on the device from the PokeAPI sprite project (pinned URLs, never hosted by us); expo-image; TanStack Query.
    - Cleanup: split PokedexView; honest error states; Sentry.
    - Ship: web deploy.
 C. **iOS 27 and devices.**
@@ -51,8 +51,9 @@ C. **iOS 27 and devices.**
    - Layout: a fold-aware module; adaptive layouts for iPhone 18 Pro/Pro Max, iPhone Duo (ships 2026-10-23), Galaxy Z Fold8/Flip8, Pixel Fold, iPad, and desktop web.
 D. **Battle hub v1.**
    - A shared team engine with a ruleset adapter (Champions Stat Points + Stat Alignment + Mega vs SV EVs/IVs + Tera).
-   - Champions tab: regulation hub, Stat Point editor, bring/pick planner, @smogon/calc, usage, and "meta picks & builds".
-   - Showdown tab: paste and PokéPaste import/export, Smogon stats and sets, calc, and "test on Showdown".
+   - One Battle tab with a Champions / Showdown dropdown.
+   - Champions section: regulation hub, Stat Point editor, bring/pick planner, @smogon/calc, usage, and "meta picks & builds".
+   - Showdown section: paste and PokéPaste import/export, Smogon stats and sets, calc, and "test on Showdown".
 E. **Accounts and sync.** Firebase Auth and Firestore per the data-model doc, local-first sync, migration of existing local profiles, in-app account deletion, privacy policy and ToS, and an age gate.
 F. **TCG v2.**
    - Move from pokemontcg.io to TCGdex before 2027-03-01 (target: off it by 2027-01-31).

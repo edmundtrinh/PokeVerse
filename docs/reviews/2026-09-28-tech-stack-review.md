@@ -6,6 +6,8 @@ An end-to-end review of PokeVerse's code, architecture, tests, tooling, and docs
 
 **Related:** [interview guide](2026-09-28-chief-of-staff-interview.md) · [battle ecosystem research](../research/2026-09-28-battle-ecosystem.md) · [device research](../research/2026-09-28-devices.md) · [architecture overview](../architecture/overview.md) · [roadmap](../../specs/roadmap.md) · [decisions (ADRs)](../decisions/)
 
+> **Updates since this snapshot (2026-09-29):** the owner has decided several things since this was written. Tabs are **Pokédex → TCG → Battle → Profile**, with a Champions / Showdown dropdown inside Battle ([OQ-4](../../specs/open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)). Pokémon images load on the device from the PokeAPI sprite project and are never hosted by us ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)). Marketplaces get plain links only ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)). Species use our own keys ([OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)). Current decisions live in the ADRs and specs, not here.
+
 ## Contents
 
 1. [Scope and method](#1-scope-and-method)

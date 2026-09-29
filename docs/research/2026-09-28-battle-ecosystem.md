@@ -8,6 +8,8 @@ Research behind PokeVerse's planned battle hub, which has a **Champions** tab an
 
 **Related:** [tech-stack review](../reviews/2026-09-28-tech-stack-review.md) · [device research](2026-09-28-devices.md) · [decisions (ADRs)](../decisions/) · [roadmap](../../specs/roadmap.md)
 
+> **Updates since this snapshot (2026-09-29):** the owner has decided several things since this was written. Tabs are **Pokédex → TCG → Battle → Profile**, with a Champions / Showdown dropdown inside Battle ([OQ-4](../../specs/open-questions.md#oq-4-champions-and-showdown-tab-naming-and-default)). Pokémon images load on the device from the PokeAPI sprite project and are never hosted by us ([ADR-0012](../decisions/ADR-0012-brand-ip-and-assets.md)). Marketplaces get plain links only ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)). Species use our own keys ([OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)). Current decisions live in the ADRs and specs, not here.
+
 ## Key takeaways
 
 - **Champions is the competitive game now.** It's the official VGC game, required for Championship Points events since 2026-09-01. Regulation M-C runs from 2026-09-08 to 2026-12-01.

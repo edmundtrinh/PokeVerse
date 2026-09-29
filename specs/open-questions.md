@@ -22,7 +22,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | [OQ-11](#oq-11-battle-hub-p3-or-accounts-p4-first) | Battle hub (P3) or accounts (P4) first | P3 first | Roadmap order | Before P3 starts |
 | [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | **Decided 2026-09-29:** guest mode only in v1 | n/a | Done |
 | [OQ-13](#oq-13-canonical-species-key) | Canonical species key | **Decided 2026-09-29:** our own key (dex number + form slug) is primary; the other sources are reference-only | n/a | Done |
-| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | v1: TCGdex's TCGplayer and Cardmarket prices, text-labeled, with link-outs; v2: eBay listings, and PriceCharting if licensed; or defer | ADR-0009, TCG-6, P5 | Before P5 |
+| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | Direction (2026-09-29): plain "View on TCGplayer / Cardmarket" links, collection value from the user's own purchase prices, eBay current listings in v2; no affiliates; still planning | ADR-0009, TCG-6, P5 | Before P5 |
 
 ## OQ-1: Final backend pick
 
@@ -218,7 +218,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 - **Question:** how do we measure active users and retention without tracking people?
 - **Blocks:** the usage metrics in the [PRD](PRD.md#7-success-metrics), the privacy policy and store privacy labels (P4 and P6), and any consent UI.
-- **Decide by:** before the P4 privacy policy is written.
+- **Decide by:** before P1 ends. Analytics starts in P1, so the P1 privacy policy has to cover it.
 - **Context:**
   - The audience skews young, and the project is non-commercial.
   - Maintainer environments must be able to reach the vendor.

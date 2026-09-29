@@ -27,8 +27,8 @@
 
 ## Decision
 
-- **One team engine in `packages/battle`**, shared by the Champions and Showdown tabs. It's platform-agnostic TypeScript, so it runs in the app, in Node tests, and in the pipeline.
-- **The team model:** a ruleset-neutral core (species, form, ability, item, moves, level, gender, shiny, nickname, notes), plus a spread and a gimmick that depend on the ruleset:
+- **One team engine in `packages/battle`**, shared by the Battle tab's Champions and Showdown sections (decided 2026-09-29: one Battle tab with a Champions / Showdown dropdown). It's platform-agnostic TypeScript, so it runs in the app, in Node tests, and in the pipeline.
+- **The team model:** a ruleset-neutral core (the species key, which already names the form, such as `445-mega-z`; plus ability, item, moves, level, gender, shiny, nickname, and notes; see [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)), plus a spread and a gimmick that depend on the ruleset:
   - Champions: Stat Points and Stat Alignment, with Mega Evolution.
   - SV: EVs, IVs, and nature, with a Tera type.
 - **A ruleset adapter** exists for each ruleset and regulation (Champions M-A, M-B, M-C, and later; SV formats). It implements:
@@ -49,7 +49,7 @@
 ## Consequences
 
 **Good**
-- One editor, one calculator, and one stats viewer for both tabs, and Showdown's Champions formats fit in naturally.
+- One editor, one calculator, and one stats viewer for both sections, and Showdown's Champions formats fit in naturally.
 - A new regulation is data (a curated file plus a mod extraction), not code.
 - Correctness is testable:
   - golden tests for the stat formulas
