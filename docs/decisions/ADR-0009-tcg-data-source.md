@@ -26,6 +26,10 @@
   - Build a sets index, per-set card lists, and a search index from `tcgdex/cards-database`, and publish them as versioned bundles.
   - The app doesn't call a TCG API at runtime.
 - **Deadline: off pokemontcg.io by 2027-01-31**, a month before it shuts down. The migration is data-layer work, so it can run ahead of the rest of Phase 5 if earlier phases run long.
+- **The owner's requirement (2026-09-29):**
+  - Show prices from TCGplayer, eBay, PSA, Collectr, and DoubleHolo, each labeled with its source (and its logo, where that source's brand terms allow), the way other collecting apps do.
+  - Each source is used only where its terms permit.
+  - Feasibility, terms, and logo rules per source are being verified in [OQ-14](../../specs/open-questions.md#oq-14-card-price-sources-and-logos). This ADR will be revised with the results. Until then, the baseline below stands.
 - **Prices come from Cardmarket's price guide (EUR) or the tcgcsv mirror of TCGplayer (USD).**
   - The pipeline joins them into a daily price bundle.
   - Every price shows its source and "as of" date.

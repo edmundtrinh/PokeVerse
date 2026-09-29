@@ -175,7 +175,11 @@ Find cards, plan binders, build decks, and enjoy the cards themselves ([ADR-0009
 
 - **TCG-1. Card search** from TCGdex bundles, by name, set, and number.
   - AC: search works offline once the bundles are synced.
-- **TCG-2. Binder planner and saved binders.** Grids from 2×2 to 5×5, multiple pages, a card picker with search for each slot, and a save dialog with name, color, and tags.
+- **TCG-2. Binder planner and saved binders** (decided 2026-09-29).
+  - **Grids:** the standard binder page sizes, 2×2 (4-pocket), 3×3 (9-pocket), 3×4 (12-pocket), and 4×4 (16-pocket).
+  - **Pages:** a new binder starts with 50 pages, and users can add or remove pages.
+  - **Editing:** a card picker with search for each slot, and a save dialog with name, color, and tags.
+  - AC: removing a page that holds cards asks whether to move those cards to other pages or remove them. Nothing is lost silently.
   - AC: behavior matches `BinderPlanner.test.tsx` and `TCGFlow.test.tsx`, updated for TCGdex and for honest errors instead of mock data.
   - AC: changing a binder's grid size never loses or scrambles cards, because positions are stored as page and slot.
 - **TCG-3. Deck builder.** Search, add cards, and adjust counts, with warnings for the 60-card rule, the four-copy limit (basic Energy excepted), and the one-ACE-SPEC limit. Decks are saved locally.
@@ -183,8 +187,10 @@ Find cards, plan binders, build decks, and enjoy the cards themselves ([ADR-0009
   - AC: no crashes; a 3×3 page of holo cards stays smooth on a mid-range phone; Reduce Motion shows a static finish.
 - **TCG-5. Migrate off pokemontcg.io by 2027-01-31.**
   - AC: saved binders and decks are mapped to TCGdex IDs, and unmapped cards are flagged, never dropped.
-- **TCG-6. Reference prices (stretch).** Daily Cardmarket prices, or TCGplayer prices via tcgcsv, each with its source and date.
-  - AC: the feature hides cleanly when prices are unavailable.
+- **TCG-6. Reference prices from multiple labeled sources.**
+  - **Sources the owner wants:** TCGplayer, eBay, PSA, Collectr, and DoubleHolo, each only where its terms allow. Feasibility per source is being verified; see [OQ-14](open-questions.md#oq-14-card-price-sources-and-logos).
+  - **Display:** every price shows its source, an "as of" date, and a link to the source. The source's logo appears only where its brand terms allow, the way other collecting apps credit sources.
+  - AC: the feature hides cleanly, source by source, when a source is unavailable.
 
 **Later:** collection tracking and set completion; wishlists; a two-page binder spread on foldables (see 5.6); scanning cards with the camera; Japanese cards; public binder sharing.
 
@@ -208,7 +214,7 @@ Optional accounts that sync your things across devices, safely ([ADR-0003](../do
 - **ACC-5. A privacy policy and Terms of Service** on our domain, linked from sign-in and settings, that describe exactly what the app does.
 - **ACC-6. An age gate with COPPA-aware defaults.** A neutral age question comes before account creation, and the account stores an age band, never a birth date.
   - AC: users under 13 get no public features: no public profile, and private-only teams and binders.
-  - Proposed for v1: under-13s use guest mode, with everything kept on the device, until there's a verifiable parental-consent flow. COPPA requires parental consent before collecting personal information, such as an email address, from a child (verify against current guidance).
+  - **Decided 2026-09-29:** in v1, under-13s use guest mode only, with everything kept on the device, until there's a verifiable parental-consent flow. COPPA requires parental consent before collecting personal information, such as an email address, from a child (verify against current guidance).
 - **ACC-7. Security.**
   - AC: Firestore security rules let users read and write only their own data, and validate every public collection. Emulator tests run in CI.
   - AC: App Check is on, budget alerts are set, and public writes are rate-limited per user.

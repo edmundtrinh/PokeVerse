@@ -16,11 +16,13 @@ These are decisions the maintainer still has to make. Each one lists its options
 | [OQ-5](#oq-5-license) | License | MIT, once the maintainer confirms he's cleared to license the code | The LICENSE file; outside contributions | As soon as possible |
 | [OQ-6](#oq-6-smogon-sets-and-analyses-permission) | Smogon sets and analyses | Ask first; meanwhile show usage stats, our own derived builds, and links | SD-3, meta pages | Before P3 |
 | [OQ-7](#oq-7-sprite-source-and-permission-for-store-builds) | Sprite source for store builds | PokeAPI sprites for web; ask for permission before stores, or go text-first | P6 store submission | Before P6 |
-| [OQ-8](#oq-8-analytics-tool) | Analytics tool | No tracking SDK: Sentry, store consoles, and cookieless web analytics | Usage metrics, privacy policy | Before P4 |
+| [OQ-8](#oq-8-analytics-tool) | Analytics tool | Yes to analytics (owner, 2026-09-29): Sentry + a vendor-neutral wrapper, with Firebase Analytics proposed | Usage metrics, privacy policy | Before P1 ends |
 | [OQ-9](#oq-9-showdown-login-battle-client) | Showdown-login battle client | Not in v1; revisit after P6 | Nothing yet | After P6 |
 | [OQ-10](#oq-10-replica-code-moderation) | Replica code moderation | Curated in P3; structured, pre-moderated submissions in P4 | CHA-5, security rules, Terms | Before P4 |
 | [OQ-11](#oq-11-battle-hub-p3-or-accounts-p4-first) | Battle hub (P3) or accounts (P4) first | P3 first | Roadmap order | Before P3 starts |
-| [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | No accounts for under-13s in v1; guest mode on the device only | ADR-0003, the age gate, privacy policy, P4 | Before P4 |
+| [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | **Decided 2026-09-29:** guest mode only in v1 | n/a | Done |
+| [OQ-13](#oq-13-canonical-species-key) | Canonical species key | Our own key: National Dex number + our form slug, with a crosswalk | Data model, data pipeline, battle engine | Before the P1 data pipeline |
+| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | Pending feasibility research | ADR-0009, TCG-6, P5 | Before P5 |
 
 ## OQ-1: Final backend pick
 
@@ -196,7 +198,17 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Aptabase | Privacy-first and open source, with mobile SDKs | Smaller project |
 | Our own anonymous daily "ping" counter | Minimal and fully ours | Build and maintain it |
 
-- **Recommendation:** start with no product-analytics SDK. Use Sentry, the store consoles, and cookieless web analytics. Add a privacy-friendly tool only for a specific question those can't answer. If we do, choose one that's anonymous, aggregate, easy to opt out of, reachable by maintainers, and free of ad identifiers or cross-app tracking.
+- **Owner's direction (2026-09-29):** yes to product analytics from the start.
+- **Recommendation:**
+  - Crashes and performance go to Sentry.
+  - Product events go through our own small `analytics.track(event, props)` wrapper, so the vendor can be swapped. Proposed vendor: Firebase Analytics, which is in the same project and console as the backend, free, and reachable by maintainers. Mixpanel or Amplitude are alternatives if its reports prove too limited.
+  - Guardrails:
+    - anonymous by default, with no personal data in events
+    - no ad identifiers and no cross-app tracking
+    - an in-app opt-out
+    - only essential, anonymous measurement for under-13 guests (verify against COPPA's internal-operations exception)
+    - privacy labels and the privacy policy updated in step with the events
+  - The store consoles and cookieless web analytics still complement it.
 
 ## OQ-9: Showdown-login battle client
 
@@ -268,7 +280,42 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Accounts for everyone, with no age gate | Simplest to build | Not acceptable for an audience that skews young |
 
 - **Recommendation:** no accounts for under-13s in v1. Revisit parental consent after P6, if younger players ask for sync.
+- **Decided 2026-09-29:** guest mode only for under-13s in v1 (see Decided below).
+
+## OQ-13: Canonical species key
+
+- **Question:** what key identifies a Pokémon, or a specific form, in saved documents such as teams, dex progress, and favorites?
+- **Blocks:** the data model's IDs, the data-pipeline crosswalk, the battle engine's inputs, and migrations.
+- **Decide by:** before the P1 data pipeline ships.
+- **Context:** The Pokémon Company publishes only the National Pokédex number. Every other ID scheme is a community convention. Forms (Megas, regional forms, Rotom appliances, and so on) need more than a number.
+
+| Option | Example | For | Against |
+|---|---|---|---|
+| **Our own key: dex number + our form slug** (recommended) | `445`, `445-mega`, `445-mega-z`, `37-alola` | Built on the one official number; readable and sortable; no third party can break it; works in URLs | We maintain the form slugs and a crosswalk |
+| PokeAPI names | `garchomp-mega`, `vulpix-alola` | Widely used by dex apps | Community-run; its numeric form IDs (10000+) are internal |
+| Showdown IDs | `garchompmega`, `vulpixalola` | Native to the battle engine, pastes, calc, and usage stats | Community-run and competitive-focused; not an official source |
+| Opaque IDs (UUIDs) | n/a | Never change | Unreadable; every read needs a lookup |
+
+- **Recommendation:** our own key.
+  - The data pipeline generates a crosswalk that maps each key to PokeAPI names and IDs, Showdown IDs, TCGdex references, and display names.
+  - Saved documents store only our key. If a source renames something, we fix the crosswalk, never user data.
+  - The battle engine converts to Showdown IDs at its edge when it calls `@smogon/calc` or `@pkmn`.
+
+## OQ-14: Card price sources and logos
+
+- **Question:** which price sources can we use, and how do we credit them?
+- **Owner's requirement (2026-09-29):** prices from TCGplayer, eBay, PSA, Collectr, and DoubleHolo, if possible, each labeled with its logo the way other collecting apps do.
+- **Blocks:** [ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md), PRD requirement TCG-6, and P5.
+- **Decide by:** before P5.
+- **Known constraints:**
+  - TCGplayer isn't granting new API access.
+  - API keys can't ship inside the app, so keyed sources need our pipeline or a server function.
+  - Logos are trademarks. Use them only where a source's API, partner, or affiliate terms allow; otherwise show the source's name and a link.
+  - Feasibility, terms, and logo rules for each source are being researched (2026-09-29).
+- **Recommendation:** pending that research.
 
 ## Decided
 
-Nothing yet. When a question is settled, move it here with the date, the outcome, and a link to the ADR or PR that records it.
+When a question is settled, move it here with the date, the outcome, and a link to the ADR or PR that records it.
+
+- **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).

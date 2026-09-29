@@ -152,7 +152,7 @@ interface PokemonTeamMember {
 | `cardId` | TCGdex card ID ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)) | n/a | Data bundle. Today's pokemontcg.io IDs need a mapping step (verify how many differ). |
 
 - **Routes use the dex number** (`/dex/25`, [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md)); documents use `speciesId`. The dex index in the bundle maps between them.
-- **Why Showdown-style IDs:** the battle engine, paste import and export, `@smogon/calc`, and usage stats all speak them, so teams round-trip without translation. The dex number stays on dex entries for sorting.
+- **Why Showdown-style IDs (under review, [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key)):** the battle engine, paste import and export, `@smogon/calc`, and usage stats all speak them, so teams round-trip without translation. The dex number stays on dex entries for sorting. The recommended alternative keeps Showdown IDs as one column in a crosswalk rather than the key itself.
 
 ### 2.3 Entity-relationship diagram
 
@@ -360,8 +360,8 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
 | `name` | string | 1–60 characters | |
 | `color` | string | A `BINDER_COLORS` id (`red`, `blue`, …) | |
 | `tags` | string[] | Up to 20, each 1–30 characters | `SUGGESTED_TAGS` are suggestions, not a closed list |
-| `gridSize` | `'2x2' \| '3x3' \| '4x3' \| '4x4' \| '5x5'` | Defined as columns × rows | Confirm what `'4x3'` means in today's planner (verify). The TCG checklist lists `4x5` and `5x4`, which the code doesn't have. |
-| `pageCount` | integer | 1–100 | The planner shows "Page N of 100" |
+| `gridSize` | `'2x2' \| '3x3' \| '3x4' \| '4x4'` | Columns × rows; the standard 4-, 9-, 12-, and 16-pocket pages (decided 2026-09-29) | Today's code also has `'4x3'` and `'5x5'`; the migration in [§4](#4-migration-from-todays-keys) maps them |
+| `pageCount` | integer | 1–200; a new binder starts at 50 (decided 2026-09-29) | Users add or remove pages. Removing a page that holds cards asks whether to move those cards or remove them. The 200 cap is proposed, to keep the document well under Firestore's size limit. |
 | `pages` | `BinderPage[]` | Only pages that hold cards; `pageIndex` unique | |
 
 - **`BinderPage`:** `{ pageIndex, slots }`. `pageIndex` is an integer from 0 to `pageCount − 1`; the UI shows `pageIndex + 1`. `slots` holds only filled slots, with unique `slotIndex`.
@@ -377,7 +377,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply.
   | `dateAdded` | timestamp | |
 
 - **Changing `gridSize` is an explicit reflow.** Cards keep their reading order (page, then slot) and are laid into the new grid, and `pageCount` grows if needed. Stored indices are never reinterpreted.
-- **Size check:** the worst case is 100 pages × 25 slots = 2,500 cards. At a rough 150–200 bytes per slot, that's about 0.4–0.5 MB, under Firestore's 1 MiB document limit (an estimate). If binders outgrow it, pages move to a `binders/{id}/pages/{pageIndex}` subcollection.
+- **Size check:** the worst case is 200 pages × 16 slots (4×4) = 3,200 cards. At a rough 150–200 bytes per slot, that's about 0.5–0.65 MB, under Firestore's 1 MiB document limit (an estimate). If binders outgrow it, pages move to a `binders/{id}/pages/{pageIndex}` subcollection.
 
 #### dex progress
 
@@ -580,7 +580,7 @@ flowchart TD
 | `@pokemon_favorites` (`number[]`) | `favorites/species_<speciesId>` | Dex number → `speciesId` through the ID map |
 | `UserProfile.favorites` (`string[]`) | `favorites/species_<speciesId>`, merged with the row above | Each string is resolved as a dex number first, then as a name |
 | `UserProfile.caughtPokemon[]` | `dex/{speciesId}` | `caught = seen = true`; `isShiny` → `shiny`; `ballType` kept if it's a `POKEBALL_TYPES` id; `dateSpotted` → `firstSeenAt`; `dateCaught` → `caughtAt` |
-| `UserProfile.savedBinders[]` | `binders/{id}` | IDs, name, color, tags, `gridSize`, and dates are kept. `position` → `pageIndex = ⌊position / slotsPerPage⌋`, `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. That assumes a 0-based, page-major encoding (verify against `BinderPlanner.tsx`). `purchasePrice` → `{ amount: round(price × 100), currency: 'USD' }` (assumes USD; verify). |
+| `UserProfile.savedBinders[]` | `binders/{id}` | IDs, name, color, tags, `gridSize`, and dates are kept. `position` → `pageIndex = ⌊position / slotsPerPage⌋`, `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. That assumes a 0-based, page-major encoding (verify against `BinderPlanner.tsx`). `purchasePrice` → `{ amount: round(price × 100), currency: 'USD' }` (assumes USD; verify). Legacy grid sizes: `'4x3'` becomes `'3x4'` if it meant 4 rows × 3 columns (verify against `BinderPlanner.tsx`), and `'5x5'` becomes `'4x4'` with a reflow that adds pages. |
 | `@image_cache_metadata` | dropped | Obsolete once expo-image lands |
 
 ### 4.3 First sign-in (P4)
@@ -793,7 +793,7 @@ Firestore rules aren't filters: a list query has to include the same constraints
 
 Settled answers become ADR updates; the shared list is [specs/open-questions.md](../../specs/open-questions.md).
 
-- **The canonical species key.** Proposed: Showdown-style `speciesId` in documents, the dex number in URLs.
+- **The canonical species key: reopened 2026-09-29.** Showdown isn't an official source, so the owner doesn't want its IDs to be the source of truth. The recommendation is our own key, built from the official National Dex number plus a form slug we control, with a crosswalk to other sources. The Showdown-style IDs in this document are placeholders until that's decided. See [OQ-13](../../specs/open-questions.md#oq-13-canonical-species-key).
 - **Form-level dex tracking.** Should regional forms and Megas get their own progress, as Pokémon HOME tracks them?
 - **Binder encoding today.** What does `'4x3'` mean, and is `position` 0-based and page-major? Confirm when `BinderPlanner.tsx` lands.
 - **The currency of legacy `purchasePrice`.** Assumed USD.
