@@ -32,7 +32,9 @@
     - **TCGplayer and Cardmarket:** link-outs only, "View on TCGplayer" and "View on Cardmarket". They go to the card's product page when TCGdex provides the marketplace's product ID, otherwise to a marketplace search built from the card name, set, and number. We show **no price numbers** from either (unlicensed), and we don't use TCGdex's or tcgcsv's copies of their prices.
     - **eBay:** current listings only, no sold prices. That's v2, through eBay's Browse API from a server function, cached no more than 6 hours, in its own panel.
     - **Skipped:** PriceCharting, PSA, Collectr, DoubleHolo, and any scraping.
-    - **Affiliate programs:** undecided, leaning no, to keep the project free and non-commercial. Links are plain links, and sources appear as plain-text names. Official logos need a partner grant.
+    - **Affiliate programs: skipped (owner, 12:58).** The project stays free and non-commercial. Links are plain links, and sources appear as plain-text names.
+    - **Collection value comes from the user's own purchase prices (owner, 12:58).** Binders show an "actual" value (owned cards) and a "projected" value (owned plus wishlist cards, at optional user-entered target prices). No marketplace prices are involved.
+    - **Default marketplace by region** (proposed): taken from the device's region setting, with an override in Settings → Preferences.
   - **Swappable:** marketplace links and any future price source sit behind a `MarketplaceProvider` interface. Binders and decks never depend on prices.
 - **Map the old IDs.** The pipeline builds a pokemontcg.io → TCGdex ID map, and a one-time migration rewrites saved binders and decks. Cards that don't map are flagged to the user, never dropped.
 - **Card images load from TCGdex's image CDN at first**, as TCGdex documents it (verify its terms). If traffic grows, the pipeline moves them to our CDN, under the same IP rules as sprites ([ADR-0012](ADR-0012-brand-ip-and-assets.md)).

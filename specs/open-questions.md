@@ -340,11 +340,19 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **TCGplayer and Cardmarket:** link-outs only, "View on TCGplayer" and "View on Cardmarket", to the card's product page when we have its ID, otherwise to a search for the card name, set, and number. We show **no price numbers** from either, because we have no license to them.
   - **eBay:** current listings only, no sold prices, in v2 through eBay's Browse API from a server function.
   - **Skipped:** PriceCharting, PSA, Collectr, and DoubleHolo.
-  - **Affiliate programs:** undecided, leaning no, to keep the app completely free and non-commercial. Without a partner grant, sources appear as plain-text names, not logos.
+  - **Affiliate programs: skipped (decided 12:58).** The app stays free and non-commercial. Marketplaces get plain links and plain-text names, with no logos.
+  - **Collection value: from the user's own purchase prices (decided 12:58).** There's no licensing issue.
+    - "Actual" value counts owned cards.
+    - "Projected" value also counts wishlist cards, at an optional user-entered target price (proposed).
+  - **eBay panel focus:** the latest auctions and listings, mostly graded cards but raw ones too. Filters for graded/raw, grader and grade, auction vs Buy It Now, and ending-soonest.
+  - **Default marketplace by region** (proposed):
+    - It follows the device's region setting, with no location permission. US and Canada get TCGplayer first, the UK and EU get Cardmarket first, and everywhere else gets both.
+    - Each card shows a primary "View on …" button plus a "More" menu with the other marketplaces and "Search eBay".
+    - Settings → Preferences has an override: Auto, TCGplayer, or Cardmarket.
+    - eBay searches use the matching eBay site.
 - **Still to plan:**
-  - whether v1 shows any prices at all, or only link-outs plus the user's own purchase prices
-  - eBay's display and caching rules
-  - how link-outs look per region (TCGplayer for US users, Cardmarket for EU users)
+  - the eBay panel's layout, and how it refreshes within eBay's caching rules
+  - multi-currency purchase prices, and whether collection totals get currency conversion
 
 ## Decided
 
