@@ -383,7 +383,23 @@ These are decisions the maintainer still has to make. Each one lists its options
     - Each card shows a primary "View on …" button plus a "More" menu with the other marketplaces and "Search eBay".
     - Settings → Preferences has an override: Auto, TCGplayer, or Cardmarket.
     - eBay searches use the matching eBay site.
-- **"Current value" like Collectr's (owner, 14:03: use live sources whenever possible):** research into licensed, free, non-commercial live price sources is underway (2026-09-29). Until one exists, values come from purchase prices, optional target prices, and user-entered values.
+- **"Current value" like Collectr's (owner, 14:03: use live sources whenever possible). Research concluded 2026-09-29:**
+  - **Nothing free is fully licensed yet.**
+  - **PokemonPriceTracker** is the best candidate. Its terms allow free, non-revenue apps to display its raw and graded prices, with caching. But its upstream sources (TCGplayer, eBay, Cardmarket) aren't disclosed, so it passes the owner's "nothing unlicensed" bar only if it confirms its rights in writing.
+  - **Cardmarket's first-party daily price guide** needs written agreement. Its support team has told another developer yes.
+  - **JustTCG and Scrydex** need payment or permission.
+  - **eBay:** the Browse API's production access requires joining the **eBay Partner Network (EPN)**, which is eBay's affiliate program. You can qualify through a sandbox review instead of affiliate tracking links, but you still have to join. Individual listings are fine in an isolated panel. **Summing or averaging listings into a value counts as "modeling prices", which isn't allowed.**
+- **Recommended plan:**
+  - **Now:** "Your valuation", where the user enters values and sets purchase prices; totals use only those. An eBay panel of individual listings, never aggregated, *if* the owner accepts joining EPN without affiliate links. Otherwise, link-outs only.
+  - **Next:** email PokemonPriceTracker to confirm our non-revenue status and its upstream rights, and email Cardmarket for a written OK. Each approval adds its own labeled row ("Market value (PPT, as of …)", "Cardmarket trend (EUR, as of …)"). Totals are kept per source, never blended.
+- **Guardrails:**
+  - keys stay server-side
+  - no price snapshots committed, and no public price endpoint
+  - every price stores its source, fetch time, and license basis
+  - everything is labeled "estimate, not an appraisal"
+- **Owner decisions needed:**
+  - (1) join EPN without affiliate links, to unlock the eBay panel, or keep eBay to link-outs
+  - (2) send the permission emails (drafts can be prepared)
 - **Still to plan:**
   - how the eBay panel refreshes within eBay's caching rules
   - multi-currency purchase prices, and whether collection totals get currency conversion

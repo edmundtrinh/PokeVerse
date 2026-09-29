@@ -37,7 +37,11 @@
     - **Affiliate programs: skipped (owner, 12:58).** The project stays free and non-commercial. Links are plain links, and sources appear as plain-text names.
     - **Collection value comes from the user's own purchase prices (owner, 12:58).** Binders show an "actual" value (owned cards) and a "projected" value (owned plus wishlist cards, at optional user-entered target prices). No marketplace prices are involved.
     - **Default marketplace by region (decided 14:03):** automatic from the device's region setting, with an override in Settings → Preferences.
-    - **Current value:** the owner wants live sources whenever possible. That's limited to licensed sources, which are being researched ([OQ-14](../../specs/open-questions.md#oq-14-card-price-sources-and-logos)). The fallback is purchase, target, and user-entered values.
+    - **Current value:** the owner wants live sources whenever possible, limited to licensed ones. The research is done ([OQ-14](../../specs/open-questions.md#oq-14-card-price-sources-and-logos)).
+      - **v1:** "Your valuation", built from user-entered values and purchase prices.
+      - **Next:** PokemonPriceTracker (its terms allow free, non-revenue apps; we need written confirmation of its upstream rights), and Cardmarket's first-party price guide (needs a written OK).
+      - **Display rules:** each approved source gets its own labeled row, and totals are never blended across sources.
+      - **eBay:** listings are never summed or averaged, because eBay forbids "modeling prices". Its Browse API requires joining the eBay Partner Network, possibly without affiliate links (the owner's call).
   - **Swappable:** marketplace links and any future price source sit behind a `MarketplaceProvider` interface. Binders and decks never depend on prices.
 - **Map the old IDs.** The pipeline builds a pokemontcg.io → TCGdex ID map, and a one-time migration rewrites saved binders and decks. Cards that don't map are flagged to the user, never dropped.
 - **Card images load from TCGdex's image CDN at first**, as TCGdex documents it (verify its terms). If traffic grows, the pipeline moves them to our CDN, under the same IP rules as sprites ([ADR-0012](ADR-0012-brand-ip-and-assets.md)).
