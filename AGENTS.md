@@ -10,7 +10,7 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 
 ## Status (2026-09-28)
 
-- The stack is Expo SDK 49, React Native 0.72, and React 18.2. The upgrade to Expo SDK 57 is in progress: [ADR-0002](docs/decisions/).
+- The stack is Expo SDK 49, React Native 0.72, and React 18.2. The upgrade to Expo SDK 57 is in progress: [ADR-0002](docs/decisions/ADR-0002-expo-sdk-upgrade-path.md).
 - Known problems on `main` are listed in [docs/reviews/2026-09-28-tech-stack-review.md](docs/reviews/2026-09-28-tech-stack-review.md). For example, `TCGView` imports components that aren't committed yet, and the test suite doesn't run.
 - Where things are headed: [specs/roadmap.md](specs/roadmap.md), [docs/decisions/](docs/decisions/), and [specs/open-questions.md](specs/open-questions.md).
 
@@ -45,7 +45,7 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 - **Layout:** size from the window or container, never from the device model. Every screen must handle resizing: iPhone Duo, foldables, tablets, and desktop web.
 - **Accessibility:** roles, labels, hints, 44-pt touch targets, Dynamic Type, and Reduce Motion.
 - **Honest states:** show real loading, error, and empty states. Never invent fallback data.
-- **Bulk game data:** don't fetch it from third-party APIs at runtime. The plan is a CI-built data bundle ([ADR-0004](docs/decisions/)).
+- **Bulk game data:** don't fetch it from third-party APIs at runtime. The plan is a CI-built data bundle ([ADR-0004](docs/decisions/ADR-0004-static-game-data-pipeline.md)).
 
 ## Hot reload and Metro
 
@@ -65,7 +65,7 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 ## Public-repo safety
 
 - **No personal or secret data:** never commit secrets, API keys, personal absolute paths, email addresses, LAN IPs, or machine-specific notes. Keep local-only notes in `*.local.md` files, which are gitignored.
-- **No Pokémon media:** don't commit Pokémon artwork, sprites, or card images. Fetch or build them at runtime ([ADR-0012](docs/decisions/)).
+- **No Pokémon media:** don't commit Pokémon artwork, sprites, or card images. Fetch or build them at runtime ([ADR-0012](docs/decisions/ADR-0012-brand-ip-and-assets.md)).
 - **Attribution:** credit data sources (PokeAPI, Smogon, Pokémon Showdown, TCGdex) wherever their data appears.
 
 ## Platform specialists
