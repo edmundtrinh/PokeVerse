@@ -37,7 +37,7 @@ Build game data ahead of time in CI, and serve it as static, versioned files fro
 | Smogon usage stats, via [data.pkmn.cc](https://github.com/pkmn/smogon/blob/main/API.md) | Aggregate stats are public domain; sets and analyses are © Smogon | Monthly usage per format. Sets only with permission ([OQ-6](../../specs/open-questions.md#oq-6-smogon-sets-and-analyses-permission)). |
 | [tcgdex/cards-database](https://github.com/tcgdex/cards-database) | MIT | TCG sets and cards ([ADR-0009](ADR-0009-tcg-data-source.md)) |
 | Curated regulation files in this repo | Ours | Regulation IDs and dates, legal Pokémon, Megas, and items, bring-and-pick rules, and the season calendar |
-| Sprites, from the source chosen in [OQ-7](../../specs/open-questions.md#oq-7-sprite-source-and-permission-for-store-builds) | © The Pokémon Company | Resized list and detail images, published to our CDN and never committed ([ADR-0012](ADR-0012-brand-ip-and-assets.md)) |
+| Sprites from the PokeAPI sprite project ([OQ-7](../../specs/open-questions.md#oq-7-sprite-source-and-permission-for-store-builds)) | © The Pokémon Company, plus credited fan artists | **Not copied or hosted by us** (updated 2026-09-29). The pipeline publishes only an image-availability manifest (which image kinds exist for each Pokémon and form) and the pinned sprite-repo commit. The app loads images from commit-pinned jsDelivr URLs, falls back to GitHub raw, and caches them on the device ([ADR-0012](ADR-0012-brand-ip-and-assets.md)). |
 
 - **Steps:**
   1. Fetch.
@@ -46,7 +46,7 @@ Build game data ahead of time in CI, and serve it as static, versioned files fro
   4. Diff against the last published bundle, and fail on suspicious drops.
   5. Version and hash.
   6. Publish.
-- **Serving:** bundles and resized sprites go to our CDN (Cloudflare R2 or Firebase Hosting, [ADR-0005](ADR-0005-web-hosting.md)) with immutable caching. A small `manifest.json` with a short cache lifetime points to the current versions.
+- **Serving:** data bundles go to our CDN (Cloudflare R2 or Firebase Hosting, [ADR-0005](ADR-0005-web-hosting.md)) with immutable caching. Pokémon images aren't mirrored (see the sources table). A small `manifest.json` with a short cache lifetime points to the current versions.
 - **In the app:**
   - Download the manifest, fetch only the bundles that changed, and cache them indefinitely ([ADR-0007](ADR-0007-state-and-data-fetching.md)).
   - A small seed bundle can be generated into each build (not committed) so the first launch works offline.
@@ -73,7 +73,7 @@ Build game data ahead of time in CI, and serve it as static, versioned files fro
 - **Redistributing data means honoring each license.** Sprite and Smogon-content policy is [ADR-0012](ADR-0012-brand-ip-and-assets.md).
 
 **Follow-ups**
-- Pipeline v1 in Phase 1: the Pokédex index with real types, plus resized sprites.
+- Pipeline v1 in Phase 1: the Pokédex index with real types, plus the image-availability manifest. A weekly PR bumps the pinned sprite commit.
 - Battle bundles in Phase 3, and TCG bundles by the TCG migration deadline ([ADR-0009](ADR-0009-tcg-data-source.md)).
 
 ## Alternatives considered

@@ -199,10 +199,20 @@ These are decisions the maintainer still has to make. Each one lists its options
 | No sprites in store builds (text and original type icons) | The lowest store risk | Loses a lot of charm |
 | Original or community art | Our own work | Still derived from Pokémon designs, and a big effort |
 
-- **Recommendation:**
-  - Web and development builds use PokeAPI sprites, built by the pipeline, credited, and never committed.
-  - Before any store submission, ask the Smogon Sprite Project for permission to use its sprites in store builds, following the Pikalytics precedent. That permission covers their work, not The Pokémon Company's rights, so the disclaimer still matters.
-  - If there's no permission, make store builds text- and type-icon-first, and keep sprites on the web.
+- **Research findings (2026-09-29):**
+  - **Pokémon Showdown has no license for its images either.** It keeps them out of its code repository, stores the rips and fan sprites in a separate public repo (`smogon/sprites`, which says "talk to us first" before reuse), and serves them from its own server. Its tooling asks others to self-host rather than hotlink.
+  - **PokeAPI's sprite project** covers everything we need, including HOME renders for the Z-A Megas and Z-Megas and 128×128 Champions menu sprites. It's CC0 as a repository, but the images are © The Pokémon Company, and some are credited fan work.
+  - **Takedown history:** there have been takedowns of GitHub repos that host Pokémon images, but none against PokeAPI's or Smogon's sprite repos. Enforcement tends to follow money or press.
+  - **Hosting:** showing images served by someone else is generally treated differently from hosting copies yourself (the US "server test"). That's why we don't mirror them.
+- **Recommendation (updated 2026-09-29):**
+  - **Everywhere:** load images on the device from PokeAPI's sprite project through commit-pinned jsDelivr URLs (GitHub raw as the fallback), and cache them on the device only. Never commit or mirror them.
+  - **Credits:** credit the fan artists, and send courtesy notes to Smogon and Kyle Dove before launch.
+  - **Don't hotlink Showdown.**
+- **Owner's call, still open: do store builds show Pokémon images by default?**
+  - **Images on by default:** the most delightful. The risk is app-review rejection or a takedown.
+  - **Images off by default, with a "Show Pokémon images" toggle:** lower review risk. The app looks plain until the toggle is on.
+  - **Text- and type-icon-first:** the lowest risk, and the least delight.
+  - **Either way:** add a remote "images off" switch, so a takedown or a review issue can be handled without shipping a new build.
 
 ## OQ-8: Analytics tool
 

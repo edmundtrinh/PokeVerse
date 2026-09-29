@@ -37,7 +37,18 @@
 
    > PokeVerse is an unofficial, non-commercial fan project. It is not affiliated with, endorsed, sponsored, or approved by Nintendo, Game Freak, Creatures, or The Pokémon Company. Pokémon and Pokémon character names are trademarks of Nintendo.
 
-2. **No Pokémon assets in the repo:** no sprites, artwork, card images, cries, logos, or game fonts. Assets are fetched at runtime from their sources, or built by the pipeline and served from our CDN ([ADR-0004](ADR-0004-static-game-data-pipeline.md)). That way the repository's license covers only our own code and content.
+2. **No Pokémon assets in the repo:** no sprites, artwork, card images, cries, logos, or game fonts. That way the repository's license covers only our own code and content.
+   - **Pokémon images (updated 2026-09-29, after the sprite research):**
+     - They load on the device from the PokeAPI sprite project, through commit-pinned jsDelivr URLs with GitHub raw as the fallback.
+     - They're cached only on the device, with an optional offline pack the user starts, downloaded slowly. We don't host or mirror copies.
+     - This is the same separation Pokémon Showdown uses: it keeps images out of its code repository.
+   - **Guardrail:** a CI check rejects image files outside our own UI assets.
+   - **Credits screen:**
+     - The Pokémon Company's copyright line.
+     - "Sprites courtesy of the Smogon Sprite Project".
+     - Named fan spriters: KingOfThe-X-Roads and Kyle Dove for Gen 9 and the Z-A Megas; DevMike123, JoseBaGra, and Pokétwo for the custom shiny artwork.
+     - A removal contact.
+   - **Before launch:** send courtesy notes to Smogon, whose README asks people to talk to them first, and to Kyle Dove.
 3. **Original brand art only.** The icon, splash screen, and logo use no official artwork, no Poké Ball, no Pokémon characters or silhouettes, and no official logos or fonts. The Poké Ball stops being the brand mark in `packages/design`.
 4. **Pick a store-safe name before any store submission** ([OQ-3](../../specs/open-questions.md#oq-3-store-safe-brand-name-and-domain)).
    - No "Poké" or "Pokémon", and no close derivatives of Pokémon trademarks.
