@@ -1,6 +1,6 @@
 # Device layouts
 
-- **As of:** 2026-09-28. Updated on 2026-09-29 with the owner's decisions on tabs, the Battle section menu, and binder views.
+- **As of:** 2026-09-28. Updated on 2026-09-29 with the owner's decisions on tabs, the Battle section menu, and binder views, and later that day with the collection, search, set completion, and dex progress screens.
 - **Status:** Proposed. The decision is [ADR-0011](../decisions/ADR-0011-adaptive-layouts-and-foldables.md), and the work lands in roadmap phase P2 ("iOS 27 and devices").
 - **Related:** [device research](../research/2026-09-28-devices.md) · [architecture overview](overview.md) · [test strategy](../testing/test-strategy.md) · platform guides for [iOS](../../.claude/skills/ios-platform/SKILL.md) and [Android](../../.claude/skills/android-platform/SKILL.md)
 
@@ -262,11 +262,14 @@ The top-level tabs are **Pokédex, TCG, Battle, and Profile**, in that default o
 | Screen | Compact phone | iPhone Duo outer | Duo or Fold inner, flat | Half-folded | Desktop web |
 |---|---|---|---|---|---|
 | **Pokédex** | 2–3 column grid with bottom tabs; detail pushes a screen | 3 columns with the side tab bar | List and detail side by side, split at the fold | **Tabletop:** artwork on top, stats below the fold. **Book:** the same as flat. | Three panes: list, detail, and an inspector (forms, sprites, comparison) |
+| **Dex progress** | A list picker (National, a region, Regional Forms, Mega), the totals, and a grid: owned entries in color, missing ones faded | The same; toolbar on the side | The grid next to the selected Pokémon's cards and sources | **Book:** the same split, at the hinge. **Tabletop:** the totals on top, the grid below. | The lists in a sidebar, the grid, and an inspector with the selected Pokémon's cards and sources |
 | **Team builder** | One editor; pickers in sheets | One editor; toolbar items on the side | Team list next to the member editor | **Book:** the team on the left, the calculator on the right. **Tabletop:** a live stat preview above, the editor below. | Team list, editor, and calculator; paste import from the keyboard |
 | **Damage calc** | Stacked: attacker, defender, and a pinned result | Stacked, with the result pinned at the top | Attacker and defender side by side, results across the top | **Tabletop: "DS mode"**: results on the top half, controls on the bottom | Side by side, with a history of recent calcs |
 | **TCG binder: single page** | One page at a time; swipe to turn | One page; toolbar on the side | The page in one pane; the card picker or card detail in the other | **Book:** the same split, at the hinge. **Tabletop:** the page on top, the card picker below. | The page plus a card-search panel |
 | **TCG binder: binder view** | Spreads scaled to fit; roomiest in landscape, where two 3×3 pages fit side by side (proposed) | Spreads scaled to fit; toolbar on the side | **A two-page spread, with the fold as the binder's spine** | **Book:** the spread, held like a real binder. **Tabletop:** the spread on top, the card picker below. | The spread plus a card-search panel |
 | **TCG binder: continuous grid** | The binder's columns (3 for a 3×3 binder), with rows flowing and no page breaks | The same; toolbar on the side | The grid in one pane, keeping its columns; card detail in the other | **Book:** the same split, at the hinge. **Tabletop:** the grid on top, the card picker below. | The grid plus a card-search panel |
+| **TCG collection and search** (the collection, the wishlist, and the catalog) | Results as a list or grid, with search on top and filters in a sheet; a card pushes its detail: your copies, wishlist status, and marketplace links | The same; toolbar on the side | The results next to the selected card's detail; filters in a sheet, or in a panel once the window is expanded | **Book:** the same split, at the hinge. **Tabletop:** results on top, search and filters below. | Three panes: a persistent filter panel, the results, and the card's detail |
+| **Set completion** | Sets with their progress; a set opens as a grid in number order, owned cards in color and missing ones faded | The same; toolbar on the side | The set list next to the set's grid | **Book:** the same split, at the hinge. **Tabletop:** the totals on top, the grid below. | The set list, the grid, and the selected card's detail |
 | **Meta/usage** | List | List | List plus the selected set's detail | **Book:** list and detail. **Tabletop:** chart on top, list below. | Table with charts and filters |
 
 - **Every cell keeps the same functionality.** Only the arrangement changes, as the HIG asks.
@@ -274,7 +277,10 @@ The top-level tabs are **Pokédex, TCG, Battle, and Profile**, in that default o
 - **Which view a binder opens in is the user's choice,** from a preference, and switching views never moves a card ([data model: binders](data-model.md#binders)).
 - **Spreads pair pages the way a physical binder does:** the first spread is the blank inside front cover and page 1, and each later spread is the back of one sheet and the front of the next ([pages, sheets, and spreads](data-model.md#pages-sheets-and-spreads)).
 - **The binder spread uses `AdaptiveGrid`'s even-column rule:** with two 3×3 pages across the fold, it's 6 columns with the gutter on the spine.
-- **The continuous grid keeps the binder's column count, even when it's odd** (3 for 3×3). On a foldable it stays inside one pane, so no column straddles the fold (proposed).
+- **The continuous grid keeps the binder's column count, even when it's odd** (3 for 3×3). On a foldable it stays inside one pane, so no column straddles the fold (decided 2026-09-29).
+- **Filters keep one state across layouts** (proposed): a sheet on compact and medium widths, and a persistent panel from expanded width. Folding or resizing never drops a filter or the scroll position ([rule 5](#the-rules-in-one-screen)).
+- **Dex progress and set completion grids follow `AdaptiveGrid`,** with even column counts across a fold, like the binder spread.
+- **On large screens, the binder's card-search panel is the collection search** (collection first, then the catalog), and cards drag from it into slots (proposed).
 
 ## 7. Delight moments
 
