@@ -32,7 +32,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check web dependencies
+        id: web-deps
+        run: |
+          if ! node -e "require.resolve('react-native-web')" 2>/dev/null || \
+             ! node -e "require.resolve('@expo/webpack-config')" 2>/dev/null; then
+            echo "missing=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Missing react-native-web or @expo/webpack-config — install them to enable web export"
+          fi
+
       - name: Export for web
+        if: steps.web-deps.outputs.missing != 'true'
         run: npx expo export:web
 
       - name: Upload Pages artifact
