@@ -30,6 +30,12 @@
 ## Decision
 
 - **Tailwind v4 is the styling language**, through either **Uniwind** or **NativeWind 5**. A one-day spike in Phase 1 picks one, and the result is recorded here when this ADR is accepted.
+  - **Desk comparison (2026-09-29): leans Uniwind, free MIT tier only** (about 65% confidence). Details and the spike's 15 pass/fail checks are in [OQ-2](../../specs/open-questions.md#oq-2-styling-library).
+  - **If Uniwind wins:**
+    - Write animations in Reanimated rather than through Pro-only `className` transitions.
+    - Pin Tailwind 4.3.2 and react-native-web 0.21.2 until their known bugs are fixed.
+    - Gate token reads until hydration on web.
+    - Keep library-specific calls in one adapter file.
 - **Spike criteria:**
   - works on iOS, Android, and web with SDK 57 (and the SDK 58 beta) and Expo Router
   - responsive variants for our window classes, and dark mode through theme variables

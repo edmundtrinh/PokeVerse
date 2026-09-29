@@ -70,6 +70,25 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 - **Recommendation:** run the spike on one real screen (a Pokédex row and the detail header). If both pass, choose the one with a stable release: Uniwind, as of 2026-09-28. Pick NativeWind 5 instead if it has shipped a stable release by then and does better on the criteria.
 - **Owner (2026-09-29):** still undecided. A deeper desk comparison runs first (maintainers, licensing, compatibility, performance evidence, open issues), then the hands-on spike. The spike can run in a scratch Expo SDK 57 app, so it doesn't have to wait for the repo's upgrade.
+- **Desk comparison (2026-09-29): leans Uniwind, free MIT tier only, with moderate confidence (about 65%) pending the spike.**
+  - **Uniwind's strengths:**
+    - It's stable on Tailwind v4 and releases often.
+    - Theme switching works the same on iOS, Android, and web, including before first paint in a static export.
+    - It has stable JS token APIs for Native Tabs and Reanimated.
+    - It has more ecosystem momentum (about 4× NativeWind v5's downloads) and two core maintainers.
+  - **Uniwind's costs:**
+    - Animations and transitions in `className`, `group-*` variants, and automatic native safe-area insets are paid Pro features. We'd use Reanimated and a small safe-area listener instead.
+    - No container queries.
+    - Two fresh bugs need version pins until their fixes ship: Tailwind 4.3.2 (platform variants leaking) and react-native-web 0.21.2 (web build).
+  - **NativeWind 5's risks:**
+    - It's still a release candidate with no stable date.
+    - It's verified only on exact SDK 57 pins, and has effectively one active maintainer.
+    - Open bugs hit us directly: opacity modifiers on token colors (our type chips), `expo export` failures, and no manual theme toggle on web.
+    - Its free extras, container queries and `className` transitions, are real advantages.
+  - **Spike decision rule:**
+    - Pick **Uniwind** if it passes the core checks and NativeWind fails on chip colors, web theming, static export, or first-paint theming, or runs more than 1.3× slower.
+    - Pick **NativeWind 5** only if it passes everything within about 20% of Uniwind's performance, and even then only after it ships stable with SDK 58 verified.
+  - **Keep it swappable:** either way, library-specific calls stay in one small adapter file.
 
 ## OQ-3: Store-safe brand name and domain
 
