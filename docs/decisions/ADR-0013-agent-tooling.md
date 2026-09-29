@@ -36,7 +36,9 @@
   - `.claude/agents/ios.md`, invoked with `@agent-ios`
   - `.claude/agents/android.md`, invoked with `@agent-android`
   - Frontmatter: `name`, a `description` that says when to delegate, `tools`, `model: inherit`, `skills: [<platform>-platform]`, `memory`, and `color`.
-  - Agent memory uses the `local` scope (`.claude/agent-memory-local/`), so each agent's notes stay on the contributor's machine. In a public repo, accumulated notes could pick up machine-specific details, so no agent memory is committed.
+  - **Agent memory has two layers** (updated 2026-09-29, at the owner's request):
+    - **Private:** automatic memory uses the `local` scope (`.claude/agent-memory-local/`), so raw notes stay on each machine. In a public repo, accumulated notes could pick up machine-specific details.
+    - **Shared:** learnings useful on every machine and OS go into a committed, curated file per platform, `.claude/skills/<platform>-platform/references/known-issues.md`. The maintainer reviews the diff before it's committed.
 - **Two platform skills:**
   - `.claude/skills/ios-platform/SKILL.md`, with references on devices, iPhone Duo, and a review checklist
   - `.claude/skills/android-platform/SKILL.md`, with references on foldables, large screens, and a review checklist
@@ -62,7 +64,7 @@
 - **Subagent descriptions share a budget:** Claude Code warns when the combined descriptions pass 15,000 tokens. Keep them short.
 - **The design skill isn't discovered automatically**, because `packages/design/SKILL.md` sits outside any `.claude/skills/` directory. AGENTS.md links to it. A thin pointer skill under `.claude/skills/` is an option later.
 - **Fallback for a client that can't read AGENTS.md:** a local one-line `CLAUDE.md` containing `@AGENTS.md`, which `.gitignore` keeps out of commits. Don't use a symlink on Windows.
-- **Agent memory isn't shared.** Each contributor's agents learn separately. Anything worth sharing belongs in the skills or AGENTS.md, through a PR.
+- **Automatic agent memory isn't shared,** but curated learnings are. They go into the committed `known-issues.md` files, which reach every machine through git after review. Broader rules belong in the skills or AGENTS.md.
 
 ## Alternatives considered
 

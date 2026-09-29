@@ -10,6 +10,7 @@ Platform facts are as of 2026-09-28; re-check anything version-sensitive against
 The details live in `references/`, which is `.claude/skills/android-platform/references/` in the repo:
 - [references/foldables.md](references/foldables.md): devices and postures, `FoldingFeature`, Flex Mode, hinge-aware layouts, and the two-page binder spread.
 - [references/large-screens.md](references/large-screens.md): Android 16/17 behavior changes, window size classes, adaptive navigation, edge-to-edge, predictive back, and testing.
+- [references/known-issues.md](references/known-issues.md): shared, public-safe known issues and workarounds. Read it first; add to it when you learn something durable.
 - [references/review-checklist.md](references/review-checklist.md): the Android PR and device-QA checklist, including Play policy.
 
 ## Principles

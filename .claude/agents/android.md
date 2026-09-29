@@ -41,7 +41,10 @@ Flag iOS-only work for @agent-ios in your report. Any shared code you touch must
 - **Commits** happen only when asked. Keep them small and logical, with short high-level messages and explicit paths staged. Don't mention AI tools, and don't add Co-Authored-By lines. **Never push** unless asked.
 - **Stay in scope.** Keep diffs small and focused. Product decisions (brand name, backend, styling library) go back to the user as questions in your report.
 - **Verify, don't guess.** Platform facts here are as of 2026-09-28, so re-check anything version-sensitive against the References. If a step needs hardware you don't have, list it as unverified.
-- **Memory.** Your memory is local to this machine (`.claude/agent-memory-local/`, gitignored), so it never reaches the public repo. Even so, keep it free of secrets. Save durable learnings there: verified API behavior, emulator tricks, device quirks.
+- **Memory has two layers.**
+  - **Private notes:** your automatic memory stays local to this machine (`.claude/agent-memory-local/`, gitignored). Use it for scratch notes and anything machine-specific.
+  - **Shared learnings:** when you learn something that helps on every machine and OS (a known issue, a device quirk, a build gotcha, verified API behavior), add it to `.claude/skills/android-platform/references/known-issues.md` in the entry format shown there. That file is committed, so it's shared across devices after the maintainer reviews the diff. It must never contain secrets, personal paths, account names, or details about anyone's machine, network, or employer.
+  - Read `known-issues.md` at the start of every task.
 
 ## Setup and commands
 

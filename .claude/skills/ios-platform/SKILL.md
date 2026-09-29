@@ -10,6 +10,7 @@ Platform facts here are current as of 2026-09-28. Re-check anything version-sens
 The detail lives in `references/` (in the repo, `.claude/skills/ios-platform/references/`):
 - [references/devices.md](references/devices.md): the device matrix, with specs, dates, point sizes, and expected window classes.
 - [references/iphone-duo.md](references/iphone-duo.md): Apple's iPhone Duo design and developer guidance, condensed, with the React Native and Expo mapping.
+- [references/known-issues.md](references/known-issues.md): shared, public-safe known issues and workarounds. Read it first; add to it when you learn something durable.
 - [references/review-checklist.md](references/review-checklist.md): the iOS PR and device-QA checklist, including the App Store rules.
 
 ## Principles
