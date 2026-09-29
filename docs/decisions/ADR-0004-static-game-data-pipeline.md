@@ -74,7 +74,7 @@ Build game data ahead of time in CI, and serve it as static, versioned files fro
 
 **Follow-ups**
 - Pipeline v1 in Phase 1: the Pokédex index with real types, plus the image-availability manifest. A weekly PR bumps the pinned sprite commit.
-- Battle bundles in Phase 3, and TCG bundles by the TCG migration deadline ([ADR-0009](ADR-0009-tcg-data-source.md)).
+- TCG bundles in Phase 3, before the TCG migration deadline ([ADR-0009](ADR-0009-tcg-data-source.md)), then battle bundles in Phase 4.
 
 ## Alternatives considered
 

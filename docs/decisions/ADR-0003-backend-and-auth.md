@@ -39,7 +39,7 @@
 - **SDK:** the Firebase JS SDK on every platform, which also runs in Expo Go.
   - The JS SDK keeps Firestore's cache in memory only on React Native, which is one more reason to keep our own local store.
   - Native Google sign-in needs a native module, and so a development build (verify).
-- **Data model:** `users/{uid}` with subcollections for `teams`, `binders`, `dex`, and `favorites`, plus top-level `publicTeams` and `replicaCodes`. The [data model](../architecture/data-model.md) has the ERD and the migration from today's storage keys.
+- **Data model:** `users/{uid}` with subcollections for `teams`, `collection`, `wishlist`, `binders`, `dex`, `favorites`, and `savedSearches`, plus top-level `publicTeams` and `replicaCodes`. The [data model](../architecture/data-model.md) has the ERD and the migration from today's storage keys.
 - **Must-haves before any account feature ships:**
   - in-app account deletion that also deletes the user's data
   - a privacy policy and Terms of Service on our domain, linked from sign-in and settings
@@ -82,7 +82,7 @@
 
 ## Revisit when
 
-- **The reachability constraint goes away:** switch the default to Supabase, ideally before Phase 4 starts.
+- **The reachability constraint goes away:** switch the default to Supabase, ideally before Phase 5 starts.
 - **Email-link sign-in proves confusing or unreliable** (people abandon it, or report problems): move to Clerk for email codes.
 - **Discord or X sign-in becomes a priority.**
 - **Firestore costs pass the budget**, or queries get relational enough that Postgres would be simpler.

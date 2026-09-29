@@ -44,7 +44,7 @@
   - curated regulation files, cross-checked against the mod in CI
 - **We build our own UI.** Don't copy the Showdown client's code, CSS, or assets (AGPLv3).
 - **Out of scope for v1:** local simulation (`@pkmn/sim` in a web worker) and any battle client ([OQ-9](../../specs/open-questions.md#oq-9-showdown-login-battle-client)).
-- **Hermes spike first.** Before Phase 3 feature work, measure bundle size, parse time, and memory for the dex, calculator, and sets packages on a mid-range Android phone.
+- **Hermes spike first.** Before Phase 4 feature work, measure bundle size, parse time, and memory for the dex, calculator, and sets packages on a mid-range Android phone.
 
 ## Consequences
 

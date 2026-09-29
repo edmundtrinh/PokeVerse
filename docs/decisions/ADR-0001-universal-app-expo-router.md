@@ -59,7 +59,7 @@
 **Follow-ups**
 - The route map and navigation structure go in the [architecture overview](../architecture/overview.md).
 - Replace the drawer, the `Modal` screens, and the login gate during the Phase 1 migration.
-- Build the tab-order preference and its screen in Settings → Preferences (PRD APP-1) with the tabs in Phase 1, and the Battle section menu (PRD BAT-5) in Phase 3.
+- Build the tab-order preference and its screen in Settings → Preferences (PRD APP-1) with the tabs in Phase 1, and the Battle section menu (PRD BAT-5) in Phase 4.
 
 ## Alternatives considered
 

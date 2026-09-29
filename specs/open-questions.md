@@ -1,6 +1,6 @@
 # Open questions
 
-- **Last updated:** 2026-09-28
+- **Last updated:** 2026-09-29
 - **Related:** [PRD](PRD.md), [roadmap](roadmap.md), [decisions (ADRs)](../docs/decisions/README.md)
 
 These are decisions the maintainer still has to make. Each one lists its options, a recommendation, and what it blocks. Once a question is settled, record the outcome in the ADR it names (or a new ADR), then move the question to "Decided" at the bottom of this file.
@@ -9,26 +9,26 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 | # | Question | Recommendation | Blocks | Decide by |
 |---|---|---|---|---|
-| [OQ-1](#oq-1-final-backend-pick) | Final backend pick | Firebase now; Supabase if the reachability constraint goes away | ADR-0003, P4 | Before P4 |
+| [OQ-1](#oq-1-final-backend-pick) | Final backend pick | Firebase now; Supabase if the reachability constraint goes away | ADR-0003, P5 | Before P5 |
 | [OQ-2](#oq-2-styling-library) | Styling library | Deeper desk comparison, then a hands-on spike; if both pass, pick the stable one | ADR-0006, all new UI | P1 spike |
-| [OQ-3](#oq-3-store-safe-brand-name-and-domain) | Store-safe brand name and domain | Choose in P1, before buying a domain or creating store records | The custom domain, P1 web deploy, P4 auth domains, P6 | Before the P1 web deploy |
+| [OQ-3](#oq-3-store-safe-brand-name-and-domain) | Store-safe brand name and domain | Choose in P1, before buying a domain or creating store records | The custom domain, P1 web deploy, P5 auth domains, P6 | Before the P1 web deploy |
 | [OQ-4](#oq-4-champions-and-showdown-tab-naming-and-default) | Tab naming and default | **Decided 2026-09-29:** Pokédex → TCG → Battle (Champions ▾ / Showdown) → Profile; user-reorderable | n/a | Done |
-| [OQ-5](#oq-5-license) | License | MIT, once the maintainer confirms he's cleared to license the code | The LICENSE file; outside contributions | As soon as possible |
-| [OQ-6](#oq-6-smogon-sets-and-analyses-permission) | Smogon sets and analyses | Ask first; meanwhile show usage stats, our own derived builds, and links | SD-3, meta pages | Before P3 |
-| [OQ-7](#oq-7-sprite-source-and-permission-for-store-builds) | Sprite source for store builds | PokeAPI sprites for web; ask for permission before stores, or go text-first | P6 store submission | Before P6 |
-| [OQ-8](#oq-8-analytics-tool) | Analytics tool | Yes to analytics (owner, 2026-09-29): Sentry + a vendor-neutral wrapper, with Firebase Analytics proposed | Usage metrics, privacy policy | Before P1 ends |
+| [OQ-5](#oq-5-license) | License | MIT, once the maintainer confirms the code can be licensed | The LICENSE file; outside contributions | As soon as possible |
+| [OQ-6](#oq-6-smogon-sets-and-analyses-permission) | Smogon sets and analyses | Ask first; meanwhile show usage stats, our own derived builds, and links | SD-3, meta pages | Before P4 |
+| [OQ-7](#oq-7-sprite-source-and-permission-for-store-builds) | Sprite source for store builds | **Decided 2026-09-29:** images load on the device from commit-pinned PokeAPI sprite URLs; store builds show them by default, with a remote images-off switch | n/a | Done |
+| [OQ-8](#oq-8-analytics-tool) | Analytics tool | Yes to analytics (owner, 2026-09-29): Sentry + a vendor-neutral wrapper, with Firebase Analytics proposed. Decided: crash reports get their own switch, and web consent is asked only where the law requires it | Usage metrics, privacy policy | Before P1 ends |
 | [OQ-9](#oq-9-showdown-login-battle-client) | Showdown-login battle client | Not in v1; revisit after P6 | Nothing yet | After P6 |
-| [OQ-10](#oq-10-replica-code-moderation) | Replica code moderation | Curated in P3; structured, pre-moderated submissions in P4 | CHA-5, security rules, Terms | Before P4 |
-| [OQ-11](#oq-11-battle-hub-p3-or-accounts-p4-first) | Battle hub (P3) or accounts (P4) first | P3 first | Roadmap order | Before P3 starts |
+| [OQ-10](#oq-10-replica-code-moderation) | Replica code moderation | Curated in P4; structured, pre-moderated submissions in P5 | CHA-5, security rules, Terms | Before P5 |
+| [OQ-11](#oq-11-phase-order) | Phase order | **Decided 2026-09-29:** P3 TCG v2 → P4 battle hub → P5 accounts and sync | n/a | Done |
 | [OQ-12](#oq-12-accounts-for-users-under-13) | Accounts for users under 13 | **Decided 2026-09-29:** guest mode only in v1 | n/a | Done |
-| [OQ-13](#oq-13-canonical-species-key) | Canonical species key | **Decided 2026-09-29:** our own key (dex number + form slug) is primary; the other sources are reference-only | n/a | Done |
-| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | Direction (2026-09-29): plain "View on TCGplayer / Cardmarket" links, collection value from the user's own purchase prices, eBay current listings in v2; no affiliates; still planning | ADR-0009, TCG-6, P5 | Before P5 |
+| [OQ-13](#oq-13-canonical-species-key) | Canonical species key | **Decided 2026-09-29:** our own key (dex number + form slug) is primary; the other sources are reference-only. Moves, abilities, items, natures, types, formats, and regulations get our own IDs too | n/a | Done |
+| [OQ-14](#oq-14-card-price-sources-and-logos) | Card price sources and logos | Direction (2026-09-29): plain "View on TCGplayer / Cardmarket" and eBay links; "Your valuation" from the user's own values and purchase prices; an eBay listings panel in v2; licensed market prices once a source gives written permission; no affiliates | ADR-0009, TCG-6, TCG-17, TCG-18 | Before P3 (links) |
 
 ## OQ-1: Final backend pick
 
 - **Question:** do accounts and sync run on Firebase, or on something else?
-- **Blocks:** accepting [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md), all of P4, the Firestore details in the [data model](../docs/architecture/data-model.md), and the list of data processors in the privacy policy.
-- **Decide by:** before P4 starts.
+- **Blocks:** accepting [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md), all of P5, the Firestore details in the [data model](../docs/architecture/data-model.md), and the list of data processors in the privacy policy.
+- **Decide by:** before P5 starts.
 - **Context:**
   - Maintainer environments must be able to reach the vendor's dashboard, docs, and deployments, and some networks restrict certain vendors.
   - Sign-in v1 is Apple, Google, and email, with local-first sync.
@@ -41,7 +41,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 | **AWS Amplify Gen 2** | A TypeScript-defined backend; good AWS practice | Heavier setup and a rougher sign-in UX |
 | **Self-hosted Better Auth** | Full control | A server to run and secure |
 
-- **Recommendation:** Firebase, as [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) describes, while the reachability constraint holds. If the constraint goes away before P4 starts, switch the default to Supabase and revise ADR-0003 and the data model. Either way, keep data access behind repository interfaces so the choice stays reversible.
+- **Recommendation:** Firebase, as [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) describes, while the reachability constraint holds. If the constraint goes away before P5 starts, switch the default to Supabase and revise ADR-0003 and the data model. Either way, keep data access behind repository interfaces so the choice stays reversible.
 
 ## OQ-2: Styling library
 
@@ -95,7 +95,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 - **Question:** what's the app called in the stores, and what domain do we buy?
 - **Blocks:**
   - the custom domain, and so the P1 web deploy on our own domain ([ADR-0005](../docs/decisions/ADR-0005-web-hosting.md))
-  - email-link and universal-link domains (P4)
+  - email-link and universal-link domains (P5)
   - `app.json`'s name, slug, and bundle IDs, and the store records (P6)
   - the wordmark in `packages/design`
   - the internal `@pokeverse/*` package scope, which is cheap to rename
@@ -122,8 +122,8 @@ These are decisions the maintainer still has to make. Each one lists its options
 ## OQ-4: Champions and Showdown tab naming and default
 
 - **Question:** what are the battle hub's tabs called, and which one opens first?
-- **Blocks:** P3's navigation and routes (for example `/battle/champions` and `/battle/showdown`), copy, onboarding, and deep links.
-- **Decide by:** before P3 design starts.
+- **Blocks:** P4's navigation and routes (for example `/battle/champions` and `/battle/showdown`), copy, onboarding, and deep links.
+- **Decide by:** before P4 design starts.
 - **Context:** Showdown hosts Champions formats too, so the real split is by ruleset, not by platform. One shared team engine serves both tabs ([ADR-0008](../docs/decisions/ADR-0008-battle-engine.md)).
 
 | Option | For | Against |
@@ -155,7 +155,7 @@ These are decisions the maintainer still has to make. Each one lists its options
   - the README's license section, and CONTRIBUTING's contribution terms
   - calling the project open source: without a license, the repo is public but not legally open source
 - **Decide by:** as soon as possible. Everything community-related waits on it.
-- **Context:** the README has claimed MIT, but there's no LICENSE file. The maintainer first confirms he's cleared to license the code, since you can only license code you own.
+- **Context:** the README has claimed MIT, but there's no LICENSE file. The maintainer first confirms the code can be licensed, since you can only license code you own.
 
 | Option | For | Against |
 |---|---|---|
@@ -164,13 +164,13 @@ These are decisions the maintainer still has to make. Each one lists its options
 | GPL-3.0 or AGPL-3.0 | Keeps forks open; AGPL would even allow reusing the Showdown client's code | Copyleft obligations for everyone, and it deters casual contributors |
 | No license (the status quo) | Nothing to decide | Nobody can legally reuse or contribute |
 
-- **Recommendation:** MIT, added as soon as the maintainer confirms he's cleared to license the code ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)). Contributions come in under the same license (inbound = outbound), so no contributor agreement is needed.
+- **Recommendation:** MIT, added as soon as the maintainer confirms the code can be licensed ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)). Contributions come in under the same license (inbound = outbound), so no contributor agreement is needed.
 
 ## OQ-6: Smogon sets and analyses permission
 
 - **Question:** may we show Smogon's sets and analyses, and how do we credit them?
 - **Blocks:** SD-3 (sets per format), the content of "meta picks and builds" pages for Showdown formats, the source list in [ADR-0004](../docs/decisions/ADR-0004-static-game-data-pipeline.md), and the credits screen.
-- **Decide by:** before P3 starts.
+- **Decide by:** before P4 starts.
 - **Context:**
   - Smogon's code is MIT, and its aggregate usage stats are public domain, but its sets and analyses are © Smogon.
   - The data.pkmn.cc endpoints that package them are "subject to change".
@@ -182,13 +182,13 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Ask Smogon; show sets and analysis excerpts with attribution | The best experience, done with permission | Needs a yes, and upkeep |
 | Community-submitted sets | Our own content | Needs moderation and critical mass |
 
-- **Recommendation:** contact Smogon's site staff while planning P3. Until they answer, ship usage stats, derived builds, and links to their analyses. If they agree, show sets with clear attribution and a link back, and follow any conditions they set.
+- **Recommendation:** contact Smogon's site staff while planning P4. Until they answer, ship usage stats, derived builds, and links to their analyses. If they agree, show sets with clear attribution and a link back, and follow any conditions they set.
 
 ## OQ-7: Sprite source and permission for store builds
 
 - **Question:** which sprites ship where, and with whose permission?
-- **Blocks:** P6 store submission, store screenshots, the pipeline's sprite step (the source decides paths and sizes), and DEX-6.
-- **Decide by:** before P6. The web can use sprites earlier.
+- **Blocks:** P6 store submission, store screenshots, the pipeline's image-availability manifest, and DEX-6.
+- **Decide by:** done (decided 2026-09-29, below).
 - **Context:** every Pokémon sprite depicts The Pokémon Company's copyrighted designs, whatever repository hosts it ([ADR-0012](../docs/decisions/ADR-0012-brand-ip-and-assets.md)).
 
 | Option | For | Against |
@@ -217,7 +217,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 ## OQ-8: Analytics tool
 
 - **Question:** how do we measure active users and retention without tracking people?
-- **Blocks:** the usage metrics in the [PRD](PRD.md#7-success-metrics), the privacy policy and store privacy labels (P4 and P6), and any consent UI.
+- **Blocks:** the usage metrics in the [PRD](PRD.md#7-success-metrics), the privacy policy and store privacy labels (P1, P5, and P6), and any consent UI.
 - **Decide by:** before P1 ends. Analytics starts in P1, so the P1 privacy policy has to cover it.
 - **Context:**
   - The audience skews young, and the project is non-commercial.
@@ -262,15 +262,15 @@ These are decisions the maintainer still has to make. Each one lists its options
 |---|---|---|
 | **No: "Test on Showdown" only** | No extra scope | People leave the app to battle |
 | An experiment after P6, with Smogon staff's blessing | The full loop inside one app | A big build, plus server etiquette and chat moderation |
-| Build it in P3 | Ambitious | Derails the battle hub v1 |
+| Build it in P4 | Ambitious | Derails the battle hub v1 |
 
 - **Recommendation:** not in v1. Keep "Test on Showdown", and later local simulation (`@pkmn/sim` in a web worker). Revisit after P6 if players ask for it, and talk to Smogon staff before writing any code.
 
 ## OQ-10: Replica code moderation
 
 - **Question:** how do user-submitted Replica Team codes stay useful and safe?
-- **Blocks:** CHA-5 submissions, the `replicaCodes` schema and security rules ([data model](../docs/architecture/data-model.md)), the Terms' content policy, and P4.
-- **Decide by:** before P4 starts.
+- **Blocks:** CHA-5 submissions, the `replicaCodes` schema and security rules ([data model](../docs/architecture/data-model.md)), the Terms' content policy, and P5.
+- **Decide by:** before P5 starts.
 - **Context:**
   - A Replica Team code is 10 characters (for example `7F8MM 0LD1F`), and there's no official API to validate one.
   - The risks are dead codes, spam, abusive text in titles and notes, and a young audience.
@@ -284,35 +284,33 @@ These are decisions the maintainer still has to make. Each one lists its options
 | Trusted contributors with earned reputation | Scales well | Complex to build |
 
 - **Recommendation:**
-  - P3 ships a curated, read-only library.
-  - P4 adds submissions from signed-in users aged 13 and over. Submissions use structured fields only: the code (format-checked), the regulation, an optional paste, and a source link, with no free text in v1. They're pre-moderated, rate-limited per user, and protected by App Check.
+  - P4 ships a curated, read-only library.
+  - P5 adds submissions from signed-in users aged 13 and over. Submissions use structured fields only: the code (format-checked), the regulation, an optional paste, and a source link, with no free text in v1. They're pre-moderated, rate-limited per user, and protected by App Check.
   - "Worked" and "didn't work" votes and a report button prune dead codes.
   - Codes are archived automatically when their regulation ends.
   - Move toward post-moderation only if the volume outgrows the queue.
 
-## OQ-11: Battle hub (P3) or accounts (P4) first
+## OQ-11: Phase order
 
-- **Question:** which ships first, the battle hub or accounts and sync?
+- **Question:** which ships first, the battle hub or accounts and sync? It was first asked when the battle hub was P3 and accounts P4.
 - **Blocks:** the roadmap order; when [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) has to be accepted; and whether the Replica library launches read-only.
-- **Decide by:** before P3 starts.
+- **Decided 2026-09-29, 14:41 (owner):** TCG v2 moves ahead of the battle hub, and accounts stay after both. The order is P3 TCG v2 (the collection, binders, dex progress, and the TCGdex migration before 2027-01-31), P4 battle hub, P5 accounts and sync, and P6 delight and launch. The reasons are in the [roadmap](roadmap.md#why-tcg-v2-and-the-battle-hub-come-before-accounts).
+
+The options that were weighed for the battle hub and accounts:
 
 | Option | For | Against |
 |---|---|---|
-| **P3, then P4** (current plan) | People sign up for value; local-first keeps teams safe meanwhile; compliance work comes only when it's needed | Community features wait |
-| P4, then P3 | Accounts are ready when the hub launches; shared teams and Replica submissions from day one | Compliance work before there's much to protect; the battle hub ships later |
-| Interleave: P3's core, a minimal P4, then P3's community features | Some of both | More context switching for one maintainer |
+| **The battle hub, then accounts** (chosen) | People sign up for value; local-first keeps teams safe meanwhile; compliance work comes only when it's needed | Community features wait |
+| Accounts, then the battle hub | Accounts are ready when the hub launches; shared teams and Replica submissions from day one | Compliance work before there's much to protect; the battle hub ships later |
+| Interleave: the hub's core, minimal accounts, then the hub's community features | Some of both | More context switching for one maintainer |
 
-- **Recommendation:** P3 first, for the reasons in the [roadmap](roadmap.md#why-p3-battle-hub-comes-before-p4-accounts). If shared teams or Replica submissions turn out to be must-haves at launch, interleave a minimal P4 slice.
-
-- **Decided 2026-09-29 14:41 (owner):**
-  - TCG v2 moves ahead of the Battle hub. The new order: P3 TCG v2 (collection, binders, dex progress, and the TCGdex migration before 2027-01-31), P4 Battle hub, P5 Accounts and sync, P6 Delight and launch.
-  - The value-before-accounts logic above still holds, since accounts stay after both.
+- **If shared teams or Replica submissions turn out to be must-haves at launch,** interleave a minimal slice of accounts.
 
 ## OQ-12: Accounts for users under 13
 
 - **Question:** can people under 13 create accounts in v1, or do they stay in guest mode?
 - **Blocks:** the age gate and account flow in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md), the data model's `child` handling, the privacy policy, and store age ratings.
-- **Decide by:** before P4.
+- **Decide by:** before P5.
 
 | Option | For | Against |
 |---|---|---|
@@ -324,7 +322,7 @@ These are decisions the maintainer still has to make. Each one lists its options
 - **Decided 2026-09-29:** guest mode only for under-13s in v1 (see Decided below).
 - **Refined 14:41:**
   - A neutral age-band question is asked **once per install** at first launch, in production builds only, and never repeated.
-  - A development flag skips it, for example `EXPO_PUBLIC_SKIP_AGE_GATE=1` or a dev-menu toggle (proposed).
+  - A development flag skips it (decided), for example `EXPO_PUBLIC_SKIP_AGE_GATE=1` or a dev-menu toggle (the mechanism is proposed).
   - Under-13 guests get essential-only analytics.
 
 ## OQ-13: Canonical species key
@@ -360,8 +358,8 @@ These are decisions the maintainer still has to make. Each one lists its options
 
 - **Question:** which price sources can we use, and how do we credit them?
 - **Owner's requirement (2026-09-29):** prices from TCGplayer, eBay, PSA, Collectr, and DoubleHolo, if possible, each labeled with its logo the way other collecting apps do.
-- **Blocks:** [ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md), PRD requirement TCG-6, and P5.
-- **Decide by:** before P5.
+- **Blocks:** [ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md), PRD requirements TCG-6, TCG-17, and TCG-18, and P3's marketplace links.
+- **Decide by:** before P3 for the links. Licensed prices (v1.1) and the eBay panel (v2) can wait.
 - **Known constraints:**
   - TCGplayer isn't granting new API access.
   - API keys can't ship inside the app, so keyed sources need our pipeline or a server function.
@@ -386,7 +384,7 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **Affiliate programs: skipped (decided 12:58).** The app stays free and non-commercial. Marketplaces get plain links and plain-text names, with no logos.
   - **Collection value: from the user's own purchase prices (decided 12:58).** There's no licensing issue.
     - "Actual" value counts owned cards.
-    - "Projected" value also counts wishlist cards, at an optional user-entered target price (proposed).
+    - "Projected" value also counts wishlist cards, at an optional user-entered target price (decided 14:03). Licensed live prices are used wherever a source allows, each in its own row.
   - **eBay panel (v2), decided 14:03: all of the following.**
     - **Filters and sorting:** a Graded / Raw toggle, grader and grade filters, auction vs Buy It Now, and sorting by ending soonest, newly listed, or price.
     - **Rows:** photo, title, current bid or price, time left, and shipping.
@@ -394,7 +392,7 @@ These are decisions the maintainer still has to make. Each one lists its options
   - **eBay link-outs, like the TCGplayer link:** "View listings on eBay" and "View recently sold on eBay", which opens eBay's own sold-listings search. No sold data comes through the API.
   - **Default marketplace by region: decided 14:03 (automatic first):**
     - It follows the device's region setting, with no location permission. US and Canada get TCGplayer first, the UK and EU get Cardmarket first, and everywhere else gets both.
-    - Each card shows a primary "View on …" button plus a "More" menu with the other marketplaces and "Search eBay".
+    - Each card shows a primary "View on …" button plus a "More" menu with the other marketplace, "View listings on eBay", and "View recently sold on eBay" (in v1, proposed; the eBay panel comes in v2).
     - Settings → Preferences has an override: Auto, TCGplayer, or Cardmarket.
     - eBay searches use the matching eBay site.
 - **"Current value" like Collectr's (owner, 14:03: use live sources whenever possible). Research concluded 2026-09-29:**
@@ -426,4 +424,6 @@ When a question is settled, move it here with the date, the outcome, and a link 
 - **2026-09-29, OQ-13 (species key):** our own key (dex number + form slug) is primary; PokeAPI, Showdown, and TCGdex IDs live in a reference crosswalk.
 - **2026-09-29, OQ-7 (images in store builds):** on by default, with a remote "images off" switch.
 - **2026-09-29, OQ-11 (roadmap order):** P3 TCG v2 → P4 Battle hub → P5 Accounts and sync.
-- **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).
+- **2026-09-29, OQ-8 (analytics, in part):** crash reports get their own switch, on by default and anonymous; web consent is asked only where the law requires it. The vendor is still open.
+- **2026-09-29, OQ-13 (extended):** moves, abilities, items, natures, types, formats, and regulations use our own IDs too; cards keep TCGdex IDs.
+- **2026-09-29, OQ-12 (accounts for users under 13):** guest mode only in v1, with data on the device, until a verifiable parental-consent flow exists. The age question is asked once per install, in production builds only. Recorded in [ADR-0003](../docs/decisions/ADR-0003-backend-and-auth.md) and the [PRD](PRD.md).

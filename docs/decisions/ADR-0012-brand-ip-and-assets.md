@@ -71,7 +71,7 @@
    - Respect PokeAPI's fair-use policy.
    - Keep request volume low on Showdown, PokéPaste, and data.pkmn.cc.
    - Never spoof a User-Agent.
-9. **License our code under MIT, but only after the maintainer confirms he's cleared to license it** ([OQ-5](../../specs/open-questions.md#oq-5-license)). Until then there's no LICENSE file, and the README doesn't claim one.
+9. **License our code under MIT, but only after the maintainer confirms the code can be licensed** ([OQ-5](../../specs/open-questions.md#oq-5-license)). Until then there's no LICENSE file, and the README doesn't claim one.
 10. **Respond fast to rights holders.** If one asks us to remove something, remove it promptly and note it in the developer log. The web app is the fallback channel if a store rejects a build.
 
 ## Consequences
@@ -89,7 +89,7 @@
 
 **Follow-ups**
 - Remove `pokemon_sprites_organized/` and `scripts/pokemon_sprites.py` in the SDK 57 prune.
-- Replace the sprite in `packages/design/assets/` with a link or original placeholder art. That's the maintainer's call, because the folder holds his work in progress.
+- Replace the sprite in `packages/design/assets/` with a link or original placeholder art. That's the maintainer's call, because the folder holds their work in progress.
 - Revise the brand-mark guidance in `packages/design`, and design an original icon before the beta.
 - Add the disclaimer and the credits screen in Phase 1, with the web deploy.
 

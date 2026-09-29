@@ -1,6 +1,6 @@
 # Test strategy
 
-- **As of:** 2026-09-28
+- **As of:** 2026-09-28. Updated on 2026-09-29 for the new phase order, and with tests for the collection, dex progress, valuation, CSV, and search.
 - **Status:** §1 describes `main` on that date. §2 is the P0 repair (step U5 of the SDK 57 upgrade). §3 onward is the target for P1 and later.
 - **Related:** [architecture overview](../architecture/overview.md) · [data model](../architecture/data-model.md) · [device layouts](../architecture/device-layouts.md) · [roadmap](../../specs/roadmap.md) · manual checklists [TEST_CASES.md](../TEST_CASES.md) and [TCG_TEST_CASES.md](../TCG_TEST_CASES.md)
 
@@ -136,7 +136,7 @@ module.exports = {
    const mockGet = (axios.create as jest.Mock).mock.results[0].value.get as jest.Mock;
    ```
 
-   `tcgApi` itself is replaced in P5 (TCGdex through the pipeline, [ADR-0009](../decisions/ADR-0009-tcg-data-source.md)), so keep this suite small.
+   `tcgApi` itself is replaced in P3 (TCGdex through the pipeline, [ADR-0009](../decisions/ADR-0009-tcg-data-source.md)), so keep this suite small.
 6. **Use `fireEvent.press`,** or RNTL's `userEvent.press`, instead of calling `props.onPress()`. Await state changes with `findBy*` or `waitFor`. In the harness, give each control `accessibilityRole="button"` so it can be queried by role.
 7. **Remove empty and timing assertions:**
    - delete the `not.toThrow` wrappers (a render error fails the test anyway) and assert on what renders
@@ -187,9 +187,13 @@ module.exports = {
 | **Paste import and export** | `packages/battle`, through `@pkmn/sets` | Round-trips for both the regular and the beta-client layouts. Champions Stat Points on the `EVs:` line. Nicknames, genders, items, and Tera types. Malformed lines produce line-level errors. |
 | **Window classes** | `packages/ui` | Width boundaries 599/600, 839/840, and 1199/1200; height boundaries 479/480 and 899/900 ([device layouts §3.1](../architecture/device-layouts.md#31-usewindowclass)). |
 | **Posture to layout** | `packages/ui` | Book splits at the hinge; tabletop stacks; flat decides by width; an occluding hinge gets a gutter; grids use even columns across a fold; a compact height means at most two panes. |
-| **Storage migrations** | The app's storage layer | Legacy fixtures migrate to v1: favorites merged from both stores, `position` becomes (page, slot), simulated identities are dropped, corrupt JSON stays in the backup, and reruns are idempotent ([data model §4](../architecture/data-model.md#4-migration-from-todays-keys)). |
+| **Storage migrations** | The app's storage layer | Legacy fixtures migrate to v1: favorites merged from both stores, `position` becomes (page, slot), binder cards become collection copies that their slots reference, simulated identities are dropped, corrupt JSON stays in the backup, and reruns are idempotent ([data model §4](../architecture/data-model.md#4-migration-from-todays-keys)). |
 | **Sync** | The app's sync engine | Last-write-wins merge; `updatedAt = max(now, previous + 1)`; tombstones; outbox coalescing; conflict copies ([data model §3](../architecture/data-model.md#3-local-first-store-and-sync)). |
 | **Filters and search** | `usePokedexFilters` | Type, generation, and favorites filters combine correctly. Search over the full index meets the 50 ms budget as a benchmark, not as a unit assertion. |
+| **Dex counting** | The app's collection module, with the pipeline's card-to-species map | A card counts for every Pokémon it features, and a tag team for each Pokémon named (Pikachu & Zekrom-GX counts for #25 and #644). Cameos, Trainers, and Energy never count. An Alolan Vulpix card marks `37-alola` and #37. Losing the last copy removes the mark ([data model](../architecture/data-model.md#counting-cards-toward-dex-progress)). |
+| **Your valuation** | The app's collection module | A copy's entered value comes first, then its purchase price. Unvalued copies are counted, never estimated. Totals stay per currency. Projected adds wishlist target prices to actual. Sold and traded copies drop out ([PRD TCG-12](../../specs/PRD.md#53-tcg)). |
+| **CSV import and export** | The app's collection module | Export, then import into an empty store, restores every copy and field. Importing the same file again doesn't duplicate copies. Unmatched rows are listed, never dropped. Cells starting with `=`, `+`, `-`, or `@` are escaped ([PRD TCG-13](../../specs/PRD.md#53-tcg)). |
+| **Collection search** | The search index ([data model §3.5](../architecture/data-model.md#35-search-and-derived-indexes)) | Filters combine correctly, and results match a brute-force scan of the same fixture. The 100 ms budget for 10,000 copies plus the catalog is a benchmark, not a unit assertion. |
 
 **Property tests** for the Champions rules (fast-check):
 - **Round trip:** for every SP from 0 to 32, `evToSp(spToEv(sp)) === sp`. Here `spToEv(sp) = 8·sp − 4` (0 stays 0), and `evToSp(ev) = ⌊(ev + 4) / 8⌋`, which is derived.
@@ -210,7 +214,10 @@ module.exports = {
   - the binder planner (the existing suite)
   - the deck builder
   - the team editor: SP and EV inputs and legality messages
-  - sign-in and sign-out, from P4
+  - the first-launch age question in production builds, and the development flag that skips it, from P1
+  - the collection, a card's detail, and set completion, from P3
+  - binder drag and drop, including the move and swap actions for keyboard and screen-reader users, from P3
+  - sign-in and sign-out, from P5
 
 ### 4.3 Contract tests (data pipeline and backend)
 
@@ -223,11 +230,13 @@ module.exports = {
   - every regulation roster is non-empty and every entry exists
   - every format a team can reference exists
   - every item in a Champions pool exists
-  - every species has a sprite at every published size
+  - every species key has an entry in the image-availability manifest
+  - every dex list's entries exist and are in order: 1,025 in the National list and 151 in Kanto
+  - every card's featured species keys exist, and cards that can't be mapped are listed in the report, never guessed
   - file sizes stay within a budget (set in P1)
 - **A diff report against the last published build,** for example "Regulation M-C adds 24 Pokémon", so a person reviews big changes before they ship.
 
-**Backend** (from P4, [ADR-0003](../decisions/ADR-0003-backend-and-auth.md)):
+**Backend** (from P5, [ADR-0003](../decisions/ADR-0003-backend-and-auth.md)):
 - **Security rules** tested with the Firebase Emulator Suite and `@firebase/rules-unit-testing` (5.0.2, which targets `firebase` 12). Cover:
   - owner-only access
   - the `updatedAt` guard and `schemaVersion` monotonicity
@@ -251,7 +260,8 @@ module.exports = {
   2. Launch offline after one online session: the Pokédex still works.
   3. Build a Champions team, see the legality messages, export a paste.
   4. Binder: add a card, turn the page, relaunch: the card is still there.
-  5. From P4: sign in, sign out and keep the data, delete the account.
+  5. From P3: add a copy of a card, place it in a binder, see it count in dex progress, export CSV, and import it again with no duplicates.
+  6. From P5: sign in, sign out and keep the data, delete the account.
 
 **Web: Playwright**
 - **Run against the static export** (`npx expo export -p web`, served locally).
@@ -320,7 +330,7 @@ flowchart LR
 |---|---|---|
 | Playwright (web) | Pull requests that touch UI | P1 |
 | Data-pipeline contract tests | Pipeline changes and every scheduled run; blocks the publish | P1 |
-| Security-rules and Functions tests | Pull requests that touch rules or Functions | P4 |
+| Security-rules and Functions tests | Pull requests that touch rules or Functions | P5 |
 | Maestro (mobile) | Nightly and before each release | P1 (smoke), growing with each phase |
 
 **Coverage targets:**
@@ -348,7 +358,7 @@ The tools and the full device QA checklist are in [device layouts §8](../archit
 | iPad | Simulator: full screen, Split View, resized windows | Every release |
 | Web: phone, tablet, desktop, foldable | Playwright projects (automated); Chrome DevTools device mode (manual) | Playwright on UI pull requests; manual before releases |
 
-**Gates:** P2 passes when the device QA checklist passes on iPhone Duo and one Fold ([roadmap](../../specs/roadmap.md)). P4 needs sign-in E2E passing on all three platforms.
+**Gates:** P2 passes when the device QA checklist passes on iPhone Duo and one Fold ([roadmap](../../specs/roadmap.md)). P5 needs sign-in E2E passing on all three platforms.
 
 ## 7. Accessibility testing
 
@@ -393,7 +403,7 @@ The tools and the full device QA checklist are in [device layouts §8](../archit
 - **Remove the Detox and Flipper references** from `TCG_TEST_CASES.md`'s tools section; Maestro and Playwright replace them.
 - **Name automated tests after the case they cover,** for example `it('TC-020: favorites persist after restart', ...)`, so each checklist line can link to its test.
 - **Known failures** get an issue link, not a silent pass.
-- **Update the TCG checklist twice:** when `BinderPlanner` lands, and again with the TCGdex migration (P5).
+- **Update the TCG checklist twice:** when `BinderPlanner` lands, and again with the TCGdex migration (P3).
 
 ## 9. Fixtures and test data
 
