@@ -56,7 +56,8 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 ## Git and commits
 
 - **`main` is PR-only.** Never commit or push directly to it. Work on `feature/<name>` (or `fix/`, `chore/`, `docs/`) branches, and merge through a PR after CI passes and the owner approves.
-- **Cross-machine WIP:** at every stopping point, commit and push unfinished work to a `feature/<name>` branch, even if it's broken, and open a draft PR whose description says what's done, what's broken or unverified, and what's next. Other machines find in-progress work with `git fetch --all && gh pr list`. Never leave work uncommitted on only one machine.
+- **Cross-machine WIP:** at every stopping point, commit and push unfinished work to its `feature/<name>` branch, even if it's broken, so it never lives on only one machine. The latest commit message says what's done, what's broken or unverified, and what's next. Other machines find in-progress work with `git fetch --all` and `git branch -r`.
+- **PRs are for working features.** Open one when the feature works end to end (as a draft while it's still being verified), with a description that says what changed, how it was verified, and what's left. Partial features stay on their branch without a PR.
 - Make small, logical commits with short, high-level messages describing what changed.
 - Never mention AI tools (Claude, Codex, and so on) in commit messages, and never add `Co-Authored-By` lines.
 - Never force-push or rewrite shared history unless the maintainer asks.
