@@ -66,8 +66,7 @@ const renderWithProvider = (component: React.ReactElement) => {
   return render(<UserProvider>{component}</UserProvider>);
 };
 
-// Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-describe.skip('BinderPlanner', () => {
+describe('BinderPlanner', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (tcgApi.searchCards as jest.Mock).mockResolvedValue(mockCards);

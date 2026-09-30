@@ -1,7 +1,8 @@
 // src/__tests__/integration/TCGFlow.test.tsx
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserProvider } from '../../contexts/UserContext';
 import TCGView from '../../components/tcg/TCGView';
 import * as tcgApi from '../../api/tcgApi';
@@ -111,8 +112,9 @@ const renderTCGView = () => {
 };
 
 describe('TCG Integration Flow', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks();
+    await AsyncStorage.clear();
     (tcgApi.searchCards as jest.Mock).mockResolvedValue(mockCards);
     (tcgApi.getRecentSets as jest.Mock).mockResolvedValue(mockSets);
     (tcgApi.getCardsBySet as jest.Mock).mockResolvedValue(mockCards);
@@ -125,7 +127,7 @@ describe('TCG Integration Flow', () => {
 
       // Should start with Binder mode
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
 
       // Switch to Deck Builder
@@ -143,19 +145,38 @@ describe('TCG Integration Flow', () => {
       });
 
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
     });
   });
 
   describe('Complete Binder Flow', () => {
-    // Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-    it.skip('should complete full binder workflow: create → populate → save', async () => {
+    it('should complete full binder workflow: create → populate → save', async () => {
+      // Saving requires a logged-in user
+      await AsyncStorage.setItem(
+        'user_profile',
+        JSON.stringify({
+          id: 'test-user',
+          displayName: 'Test Trainer',
+          authProvider: 'guest',
+          preferences: {
+            defaultSpriteVersion: 'default',
+            showShinyByDefault: false,
+            enableHaptics: false,
+            enablePriceTracking: false,
+          },
+          caughtPokemon: [],
+          savedBinders: [],
+          favorites: [],
+          createdAt: '2024/01/01',
+        })
+      );
+
       const { getByText, getAllByText, getByPlaceholderText } = renderTCGView();
 
       // 1. Start with Binder Planner
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
 
       // 2. Change grid size to 2x2 for easier testing
@@ -189,7 +210,7 @@ describe('TCG Integration Flow', () => {
       // 7. Select a card (simulate card selection)
       await waitFor(() => {
         // Find and press a card (mocked as holo-card)
-        const holoCard = getByText('Charizard ex');
+        const holoCard = screen.getAllByText('Charizard ex')[0];
         fireEvent.press(holoCard.parent!);
       });
 
@@ -206,23 +227,29 @@ describe('TCG Integration Flow', () => {
 
       // 10. Fill out save dialog
       await waitFor(() => {
-        expect(getByText('Save Binder')).toBeTruthy();
+        expect(screen.getAllByText('Save Binder').length).toBeGreaterThan(0);
 
         const nameInput = getByPlaceholderText('Enter binder name');
         fireEvent.changeText(nameInput, 'My Test Binder');
       });
 
-      // 11. Complete save
+      // 11. Complete save (the dialog title and confirm button share the same label)
       await waitFor(() => {
-        const saveDialogButton = getByText('Save Binder');
-        fireEvent.press(saveDialogButton);
+        const saveMatches = screen.getAllByText('Save Binder');
+        fireEvent.press(saveMatches[saveMatches.length - 1]);
+      });
+
+      // 12. Binder is persisted to the user profile
+      await waitFor(async () => {
+        const stored = JSON.parse((await AsyncStorage.getItem('user_profile')) as string);
+        expect(stored.savedBinders).toHaveLength(1);
+        expect(stored.savedBinders[0].name).toBe('My Test Binder');
       });
     });
   });
 
   describe('Complete Deck Builder Flow', () => {
-    // Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-    it.skip('should complete deck building workflow: search → add → manage deck', async () => {
+    it('should complete deck building workflow: search → add → manage deck', async () => {
       const { getByText, getByPlaceholderText } = renderTCGView();
 
       // 1. Switch to Deck Builder mode
@@ -246,7 +273,7 @@ describe('TCG Integration Flow', () => {
 
       // 4. Add card to deck (simulate card addition)
       await waitFor(() => {
-        const addButton = getByText('+');
+        const addButton = screen.getAllByText('+')[0];
         fireEvent.press(addButton);
       });
 
@@ -269,8 +296,7 @@ describe('TCG Integration Flow', () => {
   });
 
   describe('API Error Handling', () => {
-    // Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-    it.skip('should handle API errors gracefully throughout the flow', async () => {
+    it('should handle API errors gracefully throughout the flow', async () => {
       // Mock API to fail
       (tcgApi.searchCards as jest.Mock).mockRejectedValue(new Error('API Error'));
       (tcgApi.getRecentSets as jest.Mock).mockRejectedValue(new Error('Sets API Error'));
@@ -279,7 +305,7 @@ describe('TCG Integration Flow', () => {
 
       // Should still render without crashing
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
 
       // Grid should still show empty slots
@@ -298,15 +324,14 @@ describe('TCG Integration Flow', () => {
       });
     });
 
-    // Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-    it.skip('should fallback to mock data when API fails', async () => {
+    it('should fallback to mock data when API fails', async () => {
       // Mock complete API failure
       (tcgApi.searchCards as jest.Mock).mockRejectedValue(new Error('Complete API Failure'));
 
       const { getByText, getAllByText } = renderTCGView();
 
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
 
       // Try to open card picker
@@ -339,12 +364,11 @@ describe('TCG Integration Flow', () => {
 
       // Should still be functional
       await waitFor(() => {
-        expect(getByText('Binder Planner')).toBeTruthy();
+        expect(screen.getAllByText('Binder Planner').length).toBeGreaterThan(0);
       });
     });
 
-    // Skipped until the full BinderPlanner/SavedBinders replace the stubs (see feature/local-wip)
-    it.skip('should handle large data sets efficiently', async () => {
+    it('should handle large data sets efficiently', async () => {
       // Create large mock data set
       const largeCardSet = Array.from({ length: 100 }, (_, i) => ({
         ...mockCards[0],

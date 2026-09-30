@@ -304,6 +304,7 @@ const BinderPlanner: React.FC = () => {
               Choose a card for slot {(selectedSlotPosition || 0) + 1}
             </Text>
             <TouchableOpacity
+              testID='close-button'
               style={styles.closeButton}
               onPress={() => {
                 setShowCardPicker(false);
@@ -711,6 +712,7 @@ const BinderPlanner: React.FC = () => {
                 styles.pageNavButton,
                 currentPage <= 1 && styles.pageNavButtonDisabled,
               ]}
+              testID='prev-page-button'
               onPress={goToPreviousPage}
               disabled={currentPage <= 1}
             >
@@ -735,6 +737,7 @@ const BinderPlanner: React.FC = () => {
                 styles.pageNavButton,
                 currentPage >= totalPages && styles.pageNavButtonDisabled,
               ]}
+              testID='next-page-button'
               onPress={goToNextPage}
               disabled={currentPage >= totalPages}
             >
