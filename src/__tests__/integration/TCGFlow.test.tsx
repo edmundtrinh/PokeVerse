@@ -236,7 +236,7 @@ describe('TCG Integration Flow', () => {
       await waitFor(() => {
         const searchInput = getByPlaceholderText('Search for cards...');
         fireEvent.changeText(searchInput, 'pikachu');
-        fireEvent.submitEditing(searchInput);
+        fireEvent(searchInput, 'submitEditing');
       });
 
       // 3. Verify search was called

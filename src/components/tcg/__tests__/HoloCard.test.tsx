@@ -94,17 +94,17 @@ describe('HoloCard', () => {
         hiResImage: undefined,
       };
 
-      const { container } = render(<HoloCard card={cardWithoutHiRes} />);
-      expect(container).toBeTruthy();
+      const { toJSON } = render(<HoloCard card={cardWithoutHiRes} />);
+      expect(toJSON()).toBeTruthy();
     });
   });
 
   describe('Accessibility', () => {
     it('should be accessible', () => {
-      const { container } = render(<HoloCard card={mockCard} />);
+      const { toJSON } = render(<HoloCard card={mockCard} />);
 
       // Component should render without accessibility violations
-      expect(container).toBeTruthy();
+      expect(toJSON()).toBeTruthy();
     });
   });
 

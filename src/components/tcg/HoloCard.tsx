@@ -1,6 +1,6 @@
 // src/components/tcg/HoloCard.tsx
 import React, { useRef, useState } from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
