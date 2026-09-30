@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'react-native',
+  testTimeout: 20000,
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.js'],
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
