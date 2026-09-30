@@ -15,7 +15,14 @@ const tcgAxios = axios.create({
   ...(API_KEY ? { headers: { 'X-Api-Key': API_KEY } } : {}),
 });
 
-export const retryConfig = { attempts: 3, baseDelayMs: 500 };
+// cooldownMs: after a request fails all its retries, skip the network for this long and answer
+// from the sample data immediately, so a down API doesn't add retry delays to every call
+export const retryConfig = { attempts: 3, baseDelayMs: 500, cooldownMs: 30000 };
+
+let apiUnavailableUntil = 0;
+export const resetApiCooldown = () => {
+  apiUnavailableUntil = 0;
+};
 
 export interface TCGCard {
   id: string;
@@ -132,12 +139,16 @@ const fetchOrFallback = async <T>(
   fromResponse: (data: any) => T,
   fromFixtures: () => T
 ): Promise<T> => {
-  if (FORCE_OFFLINE) return fromFixtures();
+  if (FORCE_OFFLINE || Date.now() < apiUnavailableUntil) return fromFixtures();
   try {
     const response = await requestWithRetry(path);
     return fromResponse(response.data);
   } catch (error) {
-    console.warn(`TCG API unavailable for ${path}; using offline sample data`, error);
+    apiUnavailableUntil = Date.now() + retryConfig.cooldownMs;
+    // console.log, not warn: dev builds show warnings as an on-screen toast that looks like a failure
+    console.log(
+      `TCG API unavailable (${(error as Error)?.message ?? 'unknown error'}); using offline sample data for ${retryConfig.cooldownMs / 1000}s`
+    );
     return fromFixtures();
   }
 };

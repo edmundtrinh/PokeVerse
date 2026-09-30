@@ -8,6 +8,7 @@ import {
   getBestImageUrl,
   getFeaturedCards,
   retryConfig,
+  resetApiCooldown,
   TCGCard,
   TCGSet,
 } from '../tcgApi';
@@ -74,6 +75,9 @@ describe('TCG API', () => {
   beforeEach(() => {
     mockGet.mockReset();
     retryConfig.baseDelayMs = 0;
+    retryConfig.cooldownMs = 30000;
+    resetApiCooldown();
+    (console.warn as jest.Mock).mockClear();
   });
 
   describe('searchCards', () => {
@@ -225,6 +229,30 @@ describe('TCG API', () => {
 
       expect(mockGet).toHaveBeenCalledTimes(1);
       expect(result.length).toBeGreaterThan(0);
+    });
+
+    it('skips the network during the cooldown after all retries fail, then tries again', async () => {
+      mockGet.mockRejectedValue(new Error('Request failed with status code 500'));
+
+      await searchCards('charizard');
+      expect(mockGet).toHaveBeenCalledTimes(retryConfig.attempts);
+
+      // Follow-up calls (e.g. the next keystroke) answer from sample data without touching the API
+      const result = await searchCards('charizard');
+      expect(mockGet).toHaveBeenCalledTimes(retryConfig.attempts);
+      expect(result.length).toBeGreaterThan(0);
+
+      resetApiCooldown();
+      await searchCards('charizard');
+      expect(mockGet).toHaveBeenCalledTimes(retryConfig.attempts * 2);
+    });
+
+    it('does not raise an on-screen warning when it falls back', async () => {
+      mockGet.mockRejectedValue(new Error('Request failed with status code 500'));
+
+      await searchCards('charizard');
+
+      expect(console.warn).not.toHaveBeenCalled();
     });
 
     it('returns an empty list when nothing in the sample data matches', async () => {
