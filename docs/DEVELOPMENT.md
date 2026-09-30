@@ -512,3 +512,13 @@ See [RUN_ANDROID.md](./RUN_ANDROID.md) for running commands and troubleshooting.
 ---
 
 *Last updated: January 18, 2026 - LRU caching and Android validation completed*
+## TCG API reliability and offline data
+
+The Pokémon TCG API (`api.pokemontcg.io`) intermittently returns 500/502, and wildcard name searches take a few seconds. `src/api/tcgApi.ts` retries transient failures (network errors, timeouts, 429, 5xx) up to 3 times with backoff. If the API is still unavailable it answers from `src/data/tcgFixtures.json`, about 100 collector-favorite cards (Gold Stars, Special Illustration Rares, Illustration Rares, Hyper Rares, priciest XY-era cards, Tag Teams, Base Set holos), so search, sets and the binder planner keep working. Card images are still loaded from the network.
+
+Settings (copy `.env.example` to `.env`, then restart Metro with `npx expo start --clear`):
+
+- `EXPO_PUBLIC_TCG_API_KEY`: free key from https://dev.pokemontcg.io, sent as `X-Api-Key`. Reduces 5xx errors and raises rate limits.
+- `EXPO_PUBLIC_TCG_OFFLINE=1`: never call the API; always use the sample data.
+
+To regenerate the sample data: `node scripts/fetch-tcg-fixtures.js` (set `TCG_API_KEY` to use a key). Cards are ranked by Cardmarket price within each category.
