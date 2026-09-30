@@ -123,8 +123,9 @@ When you need to test on a physical device:
 1. **Kill everything and fix watchman:**
    ```bash
    pkill -f expo; pkill -f metro
-   watchman watch-del '/Users/edmundtrinh/Documents/Projects/PokeVerse'
-   watchman watch-project '/Users/edmundtrinh/Documents/Projects/PokeVerse'
+   # run these from the repo root
+   watchman watch-del "$PWD"
+   watchman watch-project "$PWD"
    npm run ios:dev
    ```
 
