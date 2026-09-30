@@ -1,0 +1,8055 @@
+{
+ "generatedAt": "2026-09-30T05:54:53.284Z",
+ "sets": [
+  {
+   "id": "me55c",
+   "name": "30th Celebration: Classic Collection",
+   "series": "Mega Evolution",
+   "total": 30,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "30C",
+   "releaseDate": "2026/09/16",
+   "updatedAt": "2026/07/16 15:00:00",
+   "images": {
+    "symbol": "https://images.scrydex.com/pokemon/me55c-symbol/symbol",
+    "logo": "https://images.scrydex.com/pokemon/me55c-logo/logo"
+   }
+  },
+  {
+   "id": "me55",
+   "name": "30th Celebration",
+   "series": "Mega Evolution",
+   "printedTotal": 128,
+   "total": 161,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "30C",
+   "releaseDate": "2026/09/16",
+   "updatedAt": "2026/07/16 15:00:00",
+   "images": {
+    "symbol": "https://images.scrydex.com/pokemon/me55-symbol/symbol",
+    "logo": "https://images.scrydex.com/pokemon/me55-logo/logo"
+   }
+  },
+  {
+   "id": "me1",
+   "name": "Mega Evolution",
+   "series": "Mega Evolution",
+   "printedTotal": 132,
+   "total": 188,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "MEG",
+   "releaseDate": "2025/09/26",
+   "updatedAt": "2025/09/25 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/me1/symbol.png",
+    "logo": "https://images.pokemontcg.io/me1/logo.png"
+   }
+  },
+  {
+   "id": "zsv10pt5",
+   "name": "Black Bolt",
+   "series": "Scarlet & Violet",
+   "printedTotal": 86,
+   "total": 172,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "BLK",
+   "releaseDate": "2025/07/18",
+   "updatedAt": "2025/07/17 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/zsv10pt5/symbol.png",
+    "logo": "https://images.pokemontcg.io/zsv10pt5/logo.png"
+   }
+  },
+  {
+   "id": "rsv10pt5",
+   "name": "White Flare",
+   "series": "Scarlet & Violet",
+   "printedTotal": 86,
+   "total": 173,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "WHT",
+   "releaseDate": "2025/07/18",
+   "updatedAt": "2025/07/17 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/rsv10pt5/symbol.png",
+    "logo": "https://images.pokemontcg.io/rsv10pt5/logo.png"
+   }
+  },
+  {
+   "id": "sv10",
+   "name": "Destined Rivals",
+   "series": "Scarlet & Violet",
+   "printedTotal": 182,
+   "total": 244,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "DRI",
+   "releaseDate": "2025/05/30",
+   "updatedAt": "2025/05/29 22:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv10/logo.png"
+   }
+  },
+  {
+   "id": "sv9",
+   "name": "Journey Together",
+   "series": "Scarlet & Violet",
+   "printedTotal": 159,
+   "total": 190,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "JTG",
+   "releaseDate": "2025/03/28",
+   "updatedAt": "2025/03/27 16:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv9/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv9/logo.png"
+   }
+  },
+  {
+   "id": "sv8",
+   "name": "Surging Sparks",
+   "series": "Scarlet & Violet",
+   "printedTotal": 191,
+   "total": 252,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "SSP",
+   "releaseDate": "2024/11/08",
+   "updatedAt": "2024/11/07 22:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv8/logo.png"
+   }
+  },
+  {
+   "id": "sv6pt5",
+   "name": "Shrouded Fable",
+   "series": "Scarlet & Violet",
+   "printedTotal": 64,
+   "total": 99,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "SFA",
+   "releaseDate": "2024/08/02",
+   "updatedAt": "2024/08/02 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
+   }
+  },
+  {
+   "id": "sv6",
+   "name": "Twilight Masquerade",
+   "series": "Scarlet & Violet",
+   "printedTotal": 167,
+   "total": 226,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "TWM",
+   "releaseDate": "2024/05/24",
+   "updatedAt": "2024/05/23 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv6/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv6/logo.png"
+   }
+  },
+  {
+   "id": "sv5",
+   "name": "Temporal Forces",
+   "series": "Scarlet & Violet",
+   "printedTotal": 162,
+   "total": 218,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "TEF",
+   "releaseDate": "2024/03/22",
+   "updatedAt": "2024/03/22 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv5/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv5/logo.png"
+   }
+  },
+  {
+   "id": "sv4pt5",
+   "name": "Paldean Fates",
+   "series": "Scarlet & Violet",
+   "printedTotal": 91,
+   "total": 245,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "releaseDate": "2024/01/26",
+   "updatedAt": "2024/01/25 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv4pt5/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv4pt5/logo.png"
+   }
+  },
+  {
+   "id": "sv4",
+   "name": "Paradox Rift",
+   "series": "Scarlet & Violet",
+   "printedTotal": 182,
+   "total": 266,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "releaseDate": "2023/11/03",
+   "updatedAt": "2023/11/03 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv4/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv4/logo.png"
+   }
+  },
+  {
+   "id": "sv3pt5",
+   "name": "151",
+   "series": "Scarlet & Violet",
+   "printedTotal": 165,
+   "total": 207,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "releaseDate": "2023/09/22",
+   "updatedAt": "2023/09/22 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+   }
+  },
+  {
+   "id": "sv2",
+   "name": "Paldea Evolved",
+   "series": "Scarlet & Violet",
+   "printedTotal": 193,
+   "total": 279,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "releaseDate": "2023/06/09",
+   "updatedAt": "2023/06/09 15:00:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv2/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv2/logo.png"
+   }
+  },
+  {
+   "id": "sv1",
+   "name": "Scarlet & Violet",
+   "series": "Scarlet & Violet",
+   "printedTotal": 198,
+   "total": 258,
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "releaseDate": "2023/03/31",
+   "updatedAt": "2023/03/31 15:45:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sv1/symbol.png",
+    "logo": "https://images.pokemontcg.io/sv1/logo.png"
+   }
+  },
+  {
+   "id": "sm12",
+   "name": "Cosmic Eclipse",
+   "series": "Sun & Moon",
+   "printedTotal": 236,
+   "total": 272,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "CEC",
+   "releaseDate": "2019/11/01",
+   "updatedAt": "2021/09/01 05:37:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sm12/symbol.png",
+    "logo": "https://images.pokemontcg.io/sm12/logo.png"
+   }
+  },
+  {
+   "id": "sm11",
+   "name": "Unified Minds",
+   "series": "Sun & Moon",
+   "printedTotal": 236,
+   "total": 260,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "UNM",
+   "releaseDate": "2019/08/02",
+   "updatedAt": "2021/09/01 05:37:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sm11/symbol.png",
+    "logo": "https://images.pokemontcg.io/sm11/logo.png"
+   }
+  },
+  {
+   "id": "sm10",
+   "name": "Unbroken Bonds",
+   "series": "Sun & Moon",
+   "printedTotal": 214,
+   "total": 234,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "UNB",
+   "releaseDate": "2019/05/03",
+   "updatedAt": "2021/09/01 05:37:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sm10/symbol.png",
+    "logo": "https://images.pokemontcg.io/sm10/logo.png"
+   }
+  },
+  {
+   "id": "sm9",
+   "name": "Team Up",
+   "series": "Sun & Moon",
+   "printedTotal": 181,
+   "total": 198,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "TEU",
+   "releaseDate": "2019/02/01",
+   "updatedAt": "2021/09/01 05:37:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/sm9/symbol.png",
+    "logo": "https://images.pokemontcg.io/sm9/logo.png"
+   }
+  },
+  {
+   "id": "smp",
+   "name": "SM Black Star Promos",
+   "series": "Sun & Moon",
+   "printedTotal": 248,
+   "total": 250,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "PR-SM",
+   "releaseDate": "2017/02/03",
+   "updatedAt": "2020/05/01 16:06:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/smp/symbol.png",
+    "logo": "https://images.pokemontcg.io/smp/logo.png"
+   }
+  },
+  {
+   "id": "xy10",
+   "name": "Fates Collide",
+   "series": "XY",
+   "printedTotal": 124,
+   "total": 129,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "FCO",
+   "releaseDate": "2016/05/02",
+   "updatedAt": "2018/09/03 11:49:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xy10/symbol.png",
+    "logo": "https://images.pokemontcg.io/xy10/logo.png"
+   }
+  },
+  {
+   "id": "xy7",
+   "name": "Ancient Origins",
+   "series": "XY",
+   "printedTotal": 98,
+   "total": 100,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "AOR",
+   "releaseDate": "2015/08/12",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xy7/symbol.png",
+    "logo": "https://images.pokemontcg.io/xy7/logo.png"
+   }
+  },
+  {
+   "id": "xy6",
+   "name": "Roaring Skies",
+   "series": "XY",
+   "printedTotal": 108,
+   "total": 112,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "ROS",
+   "releaseDate": "2015/05/06",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xy6/symbol.png",
+    "logo": "https://images.pokemontcg.io/xy6/logo.png"
+   }
+  },
+  {
+   "id": "dc1",
+   "name": "Double Crisis",
+   "series": "XY",
+   "printedTotal": 34,
+   "total": 34,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "DCR",
+   "releaseDate": "2015/03/25",
+   "updatedAt": "2019/01/28 16:44:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/dc1/symbol.png",
+    "logo": "https://images.pokemontcg.io/dc1/logo.png"
+   }
+  },
+  {
+   "id": "xy4",
+   "name": "Phantom Forces",
+   "series": "XY",
+   "printedTotal": 119,
+   "total": 124,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "PHF",
+   "releaseDate": "2014/11/05",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xy4/symbol.png",
+    "logo": "https://images.pokemontcg.io/xy4/logo.png"
+   }
+  },
+  {
+   "id": "xy3",
+   "name": "Furious Fists",
+   "series": "XY",
+   "printedTotal": 111,
+   "total": 114,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "FFI",
+   "releaseDate": "2014/08/13",
+   "updatedAt": "2018/03/04 10:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xy3/symbol.png",
+    "logo": "https://images.pokemontcg.io/xy3/logo.png"
+   }
+  },
+  {
+   "id": "xyp",
+   "name": "XY Black Star Promos",
+   "series": "XY",
+   "printedTotal": 211,
+   "total": 216,
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "ptcgoCode": "PR-XY",
+   "releaseDate": "2013/10/12",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+    "logo": "https://images.pokemontcg.io/xyp/logo.png"
+   }
+  },
+  {
+   "id": "ex16",
+   "name": "Power Keepers",
+   "series": "EX",
+   "printedTotal": 108,
+   "total": 108,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "PK",
+   "releaseDate": "2007/02/02",
+   "updatedAt": "2018/03/04 10:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex16/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex16/logo.png"
+   }
+  },
+  {
+   "id": "ex15",
+   "name": "Dragon Frontiers",
+   "series": "EX",
+   "printedTotal": 101,
+   "total": 101,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "DF",
+   "releaseDate": "2006/11/01",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex15/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex15/logo.png"
+   }
+  },
+  {
+   "id": "ex14",
+   "name": "Crystal Guardians",
+   "series": "EX",
+   "printedTotal": 100,
+   "total": 100,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "CG",
+   "releaseDate": "2006/08/01",
+   "updatedAt": "2018/03/04 10:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex14/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex14/logo.png"
+   }
+  },
+  {
+   "id": "ex13",
+   "name": "Holon Phantoms",
+   "series": "EX",
+   "printedTotal": 110,
+   "total": 111,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "HP",
+   "releaseDate": "2006/05/01",
+   "updatedAt": "2018/03/04 10:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex13/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex13/logo.png"
+   }
+  },
+  {
+   "id": "ex12",
+   "name": "Legend Maker",
+   "series": "EX",
+   "printedTotal": 92,
+   "total": 93,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "LM",
+   "releaseDate": "2006/02/01",
+   "updatedAt": "2018/03/04 10:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex12/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex12/logo.png"
+   }
+  },
+  {
+   "id": "ex11",
+   "name": "Delta Species",
+   "series": "EX",
+   "printedTotal": 113,
+   "total": 114,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "DS",
+   "releaseDate": "2005/10/31",
+   "updatedAt": "2020/05/01 16:06:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex11/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex11/logo.png"
+   }
+  },
+  {
+   "id": "ex10",
+   "name": "Unseen Forces",
+   "series": "EX",
+   "printedTotal": 115,
+   "total": 145,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "UF",
+   "releaseDate": "2005/08/01",
+   "updatedAt": "2020/08/14 09:35:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex10/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex10/logo.png"
+   }
+  },
+  {
+   "id": "ex8",
+   "name": "Deoxys",
+   "series": "EX",
+   "printedTotal": 107,
+   "total": 108,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "DX",
+   "releaseDate": "2005/02/01",
+   "updatedAt": "2019/01/28 16:44:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex8/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex8/logo.png"
+   }
+  },
+  {
+   "id": "ex7",
+   "name": "Team Rocket Returns",
+   "series": "EX",
+   "printedTotal": 109,
+   "total": 111,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "TRR",
+   "releaseDate": "2004/11/01",
+   "updatedAt": "2019/01/28 16:44:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/ex7/symbol.png",
+    "logo": "https://images.pokemontcg.io/ex7/logo.png"
+   }
+  },
+  {
+   "id": "base1",
+   "name": "Base",
+   "series": "Base",
+   "printedTotal": 102,
+   "total": 102,
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "ptcgoCode": "BS",
+   "releaseDate": "1999/01/09",
+   "updatedAt": "2022/10/10 15:12:00",
+   "images": {
+    "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+    "logo": "https://images.pokemontcg.io/base1/logo.png"
+   }
+  }
+ ],
+ "cards": [
+  {
+   "id": "ex7-107",
+   "name": "Mudkip ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "70",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Whirlpool",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
+    },
+    {
+     "name": "Spring Back",
+     "cost": [
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "If your opponent has only 1 Prize card left, this attack does 20 damage plus 50 more damage and the Defending Pokémon is now Asleep."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex7",
+    "name": "Team Rocket Returns",
+    "series": "EX",
+    "printedTotal": 109,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "TRR",
+    "releaseDate": "2004/11/01",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex7/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex7/logo.png"
+    }
+   },
+   "number": "107",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    258
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex7/107.png",
+    "large": "https://images.pokemontcg.io/ex7/107_hires.png"
+   }
+  },
+  {
+   "id": "ex13-104",
+   "name": "Pikachu ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "60",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Thundershock",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10",
+     "text": "Flip a coin. If heads, the Defending Pokémon is now Paralyzed."
+    },
+    {
+     "name": "Spring Back",
+     "cost": [
+      "Lightning",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "If your opponent has only 1 Prize card left, this attack does 20 damage plus 50 more damage."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex13",
+    "name": "Holon Phantoms",
+    "series": "EX",
+    "printedTotal": 110,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "HP",
+    "releaseDate": "2006/05/01",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex13/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex13/logo.png"
+    }
+   },
+   "number": "104",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    25
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex13/104.png",
+    "large": "https://images.pokemontcg.io/ex13/104_hires.png"
+   }
+  },
+  {
+   "id": "ex8-107",
+   "name": "Rayquaza ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "90",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Spiral Rush",
+     "cost": [
+      "Fire",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30×",
+     "text": "Flip a coin until you get tails. This attack does 30 damage times the number of heads."
+    },
+    {
+     "name": "Holy Star",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Lightning",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "",
+     "text": "Discard all Energy cards attached to Rayquaza Star. This attack does 100 damage to each of your opponent's Pokémon-ex. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Colorless",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Water",
+     "value": "-30"
+    },
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "ex8",
+    "name": "Deoxys",
+    "series": "EX",
+    "printedTotal": 107,
+    "total": 108,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "DX",
+    "releaseDate": "2005/02/01",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex8/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex8/logo.png"
+    }
+   },
+   "number": "107",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    384
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex8/107.png",
+    "large": "https://images.pokemontcg.io/ex8/107_hires.png"
+   }
+  },
+  {
+   "id": "ex7-108",
+   "name": "Torchic ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "70",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Fireworks",
+     "cost": [
+      "Fire"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "20",
+     "text": "Flip a coin. If tails, discard a Fire Energy card attached to Torchic Star."
+    },
+    {
+     "name": "Spring Back",
+     "cost": [
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "If your opponent has only 1 Prize card left, this attack does 20 damage plus 50 more damage and the Defending Pokémon is now Confused."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex7",
+    "name": "Team Rocket Returns",
+    "series": "EX",
+    "printedTotal": 109,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "TRR",
+    "releaseDate": "2004/11/01",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex7/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex7/logo.png"
+    }
+   },
+   "number": "108",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    255
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex7/108.png",
+    "large": "https://images.pokemontcg.io/ex7/108_hires.png"
+   }
+  },
+  {
+   "id": "ex15-100",
+   "name": "Charizard ★ δ",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "90",
+   "types": [
+    "Darkness"
+   ],
+   "attacks": [
+    {
+     "name": "Rotating Claws",
+     "cost": [
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20",
+     "text": "You may discard an Energy card attached to Charizard Star. If you do, search your discard pile for an Energy card (excluding the one you discarded) and attach it to Charizard Star."
+    },
+    {
+     "name": "Dark Swirl",
+     "cost": [
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 5,
+     "damage": "150",
+     "text": "Discard all Energy cards attached to Charizard Star and discard the top 3 cards from your opponent's deck."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "ex15",
+    "name": "Dragon Frontiers",
+    "series": "EX",
+    "printedTotal": 101,
+    "total": 101,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "DF",
+    "releaseDate": "2006/11/01",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex15/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex15/logo.png"
+    }
+   },
+   "number": "100",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    6
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex15/100.png",
+    "large": "https://images.pokemontcg.io/ex15/100_hires.png"
+   }
+  },
+  {
+   "id": "ex7-109",
+   "name": "Treecko ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "70",
+   "types": [
+    "Grass"
+   ],
+   "attacks": [
+    {
+     "name": "Tackle",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10",
+     "text": ""
+    },
+    {
+     "name": "Spring Back",
+     "cost": [
+      "Grass",
+      "Grass"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "If your opponent has only 1 Prize card left, this attack does 20 damage plus 50 more damage and the Defending Pokémon is now Poisoned."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Water",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex7",
+    "name": "Team Rocket Returns",
+    "series": "EX",
+    "printedTotal": 109,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "TRR",
+    "releaseDate": "2004/11/01",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex7/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex7/logo.png"
+    }
+   },
+   "number": "109",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    252
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex7/109.png",
+    "large": "https://images.pokemontcg.io/ex7/109_hires.png"
+   }
+  },
+  {
+   "id": "ex13-102",
+   "name": "Gyarados ★ δ",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "80",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Spiral Growth",
+     "cost": [
+      "Fire",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20",
+     "text": "Flip a coin until you get tails. For each heads, search your discard pile for a basic Energy card and attach it to Gyarados Star."
+    },
+    {
+     "name": "All-out Blast",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "50+",
+     "text": "Discard cards from the top of your deck until you have 1 card left. This attack does 50 damage plus 20 more damage for each Energy card you discarded in this way."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "ex13",
+    "name": "Holon Phantoms",
+    "series": "EX",
+    "printedTotal": 110,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "HP",
+    "releaseDate": "2006/05/01",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex13/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex13/logo.png"
+    }
+   },
+   "number": "102",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    130
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex13/102.png",
+    "large": "https://images.pokemontcg.io/ex13/102_hires.png"
+   }
+  },
+  {
+   "id": "ex16-100",
+   "name": "Flareon ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "70",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Flamethrower",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "50",
+     "text": "Discard a Fire Energy attached to Flareon Star."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex16",
+    "name": "Power Keepers",
+    "series": "EX",
+    "printedTotal": 108,
+    "total": 108,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "PK",
+    "releaseDate": "2007/02/02",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex16/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex16/logo.png"
+    }
+   },
+   "number": "100",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    136
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex16/100.png",
+    "large": "https://images.pokemontcg.io/ex16/100_hires.png"
+   }
+  },
+  {
+   "id": "ex16-102",
+   "name": "Vaporeon ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "70",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Whirlpool",
+     "cost": [
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "40",
+     "text": "Flip a coin. If heads, discard an Energy card attached to the Defending Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex16",
+    "name": "Power Keepers",
+    "series": "EX",
+    "printedTotal": 108,
+    "total": 108,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "PK",
+    "releaseDate": "2007/02/02",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex16/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex16/logo.png"
+    }
+   },
+   "number": "102",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    134
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex16/102.png",
+    "large": "https://images.pokemontcg.io/ex16/102_hires.png"
+   }
+  },
+  {
+   "id": "ex14-100",
+   "name": "Celebi ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "60",
+   "types": [
+    "Grass"
+   ],
+   "attacks": [
+    {
+     "name": "Leaf Shade",
+     "cost": [
+      "Grass"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Count the amount of Energy attached to Celebi Star. Put that many damage counters on 1 of your opponent's Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex14",
+    "name": "Crystal Guardians",
+    "series": "EX",
+    "printedTotal": 100,
+    "total": 100,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "CG",
+    "releaseDate": "2006/08/01",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex14/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex14/logo.png"
+    }
+   },
+   "number": "100",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    251
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex14/100.png",
+    "large": "https://images.pokemontcg.io/ex14/100_hires.png"
+   }
+  },
+  {
+   "id": "ex11-112",
+   "name": "Kyogre ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "90",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Critical Collection",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10",
+     "text": "Count the number of Prize cards your opponent has taken. Search your discard pile for up to that many Water Energy cards and attach them to Kyogre Star."
+    },
+    {
+     "name": "Sheer Cold",
+     "cost": [
+      "Water",
+      "Water",
+      "Water",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 5,
+     "damage": "60",
+     "text": "Flip a coin. If heads, each Defending Pokémon can't attack during your opponent's next turn."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "ex11",
+    "name": "Delta Species",
+    "series": "EX",
+    "printedTotal": 113,
+    "total": 114,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "DS",
+    "releaseDate": "2005/10/31",
+    "updatedAt": "2020/05/01 16:06:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex11/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex11/logo.png"
+    }
+   },
+   "number": "112",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    382
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex11/112.png",
+    "large": "https://images.pokemontcg.io/ex11/112_hires.png"
+   }
+  },
+  {
+   "id": "ex13-103",
+   "name": "Mewtwo ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "80",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Energy Absorption",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Search your discard pile for an Energy card and attached it to Mewtwo Star."
+    },
+    {
+     "name": "Psychic Star",
+     "cost": [
+      "Fire",
+      "Lightning",
+      "Psychic"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "50+",
+     "text": "If the Defending Pokémon is an Evolved Pokémon, discard all Energy attached to Mewtwo Star and this attack does 50 damage plus 50 more damage."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex13",
+    "name": "Holon Phantoms",
+    "series": "EX",
+    "printedTotal": 110,
+    "total": 111,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "HP",
+    "releaseDate": "2006/05/01",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex13/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex13/logo.png"
+    }
+   },
+   "number": "103",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    150
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex13/103.png",
+    "large": "https://images.pokemontcg.io/ex13/103_hires.png"
+   }
+  },
+  {
+   "id": "ex12-90",
+   "name": "Regice ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "90",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Ice Barrier",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10",
+     "text": "Prevent all effects of an attack, including damage, done to Regice Star by your opponent's Pokémon-ex during your opponent's next turn."
+    },
+    {
+     "name": "Final Blizzard",
+     "cost": [
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "30",
+     "text": "If your opponent has only 1 Prize card left and Regice Star is the only Pokémon you have in play, this attack does 30 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Metal",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "ex12",
+    "name": "Legend Maker",
+    "series": "EX",
+    "printedTotal": 92,
+    "total": 93,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "LM",
+    "releaseDate": "2006/02/01",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex12/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex12/logo.png"
+    }
+   },
+   "number": "90",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    378
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex12/90.png",
+    "large": "https://images.pokemontcg.io/ex12/90_hires.png"
+   }
+  },
+  {
+   "id": "ex10-114",
+   "name": "Raikou ★",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Star"
+   ],
+   "hp": "80",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Lightning Turn",
+     "cost": [
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20",
+     "text": "Switch Raikou Star with 1 of your Benched Pokémon."
+    },
+    {
+     "name": "Meta Voltage",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "70",
+     "text": "If you have less Prize cards left than your opponent, this attack does 40 damage to each of your Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "ex10",
+    "name": "Unseen Forces",
+    "series": "EX",
+    "printedTotal": 115,
+    "total": 145,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "UF",
+    "releaseDate": "2005/08/01",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/ex10/symbol.png",
+     "logo": "https://images.pokemontcg.io/ex10/logo.png"
+    }
+   },
+   "number": "114",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Holo Star",
+   "nationalPokedexNumbers": [
+    243
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/ex10/114.png",
+    "large": "https://images.pokemontcg.io/ex10/114_hires.png"
+   }
+  },
+  {
+   "id": "sv10-231",
+   "name": "Team Rocket's Mewtwo ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "280",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Erasure Ball",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "160+",
+     "text": "You may discard up to 2 Energy from your Benched Pokémon. This attack does 60 more damage for each card you discarded in this way."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "231",
+   "artist": "Iwamoto05",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    150
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/231.png",
+    "large": "https://images.pokemontcg.io/sv10/231_hires.png"
+   }
+  },
+  {
+   "id": "sv4pt5-232",
+   "name": "Mew ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "180",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Genome Hacking",
+     "cost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "set": {
+    "id": "sv4pt5",
+    "name": "Paldean Fates",
+    "series": "Scarlet & Violet",
+    "printedTotal": 91,
+    "total": 245,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2024/01/26",
+    "updatedAt": "2024/01/25 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv4pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv4pt5/logo.png"
+    }
+   },
+   "number": "232",
+   "artist": "USGMEN",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    151
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv4pt5/232.png",
+    "large": "https://images.pokemontcg.io/sv4pt5/232_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-199",
+   "name": "Charizard ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Fire"
+   ],
+   "evolvesFrom": "Charmeleon",
+   "attacks": [
+    {
+     "name": "Brave Wing",
+     "cost": [
+      "Fire"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "60+",
+     "text": "If this Pokémon has any damage counters on it, this attack does 100 more damage."
+    },
+    {
+     "name": "Explosive Vortex",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "330",
+     "text": "Discard 3 Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "199",
+   "artist": "miki kudo",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    6
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/199.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/199_hires.png"
+   }
+  },
+  {
+   "id": "sv10-230",
+   "name": "Ethan's Ho-Oh ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "230",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Shining Feathers",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "160",
+     "text": "Heal 50 damage from each of your Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "230",
+   "artist": "Atsushi Furusawa",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    250
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/230.png",
+    "large": "https://images.pokemontcg.io/sv10/230_hires.png"
+   }
+  },
+  {
+   "id": "sv8-238",
+   "name": "Pikachu ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "Tera",
+    "ex"
+   ],
+   "hp": "200",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Topaz Bolt",
+     "cost": [
+      "Grass",
+      "Lightning",
+      "Metal"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "300",
+     "text": "Discard 3 Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv8",
+    "name": "Surging Sparks",
+    "series": "Scarlet & Violet",
+    "printedTotal": 191,
+    "total": 252,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SSP",
+    "releaseDate": "2024/11/08",
+    "updatedAt": "2024/11/07 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv8/logo.png"
+    }
+   },
+   "number": "238",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    25
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv8/238.png",
+    "large": "https://images.pokemontcg.io/sv8/238_hires.png"
+   }
+  },
+  {
+   "id": "sv10-232",
+   "name": "Cynthia's Garchomp ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Fighting"
+   ],
+   "evolvesFrom": "Cynthia's Gabite",
+   "attacks": [
+    {
+     "name": "Corkscrew Dive",
+     "cost": [
+      "Fighting"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "100",
+     "text": "You may draw cards until you have 6 cards in your hand."
+    },
+    {
+     "name": "Draconic Buster",
+     "cost": [
+      "Fighting",
+      "Fighting"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "260",
+     "text": "Discard all Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "232",
+   "artist": "HICO KIM",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    445
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/232.png",
+    "large": "https://images.pokemontcg.io/sv10/232_hires.png"
+   }
+  },
+  {
+   "id": "sv4pt5-234",
+   "name": "Charizard ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "Tera",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Charmeleon",
+   "attacks": [
+    {
+     "name": "Burning Darkness",
+     "cost": [
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "180+",
+     "text": "This attack does 30 more damage for each Prize card your opponent has taken."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv4pt5",
+    "name": "Paldean Fates",
+    "series": "Scarlet & Violet",
+    "printedTotal": 91,
+    "total": 245,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2024/01/26",
+    "updatedAt": "2024/01/25 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv4pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv4pt5/logo.png"
+    }
+   },
+   "number": "234",
+   "artist": "AKIRA EGAWA",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    6
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv4pt5/234.png",
+    "large": "https://images.pokemontcg.io/sv4pt5/234_hires.png"
+   }
+  },
+  {
+   "id": "sv6-214",
+   "name": "Greninja ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "Tera",
+    "ex"
+   ],
+   "hp": "310",
+   "types": [
+    "Fighting"
+   ],
+   "evolvesFrom": "Frogadier",
+   "attacks": [
+    {
+     "name": "Shinobi Blade",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "170",
+     "text": "You may search your deck for a card and put it into your hand. Then, shuffle your deck."
+    },
+    {
+     "name": "Mirage Barrage",
+     "cost": [
+      "Water",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "Discard 2 Energy from this Pokémon. This attack does 120 damage to 2 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv6",
+    "name": "Twilight Masquerade",
+    "series": "Scarlet & Violet",
+    "printedTotal": 167,
+    "total": 226,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TWM",
+    "releaseDate": "2024/05/24",
+    "updatedAt": "2024/05/23 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6/logo.png"
+    }
+   },
+   "number": "214",
+   "artist": "akagi",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    658
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6/214.png",
+    "large": "https://images.pokemontcg.io/sv6/214_hires.png"
+   }
+  },
+  {
+   "id": "sv10-229",
+   "name": "Team Rocket's Moltres ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "220",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Flame Screen",
+     "cost": [
+      "Fire",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "110",
+     "text": "During your opponent's next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance)."
+    },
+    {
+     "name": "Evil Incineration",
+     "cost": [
+      "Fire",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "",
+     "text": "Discard a Team Rocket's Energy from this Pokémon. If you do, discard your opponent's Active Pokémon and all attached cards."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "229",
+   "artist": "AKIRA EGAWA",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    146
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/229.png",
+    "large": "https://images.pokemontcg.io/sv10/229_hires.png"
+   }
+  },
+  {
+   "id": "sv10-233",
+   "name": "Team Rocket's Nidoking ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Team Rocket's Nidorino",
+   "attacks": [
+    {
+     "name": "Tainted Horn",
+     "cost": [
+      "Darkness",
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "100",
+     "text": "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, put 8 damage counters on that Pokémon instead of 1."
+    },
+    {
+     "name": "Kingly Impact",
+     "cost": [
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "240",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "233",
+   "artist": "Uninori",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    34
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/233.png",
+    "large": "https://images.pokemontcg.io/sv10/233_hires.png"
+   }
+  },
+  {
+   "id": "zsv10pt5-166",
+   "name": "Zekrom ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "230",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Slash",
+     "cost": [
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "50",
+     "text": ""
+    },
+    {
+     "name": "Voltage Burst",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "130+",
+     "text": "This attack does 50 more damage for each Prize card your opponent has taken. This Pokémon also does 30 damage to itself."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "zsv10pt5",
+    "name": "Black Bolt",
+    "series": "Scarlet & Violet",
+    "printedTotal": 86,
+    "total": 172,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "BLK",
+    "releaseDate": "2025/07/18",
+    "updatedAt": "2025/07/17 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/zsv10pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/zsv10pt5/logo.png"
+    }
+   },
+   "number": "166",
+   "artist": "danciao",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    644
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/zsv10pt5/166.png",
+    "large": "https://images.pokemontcg.io/zsv10pt5/166_hires.png"
+   }
+  },
+  {
+   "id": "rsv10pt5-166",
+   "name": "Reshiram ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "230",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Slash",
+     "cost": [
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "50",
+     "text": ""
+    },
+    {
+     "name": "Blazing Burst",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "130+",
+     "text": "This attack does 50 more damage for each Prize card your opponent has taken. Discard an Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "rsv10pt5",
+    "name": "White Flare",
+    "series": "Scarlet & Violet",
+    "printedTotal": 86,
+    "total": 173,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "WHT",
+    "releaseDate": "2025/07/18",
+    "updatedAt": "2025/07/17 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/rsv10pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/rsv10pt5/logo.png"
+    }
+   },
+   "number": "166",
+   "artist": "kawayoo",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    643
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/rsv10pt5/166.png",
+    "large": "https://images.pokemontcg.io/rsv10pt5/166_hires.png"
+   }
+  },
+  {
+   "id": "sv8-239",
+   "name": "Latias ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "210",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Eon Blade",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "200",
+     "text": "During your next turn, this Pokémon can't attack."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv8",
+    "name": "Surging Sparks",
+    "series": "Scarlet & Violet",
+    "printedTotal": 191,
+    "total": 252,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SSP",
+    "releaseDate": "2024/11/08",
+    "updatedAt": "2024/11/07 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv8/logo.png"
+    }
+   },
+   "number": "239",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    380
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv8/239.png",
+    "large": "https://images.pokemontcg.io/sv8/239_hires.png"
+   }
+  },
+  {
+   "id": "sv8-237",
+   "name": "Milotic ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1",
+    "ex"
+   ],
+   "hp": "270",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Feebas",
+   "attacks": [
+    {
+     "name": "Hypno Splash",
+     "cost": [
+      "Water",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "160",
+     "text": "Your opponent's Active Pokémon is now Asleep."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv8",
+    "name": "Surging Sparks",
+    "series": "Scarlet & Violet",
+    "printedTotal": 191,
+    "total": 252,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SSP",
+    "releaseDate": "2024/11/08",
+    "updatedAt": "2024/11/07 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv8/logo.png"
+    }
+   },
+   "number": "237",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    350
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv8/237.png",
+    "large": "https://images.pokemontcg.io/sv8/237_hires.png"
+   }
+  },
+  {
+   "id": "sv4pt5-233",
+   "name": "Gardevoir ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "310",
+   "types": [
+    "Psychic"
+   ],
+   "evolvesFrom": "Kirlia",
+   "attacks": [
+    {
+     "name": "Miracle Force",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "190",
+     "text": "This Pokémon recovers from all Special Conditions."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv4pt5",
+    "name": "Paldean Fates",
+    "series": "Scarlet & Violet",
+    "printedTotal": 91,
+    "total": 245,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2024/01/26",
+    "updatedAt": "2024/01/25 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv4pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv4pt5/logo.png"
+    }
+   },
+   "number": "233",
+   "artist": "Kuroimori",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    282
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv4pt5/233.png",
+    "large": "https://images.pokemontcg.io/sv4pt5/233_hires.png"
+   }
+  },
+  {
+   "id": "sv9-184",
+   "name": "Lillie's Clefairy ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "190",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Full Moon Rondo",
+     "cost": [
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "This attack does 20 more damage for each Benched Pokémon (both yours and your opponent's)."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Metal",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv9",
+    "name": "Journey Together",
+    "series": "Scarlet & Violet",
+    "printedTotal": 159,
+    "total": 190,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "JTG",
+    "releaseDate": "2025/03/28",
+    "updatedAt": "2025/03/27 16:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv9/logo.png"
+    }
+   },
+   "number": "184",
+   "artist": "Susumu Maeya",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    35
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv9/184.png",
+    "large": "https://images.pokemontcg.io/sv9/184_hires.png"
+   }
+  },
+  {
+   "id": "sv10-234",
+   "name": "Team Rocket's Crobat ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "310",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Team Rocket's Golbat",
+   "attacks": [
+    {
+     "name": "Assassin's Return",
+     "cost": [
+      "Darkness",
+      "Darkness"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "120",
+     "text": "You may put this Pokémon into your hand. (Discard all cards attached to this Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "234",
+   "artist": "cochi8i",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    169
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/234.png",
+    "large": "https://images.pokemontcg.io/sv10/234_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-202",
+   "name": "Zapdos ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "200",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Multishot Lightning",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "120",
+     "text": "This attack also does 90 damage to 1 of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "202",
+   "artist": "Shiburingaru",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    145
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/202.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/202_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-198",
+   "name": "Venusaur ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "340",
+   "types": [
+    "Grass"
+   ],
+   "evolvesFrom": "Ivysaur",
+   "attacks": [
+    {
+     "name": "Dangerous Toxwhip",
+     "cost": [
+      "Grass",
+      "Grass",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "150",
+     "text": "Your opponent's Active Pokémon is now Confused and Poisoned."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "198",
+   "artist": "Yoriyuki Ikegami",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    3
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/198.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/198_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-200",
+   "name": "Blastoise ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Wartortle",
+   "attacks": [
+    {
+     "name": "Twin Cannons",
+     "cost": [
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "140×",
+     "text": "Discard up to 2 Basic Water Energy cards from your hand. This attack does 140 damage for each card you discarded in this way."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "200",
+   "artist": "Mitsuhiro Arita",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    9
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/200.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/200_hires.png"
+   }
+  },
+  {
+   "id": "sv9-187",
+   "name": "Salamence ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "320",
+   "types": [
+    "Dragon"
+   ],
+   "evolvesFrom": "Shelgon",
+   "attacks": [
+    {
+     "name": "Wide Blast",
+     "cost": [
+      "Fire",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "This attack does 50 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    },
+    {
+     "name": "Dragon Impact",
+     "cost": [
+      "Fire",
+      "Water",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "300",
+     "text": "Discard 2 Energy from this Pokémon."
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv9",
+    "name": "Journey Together",
+    "series": "Scarlet & Violet",
+    "printedTotal": 159,
+    "total": 190,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "JTG",
+    "releaseDate": "2025/03/28",
+    "updatedAt": "2025/03/27 16:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv9/logo.png"
+    }
+   },
+   "number": "187",
+   "artist": "Tsuyoshi Nagano",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    373
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv9/187.png",
+    "large": "https://images.pokemontcg.io/sv9/187_hires.png"
+   }
+  },
+  {
+   "id": "sv5-208",
+   "name": "Raging Bolt ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex",
+    "Ancient"
+   ],
+   "hp": "240",
+   "types": [
+    "Dragon"
+   ],
+   "attacks": [
+    {
+     "name": "Burst Roar",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Discard your hand and draw 6 cards."
+    },
+    {
+     "name": "Bellowing Thunder",
+     "cost": [
+      "Lightning",
+      "Fighting"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "70×",
+     "text": "You may discard any amount of Basic Energy from your Pokémon. This attack does 70 damage for each card you discarded in this way."
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv5",
+    "name": "Temporal Forces",
+    "series": "Scarlet & Violet",
+    "printedTotal": 162,
+    "total": 218,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEF",
+    "releaseDate": "2024/03/22",
+    "updatedAt": "2024/03/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv5/logo.png"
+    }
+   },
+   "number": "208",
+   "artist": "Teeziro",
+   "rarity": "Special Illustration Rare",
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv5/208.png",
+    "large": "https://images.pokemontcg.io/sv5/208_hires.png"
+   }
+  },
+  {
+   "id": "sv2-203",
+   "name": "Magikarp",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "30",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "cost": [
+      "Water"
+     ],
+     "name": "Expert Splasher",
+     "damage": "10+",
+     "text": "Flip 2 coins. If both of them are heads, this attack does 20 more damage.",
+     "convertedEnergyCost": 1
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv2",
+    "name": "Paldea Evolved",
+    "series": "Scarlet & Violet",
+    "printedTotal": 193,
+    "total": 279,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/06/09",
+    "updatedAt": "2023/06/09 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv2/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv2/logo.png"
+    }
+   },
+   "number": "203",
+   "artist": "Shinji Kanda",
+   "rarity": "Illustration Rare",
+   "flavorText": "An underpowered, pathetic Pokémon. It may jump high on rare occasions but never more than seven feet.",
+   "nationalPokedexNumbers": [
+    129
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv2/203.png",
+    "large": "https://images.pokemontcg.io/sv2/203_hires.png"
+   }
+  },
+  {
+   "id": "sv4-199",
+   "name": "Groudon",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "130",
+   "types": [
+    "Fighting"
+   ],
+   "attacks": [
+    {
+     "name": "Swelling Power",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Attach a Basic Fighting Energy card from your hand to 1 of your Pokémon."
+    },
+    {
+     "name": "Magma Purge",
+     "cost": [
+      "Fighting",
+      "Fighting",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "60×",
+     "text": "Discard up to 4 Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv4",
+    "name": "Paradox Rift",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 266,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/11/03",
+    "updatedAt": "2023/11/03 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv4/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv4/logo.png"
+    }
+   },
+   "number": "199",
+   "artist": "Nurikabe",
+   "rarity": "Illustration Rare",
+   "flavorText": "This legendary Pokémon is said to represent the land. It went to sleep after dueling Kyogre.",
+   "nationalPokedexNumbers": [
+    383
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv4/199.png",
+    "large": "https://images.pokemontcg.io/sv4/199_hires.png"
+   }
+  },
+  {
+   "id": "sv6-188",
+   "name": "Eevee",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "50",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Ascension",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck."
+    },
+    {
+     "name": "Quick Attack",
+     "cost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "20+",
+     "text": "Flip a coin. If heads, this attack does 20 more damage."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv6",
+    "name": "Twilight Masquerade",
+    "series": "Scarlet & Violet",
+    "printedTotal": 167,
+    "total": 226,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TWM",
+    "releaseDate": "2024/05/24",
+    "updatedAt": "2024/05/23 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6/logo.png"
+    }
+   },
+   "number": "188",
+   "artist": "Narumi Sato",
+   "rarity": "Illustration Rare",
+   "flavorText": "Its genetic code is irregular. It may mutate if it is exposed to radiation from element stones.",
+   "nationalPokedexNumbers": [
+    133
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6/188.png",
+    "large": "https://images.pokemontcg.io/sv6/188_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-168",
+   "name": "Charmander",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "70",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Blazing Destruction",
+     "cost": [
+      "Fire"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Discard a Stadium in play."
+    },
+    {
+     "name": "Steady Firebreathing",
+     "cost": [
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "168",
+   "artist": "miki kudo",
+   "rarity": "Illustration Rare",
+   "flavorText": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out.",
+   "nationalPokedexNumbers": [
+    4
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/168.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/168_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-173",
+   "name": "Pikachu",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "60",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Charge",
+     "cost": [
+      "Lightning"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Search your deck for a Basic Lightning Energy card and attach it to this Pokémon. Then, shuffle your deck."
+    },
+    {
+     "name": "Pika Punch",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "50",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "173",
+   "artist": "Hiroyuki Yamamoto",
+   "rarity": "Illustration Rare",
+   "flavorText": "When it is angered, it immediately discharges the energy stored in the pouches in its cheeks.",
+   "nationalPokedexNumbers": [
+    25
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/173.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/173_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-170",
+   "name": "Squirtle",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "60",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Withdraw",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks."
+    },
+    {
+     "name": "Skull Bash",
+     "cost": [
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "170",
+   "artist": "Mitsuhiro Arita",
+   "rarity": "Illustration Rare",
+   "flavorText": "When it feels threatened, it draws its limbs inside its shell and sprays water from its mouth.",
+   "nationalPokedexNumbers": [
+    7
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/170.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/170_hires.png"
+   }
+  },
+  {
+   "id": "sv2-222",
+   "name": "Tyranitar",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2"
+   ],
+   "hp": "180",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Pupitar",
+   "attacks": [
+    {
+     "cost": [
+      "Darkness"
+     ],
+     "name": "Rout",
+     "damage": "30+",
+     "text": "This attack does 30 more damage for each of your opponent's Benched Pokémon.",
+     "convertedEnergyCost": 1
+    },
+    {
+     "cost": [
+      "Darkness",
+      "Darkness"
+     ],
+     "name": "Dread Mountain",
+     "damage": "230",
+     "text": "Discard the top 4 cards of your deck.",
+     "convertedEnergyCost": 2
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv2",
+    "name": "Paldea Evolved",
+    "series": "Scarlet & Violet",
+    "printedTotal": 193,
+    "total": 279,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/06/09",
+    "updatedAt": "2023/06/09 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv2/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv2/logo.png"
+    }
+   },
+   "number": "222",
+   "artist": "Nurikabe",
+   "rarity": "Illustration Rare",
+   "flavorText": "Extremely strong, it can change the landscape. It is so insolent that it doesn't care about others.",
+   "nationalPokedexNumbers": [
+    248
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv2/222.png",
+    "large": "https://images.pokemontcg.io/sv2/222_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-166",
+   "name": "Bulbasaur",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "70",
+   "types": [
+    "Grass"
+   ],
+   "attacks": [
+    {
+     "name": "Leech Seed",
+     "cost": [
+      "Grass",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20",
+     "text": "Heal 20 damage from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "166",
+   "artist": "Yoriyuki Ikegami",
+   "rarity": "Illustration Rare",
+   "flavorText": "While it is young, it uses the nutrients that are stored in the seed on its back in order to grow.",
+   "nationalPokedexNumbers": [
+    1
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/166.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/166_hires.png"
+   }
+  },
+  {
+   "id": "sv5-177",
+   "name": "Gastly",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "60",
+   "types": [
+    "Darkness"
+   ],
+   "attacks": [
+    {
+     "name": "Mysterious Beam",
+     "cost": [
+      "Darkness"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Flip a coin. If heads, discard an Energy from your opponent's Active Pokémon."
+    },
+    {
+     "name": "Suffocating Gas",
+     "cost": [
+      "Darkness",
+      "Darkness"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv5",
+    "name": "Temporal Forces",
+    "series": "Scarlet & Violet",
+    "printedTotal": 162,
+    "total": 218,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEF",
+    "releaseDate": "2024/03/22",
+    "updatedAt": "2024/03/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv5/logo.png"
+    }
+   },
+   "number": "177",
+   "artist": "Mousho",
+   "rarity": "Illustration Rare",
+   "flavorText": "It wraps its opponent in its gas-like body, slowly weakening its prey by poisoning it through the skin.",
+   "nationalPokedexNumbers": [
+    92
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv5/177.png",
+    "large": "https://images.pokemontcg.io/sv5/177_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-169",
+   "name": "Charmeleon",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "100",
+   "types": [
+    "Fire"
+   ],
+   "evolvesFrom": "Charmander",
+   "attacks": [
+    {
+     "name": "Combustion",
+     "cost": [
+      "Fire"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "20",
+     "text": ""
+    },
+    {
+     "name": "Fire Blast",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "90",
+     "text": "Discard an Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "169",
+   "artist": "miki kudo",
+   "rarity": "Illustration Rare",
+   "flavorText": "If it becomes agitated during battle, it spouts intense flames, incinerating its surroundings.",
+   "nationalPokedexNumbers": [
+    5
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/169.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/169_hires.png"
+   }
+  },
+  {
+   "id": "sv2-211",
+   "name": "Raichu",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "140",
+   "types": [
+    "Lightning"
+   ],
+   "evolvesFrom": "Pikachu",
+   "attacks": [
+    {
+     "cost": [
+      "Colorless"
+     ],
+     "name": "Electrocharge",
+     "damage": "",
+     "text": "Search your deck for up to 2 Basic Lightning Energy cards and attach them to this Pokémon. Then, shuffle your deck.",
+     "convertedEnergyCost": 1
+    },
+    {
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "name": "Thunderbolt",
+     "damage": "200",
+     "text": "Discard all Energy from this Pokémon.",
+     "convertedEnergyCost": 3
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv2",
+    "name": "Paldea Evolved",
+    "series": "Scarlet & Violet",
+    "printedTotal": 193,
+    "total": 279,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/06/09",
+    "updatedAt": "2023/06/09 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv2/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv2/logo.png"
+    }
+   },
+   "number": "211",
+   "artist": "Toshinao Aoki",
+   "rarity": "Illustration Rare",
+   "flavorText": "Its tail discharges electricity into the ground, protecting it from getting shocked.",
+   "nationalPokedexNumbers": [
+    26
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv2/211.png",
+    "large": "https://images.pokemontcg.io/sv2/211_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-171",
+   "name": "Wartortle",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "100",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Squirtle",
+   "attacks": [
+    {
+     "name": "Free Diving",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Put up to 3 Basic Water Energy cards from your discard pile into your hand."
+    },
+    {
+     "name": "Spinning Attack",
+     "cost": [
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "50",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "171",
+   "artist": "Mitsuhiro Arita",
+   "rarity": "Illustration Rare",
+   "flavorText": "It cleverly controls its furry ears and tail to maintain its balance while swimming.",
+   "nationalPokedexNumbers": [
+    8
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/171.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/171_hires.png"
+   }
+  },
+  {
+   "id": "sv3pt5-167",
+   "name": "Ivysaur",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "100",
+   "types": [
+    "Grass"
+   ],
+   "evolvesFrom": "Bulbasaur",
+   "attacks": [
+    {
+     "name": "Leech Seed",
+     "cost": [
+      "Grass",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30",
+     "text": "Heal 20 damage from this Pokémon."
+    },
+    {
+     "name": "Vine Whip",
+     "cost": [
+      "Grass",
+      "Grass",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "80",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv3pt5",
+    "name": "151",
+    "series": "Scarlet & Violet",
+    "printedTotal": 165,
+    "total": 207,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/09/22",
+    "updatedAt": "2023/09/22 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv3pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv3pt5/logo.png"
+    }
+   },
+   "number": "167",
+   "artist": "Yoriyuki Ikegami",
+   "rarity": "Illustration Rare",
+   "flavorText": "Exposure to sunlight adds to its strength. Sunlight also makes the bud on its back grow larger.",
+   "nationalPokedexNumbers": [
+    2
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv3pt5/167.png",
+    "large": "https://images.pokemontcg.io/sv3pt5/167_hires.png"
+   }
+  },
+  {
+   "id": "sv1-210",
+   "name": "Drowzee",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "70",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "cost": [
+      "Psychic"
+     ],
+     "name": "Forced Sleep",
+     "damage": "",
+     "text": "Your opponent chooses 1 of their Benched Pokémon and switches it with their Active Pokémon. The new Active Pokémon is now Asleep.",
+     "convertedEnergyCost": 1
+    },
+    {
+     "cost": [
+      "Psychic",
+      "Colorless",
+      "Colorless"
+     ],
+     "name": "Gentle Slap",
+     "damage": "30",
+     "text": "",
+     "convertedEnergyCost": 3
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv1",
+    "name": "Scarlet & Violet",
+    "series": "Scarlet & Violet",
+    "printedTotal": 198,
+    "total": 258,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "releaseDate": "2023/03/31",
+    "updatedAt": "2023/03/31 15:45:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv1/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv1/logo.png"
+    }
+   },
+   "number": "210",
+   "artist": "Tomokazu Komiya",
+   "rarity": "Illustration Rare",
+   "flavorText": "When it twitches its nose, it can tell where someone is sleeping and what that person is dreaming about.",
+   "nationalPokedexNumbers": [
+    96
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv1/210.png",
+    "large": "https://images.pokemontcg.io/sv1/210_hires.png"
+   }
+  },
+  {
+   "id": "sv10-240",
+   "name": "Team Rocket's Mewtwo ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "280",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Erasure Ball",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "160+",
+     "text": "You may discard up to 2 Energy from your Benched Pokémon. This attack does 60 more damage for each card you discarded in this way."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "240",
+   "artist": "aky CG Works",
+   "rarity": "Hyper Rare",
+   "nationalPokedexNumbers": [
+    150
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/240.png",
+    "large": "https://images.pokemontcg.io/sv10/240_hires.png"
+   }
+  },
+  {
+   "id": "sv6pt5-99",
+   "name": "Basic Metal Energy",
+   "supertype": "Energy",
+   "subtypes": [
+    "Basic"
+   ],
+   "types": [
+    "Metal"
+   ],
+   "set": {
+    "id": "sv6pt5",
+    "name": "Shrouded Fable",
+    "series": "Scarlet & Violet",
+    "printedTotal": 64,
+    "total": 99,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SFA",
+    "releaseDate": "2024/08/02",
+    "updatedAt": "2024/08/02 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
+    }
+   },
+   "number": "99",
+   "rarity": "Hyper Rare",
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6pt5/99.png",
+    "large": "https://images.pokemontcg.io/sv6pt5/99_hires.png"
+   }
+  },
+  {
+   "id": "sv10-239",
+   "name": "Ethan's Ho-Oh ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "230",
+   "types": [
+    "Fire"
+   ],
+   "attacks": [
+    {
+     "name": "Shining Feathers",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Fire",
+      "Fire"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "160",
+     "text": "Heal 50 damage from each of your Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Water",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "239",
+   "artist": "aky CG Works",
+   "rarity": "Hyper Rare",
+   "nationalPokedexNumbers": [
+    250
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/239.png",
+    "large": "https://images.pokemontcg.io/sv10/239_hires.png"
+   }
+  },
+  {
+   "id": "sv10-241",
+   "name": "Cynthia's Garchomp ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "330",
+   "types": [
+    "Fighting"
+   ],
+   "evolvesFrom": "Cynthia's Gabite",
+   "attacks": [
+    {
+     "name": "Corkscrew Dive",
+     "cost": [
+      "Fighting"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "100",
+     "text": "You may draw cards until you have 6 cards in your hand."
+    },
+    {
+     "name": "Draconic Buster",
+     "cost": [
+      "Fighting",
+      "Fighting"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "260",
+     "text": "Discard all Energy from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "241",
+   "artist": "5ban Graphics",
+   "rarity": "Hyper Rare",
+   "nationalPokedexNumbers": [
+    445
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/241.png",
+    "large": "https://images.pokemontcg.io/sv10/241_hires.png"
+   }
+  },
+  {
+   "id": "sv6pt5-98",
+   "name": "Basic Darkness Energy",
+   "supertype": "Energy",
+   "subtypes": [
+    "Basic"
+   ],
+   "types": [
+    "Darkness"
+   ],
+   "set": {
+    "id": "sv6pt5",
+    "name": "Shrouded Fable",
+    "series": "Scarlet & Violet",
+    "printedTotal": 64,
+    "total": 99,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SFA",
+    "releaseDate": "2024/08/02",
+    "updatedAt": "2024/08/02 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
+    }
+   },
+   "number": "98",
+   "rarity": "Hyper Rare",
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6pt5/98.png",
+    "large": "https://images.pokemontcg.io/sv6pt5/98_hires.png"
+   }
+  },
+  {
+   "id": "sv6pt5-96",
+   "name": "Earthen Vessel",
+   "supertype": "Trainer",
+   "subtypes": [
+    "Item",
+    "Ancient"
+   ],
+   "set": {
+    "id": "sv6pt5",
+    "name": "Shrouded Fable",
+    "series": "Scarlet & Violet",
+    "printedTotal": 64,
+    "total": 99,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SFA",
+    "releaseDate": "2024/08/02",
+    "updatedAt": "2024/08/02 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
+    }
+   },
+   "number": "96",
+   "rarity": "Hyper Rare",
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6pt5/96.png",
+    "large": "https://images.pokemontcg.io/sv6pt5/96_hires.png"
+   }
+  },
+  {
+   "id": "sv10-242",
+   "name": "Team Rocket's Crobat ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "ex"
+   ],
+   "hp": "310",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Team Rocket's Golbat",
+   "attacks": [
+    {
+     "name": "Assassin's Return",
+     "cost": [
+      "Darkness",
+      "Darkness"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "120",
+     "text": "You may put this Pokémon into your hand. (Discard all cards attached to this Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv10",
+    "name": "Destined Rivals",
+    "series": "Scarlet & Violet",
+    "printedTotal": 182,
+    "total": 244,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DRI",
+    "releaseDate": "2025/05/30",
+    "updatedAt": "2025/05/29 22:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv10/logo.png"
+    }
+   },
+   "number": "242",
+   "artist": "5ban Graphics",
+   "rarity": "Hyper Rare",
+   "nationalPokedexNumbers": [
+    169
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv10/242.png",
+    "large": "https://images.pokemontcg.io/sv10/242_hires.png"
+   }
+  },
+  {
+   "id": "sv6pt5-95",
+   "name": "Pecharunt ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "ex"
+   ],
+   "hp": "190",
+   "types": [
+    "Darkness"
+   ],
+   "attacks": [
+    {
+     "name": "Irritated Outburst",
+     "cost": [
+      "Darkness",
+      "Darkness"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "60×",
+     "text": "This attack does 60 damage for each Prize card your opponent has taken."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sv6pt5",
+    "name": "Shrouded Fable",
+    "series": "Scarlet & Violet",
+    "printedTotal": 64,
+    "total": 99,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "SFA",
+    "releaseDate": "2024/08/02",
+    "updatedAt": "2024/08/02 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
+     "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
+    }
+   },
+   "number": "95",
+   "rarity": "Hyper Rare",
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sv6pt5/95.png",
+    "large": "https://images.pokemontcg.io/sv6pt5/95_hires.png"
+   }
+  },
+  {
+   "id": "dc1-6",
+   "name": "Team Aqua's Kyogre-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "190",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Aqua Impact",
+     "cost": [
+      "Water",
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "80+",
+     "text": "This attack does 20 more damage for each Colorless in your opponent's Active Pokémon's Retreat Cost."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "dc1",
+    "name": "Double Crisis",
+    "series": "XY",
+    "printedTotal": 34,
+    "total": 34,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DCR",
+    "releaseDate": "2015/03/25",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/dc1/symbol.png",
+     "logo": "https://images.pokemontcg.io/dc1/logo.png"
+    }
+   },
+   "number": "6",
+   "artist": "nagimiso",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    382
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/dc1/6.png",
+    "large": "https://images.pokemontcg.io/dc1/6_hires.png"
+   }
+  },
+  {
+   "id": "xy4-121",
+   "name": "M Gengar-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "MEGA",
+    "EX"
+   ],
+   "hp": "220",
+   "types": [
+    "Psychic"
+   ],
+   "evolvesFrom": "Gengar-EX",
+   "attacks": [
+    {
+     "name": "Phantom Gate",
+     "cost": [
+      "Psychic",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "Choose 1 of your opponent's Pokémon's attacks and use it as this attack."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "xy4",
+    "name": "Phantom Forces",
+    "series": "XY",
+    "printedTotal": 119,
+    "total": 124,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PHF",
+    "releaseDate": "2014/11/05",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy4/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy4/logo.png"
+    }
+   },
+   "number": "121",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    94
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy4/121.png",
+    "large": "https://images.pokemontcg.io/xy4/121_hires.png"
+   }
+  },
+  {
+   "id": "xy7-97",
+   "name": "Primal Groudon-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "MEGA",
+    "EX"
+   ],
+   "hp": "240",
+   "types": [
+    "Fighting"
+   ],
+   "evolvesFrom": "Groudon-EX",
+   "attacks": [
+    {
+     "name": "Gaia Volcano",
+     "cost": [
+      "Fighting",
+      "Fighting",
+      "Fighting",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "100+",
+     "text": "If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "xy7",
+    "name": "Ancient Origins",
+    "series": "XY",
+    "printedTotal": 98,
+    "total": 100,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "AOR",
+    "releaseDate": "2015/08/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy7/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy7/logo.png"
+    }
+   },
+   "number": "97",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    383
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy7/97.png",
+    "large": "https://images.pokemontcg.io/xy7/97_hires.png"
+   }
+  },
+  {
+   "id": "xyp-XY176",
+   "name": "Champions Festival",
+   "supertype": "Trainer",
+   "subtypes": [
+    "Stadium"
+   ],
+   "set": {
+    "id": "xyp",
+    "name": "XY Black Star Promos",
+    "series": "XY",
+    "printedTotal": 211,
+    "total": 216,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-XY",
+    "releaseDate": "2013/10/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+     "logo": "https://images.pokemontcg.io/xyp/logo.png"
+    }
+   },
+   "number": "XY176",
+   "artist": "Naoki Saito",
+   "rarity": "Promo",
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xyp/XY176.png",
+    "large": "https://images.pokemontcg.io/xyp/XY176_hires.png"
+   }
+  },
+  {
+   "id": "dc1-15",
+   "name": "Team Magma's Groudon-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "190",
+   "types": [
+    "Fighting"
+   ],
+   "attacks": [
+    {
+     "name": "Magma Quake",
+     "cost": [
+      "Fighting",
+      "Fighting",
+      "Fighting",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "80+",
+     "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 80 more damage."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "dc1",
+    "name": "Double Crisis",
+    "series": "XY",
+    "printedTotal": 34,
+    "total": 34,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "DCR",
+    "releaseDate": "2015/03/25",
+    "updatedAt": "2019/01/28 16:44:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/dc1/symbol.png",
+     "logo": "https://images.pokemontcg.io/dc1/logo.png"
+    }
+   },
+   "number": "15",
+   "artist": "nagimiso",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    383
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/dc1/15.png",
+    "large": "https://images.pokemontcg.io/dc1/15_hires.png"
+   }
+  },
+  {
+   "id": "xy6-77a",
+   "name": "Shaymin-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "110",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Sky Return",
+     "cost": [
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30",
+     "text": "Return this Pokémon and all cards attached to it to your hand."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "xy6",
+    "name": "Roaring Skies",
+    "series": "XY",
+    "printedTotal": 108,
+    "total": 112,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "ROS",
+    "releaseDate": "2015/05/06",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy6/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy6/logo.png"
+    }
+   },
+   "number": "77a",
+   "artist": "TOKIYA",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    492
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Banned"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy6/77a.png",
+    "large": "https://images.pokemontcg.io/xy6/77a_hires.png"
+   }
+  },
+  {
+   "id": "xy3-113",
+   "name": "M Lucario-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "MEGA",
+    "EX"
+   ],
+   "hp": "220",
+   "types": [
+    "Fighting"
+   ],
+   "evolvesFrom": "Lucario-EX",
+   "attacks": [
+    {
+     "name": "Rising Fist",
+     "cost": [
+      "Fighting",
+      "Fighting",
+      "Fighting"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "140",
+     "text": "Discard an Energy attached to your opponent's Active Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "xy3",
+    "name": "Furious Fists",
+    "series": "XY",
+    "printedTotal": 111,
+    "total": 114,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "FFI",
+    "releaseDate": "2014/08/13",
+    "updatedAt": "2018/03/04 10:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy3/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy3/logo.png"
+    }
+   },
+   "number": "113",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    448
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy3/113.png",
+    "large": "https://images.pokemontcg.io/xy3/113_hires.png"
+   }
+  },
+  {
+   "id": "xy4-122",
+   "name": "Dialga-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "180",
+   "types": [
+    "Metal"
+   ],
+   "attacks": [
+    {
+     "name": "Chrono Wind",
+     "cost": [
+      "Metal",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "60",
+     "text": "If the Defending Pokémon is a Pokémon-EX, it can't attack during your opponent's next turn."
+    },
+    {
+     "name": "Full Metal Impact",
+     "cost": [
+      "Metal",
+      "Metal",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "150",
+     "text": "Discard 2 Metal Energy attached to this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Psychic",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "xy4",
+    "name": "Phantom Forces",
+    "series": "XY",
+    "printedTotal": 119,
+    "total": 124,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PHF",
+    "releaseDate": "2014/11/05",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy4/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy4/logo.png"
+    }
+   },
+   "number": "122",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    483
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy4/122.png",
+    "large": "https://images.pokemontcg.io/xy4/122_hires.png"
+   }
+  },
+  {
+   "id": "xyp-XY150a",
+   "name": "Yveltal-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "170",
+   "types": [
+    "Darkness"
+   ],
+   "attacks": [
+    {
+     "name": "Evil Ball",
+     "cost": [
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "20+",
+     "text": "This attack does 20 more damage times the amount of Energy attached to both Active Pokémon."
+    },
+    {
+     "name": "Y Cyclone",
+     "cost": [
+      "Darkness",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "90",
+     "text": "Move an Energy from this Pokémon to 1 of your Benched Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "xyp",
+    "name": "XY Black Star Promos",
+    "series": "XY",
+    "printedTotal": 211,
+    "total": 216,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-XY",
+    "releaseDate": "2013/10/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+     "logo": "https://images.pokemontcg.io/xyp/logo.png"
+    }
+   },
+   "number": "XY150a",
+   "artist": "Hasuno",
+   "rarity": "Promo",
+   "nationalPokedexNumbers": [
+    717
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xyp/XY150a.png",
+    "large": "https://images.pokemontcg.io/xyp/XY150a_hires.png"
+   }
+  },
+  {
+   "id": "xyp-XY91",
+   "name": "Champions Festival",
+   "supertype": "Trainer",
+   "subtypes": [
+    "Stadium"
+   ],
+   "set": {
+    "id": "xyp",
+    "name": "XY Black Star Promos",
+    "series": "XY",
+    "printedTotal": 211,
+    "total": 216,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-XY",
+    "releaseDate": "2013/10/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+     "logo": "https://images.pokemontcg.io/xyp/logo.png"
+    }
+   },
+   "number": "XY91",
+   "artist": "Naoki Saito",
+   "rarity": "Promo",
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xyp/XY91.png",
+    "large": "https://images.pokemontcg.io/xyp/XY91_hires.png"
+   }
+  },
+  {
+   "id": "xyp-XY60",
+   "name": "Gyarados",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "130",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Magikarp",
+   "attacks": [
+    {
+     "name": "Full Retaliation",
+     "cost": [
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30+",
+     "text": "This attack does 30 more damage for each damage counter on each of your Benched Magikarp."
+    },
+    {
+     "name": "Thrash",
+     "cost": [
+      "Water",
+      "Water",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "100+",
+     "text": "Flip a coin. If heads, this attack does 30 more damage. If tails, this Pokémon does 30 damage to itself."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "xyp",
+    "name": "XY Black Star Promos",
+    "series": "XY",
+    "printedTotal": 211,
+    "total": 216,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-XY",
+    "releaseDate": "2013/10/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+     "logo": "https://images.pokemontcg.io/xyp/logo.png"
+    }
+   },
+   "number": "XY60",
+   "artist": "TOKIYA",
+   "rarity": "Promo",
+   "flavorText": "Rarely seen in the wild. Huge and vicious, it is capable of destroying entire cities in a rage.",
+   "nationalPokedexNumbers": [
+    130
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xyp/XY60.png",
+    "large": "https://images.pokemontcg.io/xyp/XY60_hires.png"
+   }
+  },
+  {
+   "id": "xy10-105a",
+   "name": "N",
+   "supertype": "Trainer",
+   "subtypes": [
+    "Supporter"
+   ],
+   "set": {
+    "id": "xy10",
+    "name": "Fates Collide",
+    "series": "XY",
+    "printedTotal": 124,
+    "total": 129,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "FCO",
+    "releaseDate": "2016/05/02",
+    "updatedAt": "2018/09/03 11:49:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy10/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy10/logo.png"
+    }
+   },
+   "number": "105a",
+   "artist": "Megumi Mizutani",
+   "rarity": "Rare Ultra",
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy10/105a.png",
+    "large": "https://images.pokemontcg.io/xy10/105a_hires.png"
+   }
+  },
+  {
+   "id": "xy4-114",
+   "name": "Gengar-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "170",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Night Attack",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Put 3 damage counters on 1 of your opponent's Pokémon."
+    },
+    {
+     "name": "Dark Corridor",
+     "cost": [
+      "Psychic",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "60",
+     "text": "Your opponent's Active Pokémon is now Poisoned. Switch this Pokémon with 1 of your Benched Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "xy4",
+    "name": "Phantom Forces",
+    "series": "XY",
+    "printedTotal": 119,
+    "total": 124,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PHF",
+    "releaseDate": "2014/11/05",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy4/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy4/logo.png"
+    }
+   },
+   "number": "114",
+   "artist": "Ryo Ueda",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    94
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy4/114.png",
+    "large": "https://images.pokemontcg.io/xy4/114_hires.png"
+   }
+  },
+  {
+   "id": "xy7-96",
+   "name": "Primal Kyogre-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "MEGA",
+    "EX"
+   ],
+   "hp": "240",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Kyogre-EX",
+   "attacks": [
+    {
+     "name": "Tidal Storm",
+     "cost": [
+      "Water",
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "150",
+     "text": "Move 2 Energy from this Pokémon to 1 of your Benched Pokémon. This attack does 30 damage to each of your opponent's Benched Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "xy7",
+    "name": "Ancient Origins",
+    "series": "XY",
+    "printedTotal": 98,
+    "total": 100,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "AOR",
+    "releaseDate": "2015/08/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy7/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy7/logo.png"
+    }
+   },
+   "number": "96",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    382
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy7/96.png",
+    "large": "https://images.pokemontcg.io/xy7/96_hires.png"
+   }
+  },
+  {
+   "id": "xy7-75a",
+   "name": "Hex Maniac",
+   "supertype": "Trainer",
+   "subtypes": [
+    "Supporter"
+   ],
+   "set": {
+    "id": "xy7",
+    "name": "Ancient Origins",
+    "series": "XY",
+    "printedTotal": 98,
+    "total": 100,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "AOR",
+    "releaseDate": "2015/08/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xy7/symbol.png",
+     "logo": "https://images.pokemontcg.io/xy7/logo.png"
+    }
+   },
+   "number": "75a",
+   "artist": "You Iribi",
+   "rarity": "Rare Ultra",
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Banned"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xy7/75a.png",
+    "large": "https://images.pokemontcg.io/xy7/75a_hires.png"
+   }
+  },
+  {
+   "id": "xyp-XY126",
+   "name": "Mew-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "120",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Replace",
+     "cost": [
+      "Psychic"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Move as many Energy attached to your Pokémon to your other Pokémon in any way you like."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "xyp",
+    "name": "XY Black Star Promos",
+    "series": "XY",
+    "printedTotal": 211,
+    "total": 216,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-XY",
+    "releaseDate": "2013/10/12",
+    "updatedAt": "2020/08/14 09:35:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/xyp/symbol.png",
+     "logo": "https://images.pokemontcg.io/xyp/logo.png"
+    }
+   },
+   "number": "XY126",
+   "artist": "Eske Yoshinob",
+   "rarity": "Promo",
+   "nationalPokedexNumbers": [
+    151
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/xyp/XY126.png",
+    "large": "https://images.pokemontcg.io/xyp/XY126_hires.png"
+   }
+  },
+  {
+   "id": "sm9-170",
+   "name": "Latias & Latios-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "250",
+   "types": [
+    "Dragon"
+   ],
+   "attacks": [
+    {
+     "name": "Buster Purge",
+     "cost": [
+      "Water",
+      "Psychic",
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "240",
+     "text": "Discard 3 Energy from this Pokémon."
+    },
+    {
+     "name": "Aero Unit-GX",
+     "cost": [
+      "Psychic"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Attach 5 basic Energy cards from your discard pile to your Pokémon in any way you like. If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack's cost), prevent all effects of attacks, including damage, done to it during your opponent's next turn. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fairy",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "sm9",
+    "name": "Team Up",
+    "series": "Sun & Moon",
+    "printedTotal": 181,
+    "total": 198,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEU",
+    "releaseDate": "2019/02/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm9/logo.png"
+    }
+   },
+   "number": "170",
+   "artist": "Sanosuke Sakuma",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    380,
+    381
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm9/170.png",
+    "large": "https://images.pokemontcg.io/sm9/170_hires.png"
+   }
+  },
+  {
+   "id": "sm9-161",
+   "name": "Magikarp & Wailord-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "300",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Super Splash",
+     "cost": [
+      "Water",
+      "Water",
+      "Water",
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 5,
+     "damage": "180",
+     "text": ""
+    },
+    {
+     "name": "Towering Splash-GX",
+     "cost": [
+      "Water"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10",
+     "text": "If this Pokémon has at least 7 extra Water Energy attached to it (in addition to this attack's cost), this attack does 100 damage to each of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "sm9",
+    "name": "Team Up",
+    "series": "Sun & Moon",
+    "printedTotal": 181,
+    "total": 198,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEU",
+    "releaseDate": "2019/02/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm9/logo.png"
+    }
+   },
+   "number": "161",
+   "artist": "OOYAMA",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    129,
+    321
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm9/161.png",
+    "large": "https://images.pokemontcg.io/sm9/161_hires.png"
+   }
+  },
+  {
+   "id": "sm12-143a",
+   "name": "Togepi & Cleffa & Igglybuff-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "240",
+   "types": [
+    "Fairy"
+   ],
+   "attacks": [
+    {
+     "name": "Rolling Panic",
+     "cost": [
+      "Fairy",
+      "Fairy",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "120+",
+     "text": "Flip a coin until you get tails. This attack does 30 more damage for each heads."
+    },
+    {
+     "name": "Supreme Puff-GX",
+     "cost": [
+      "Fairy",
+      "Fairy"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "",
+     "text": "Take another turn after this one. (Skip the between-turns step.) If this Pokémon has at least 14 extra Fairy Energy attached to it (in addition to this attack's cost), your opponent shuffles all of their Benched Pokémon and all cards attached to them into their deck. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Metal",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Darkness",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sm12",
+    "name": "Cosmic Eclipse",
+    "series": "Sun & Moon",
+    "printedTotal": 236,
+    "total": 272,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "CEC",
+    "releaseDate": "2019/11/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm12/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm12/logo.png"
+    }
+   },
+   "number": "143a",
+   "artist": "0313",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    173,
+    174,
+    175
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm12/143a.png",
+    "large": "https://images.pokemontcg.io/sm12/143a_hires.png"
+   }
+  },
+  {
+   "id": "sm9-165",
+   "name": "Gengar & Mimikyu-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "240",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Poltergeist",
+     "cost": [
+      "Psychic",
+      "Psychic"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "50×",
+     "text": "Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there."
+    },
+    {
+     "name": "Horror House-GX",
+     "cost": [
+      "Psychic"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Your opponent can't play any cards from their hand during their next turn. If this Pokémon has at least 1 extra Psychic Energy attached to it (in addition to this attack's cost), each player draws cards until they have 7 cards in their hand. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sm9",
+    "name": "Team Up",
+    "series": "Sun & Moon",
+    "printedTotal": 181,
+    "total": 198,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEU",
+    "releaseDate": "2019/02/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm9/logo.png"
+    }
+   },
+   "number": "165",
+   "artist": "Midori Harada",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    94,
+    778
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm9/165.png",
+    "large": "https://images.pokemontcg.io/sm9/165_hires.png"
+   }
+  },
+  {
+   "id": "sm11-221",
+   "name": "Raichu & Alolan Raichu-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "260",
+   "types": [
+    "Lightning"
+   ],
+   "attacks": [
+    {
+     "name": "Tandem Shock",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "80+",
+     "text": "If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 80 more damage, and your opponent's Active Pokémon is now Paralyzed."
+    },
+    {
+     "name": "Lightning Ride-GX",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "150+",
+     "text": "Switch this Pokémon with 1 of your Benched Pokémon. If this Pokémon has at least 2 extra Lightning Energy attached to it (in addition to this attack's cost), this attack does 100 more damage. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Metal",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sm11",
+    "name": "Unified Minds",
+    "series": "Sun & Moon",
+    "printedTotal": 236,
+    "total": 260,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "UNM",
+    "releaseDate": "2019/08/02",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm11/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm11/logo.png"
+    }
+   },
+   "number": "221",
+   "artist": "tetsuya koizumi",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    26
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm11/221.png",
+    "large": "https://images.pokemontcg.io/sm11/221_hires.png"
+   }
+  },
+  {
+   "id": "sm12-222",
+   "name": "Reshiram & Zekrom-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "270",
+   "types": [
+    "Dragon"
+   ],
+   "attacks": [
+    {
+     "name": "Fabled Flarebolts",
+     "cost": [
+      "Fire",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "90×",
+     "text": "Discard up to 3 in any combination of basic Fire and basic Lightning Energy cards from your Benched Pokémon. This attack does 90 damage for each card you discarded in this way."
+    },
+    {
+     "name": "Cross Break-GX",
+     "cost": [
+      "Fire",
+      "Fire",
+      "Lightning",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "",
+     "text": "This attack does 170 damage to 1 of your opponent's Benched Pokémon. If you played N's Resolve from your hand during this turn, this attack also does 170 damage to 1 of your opponent's other Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.) (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fairy",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sm12",
+    "name": "Cosmic Eclipse",
+    "series": "Sun & Moon",
+    "printedTotal": 236,
+    "total": 272,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "CEC",
+    "releaseDate": "2019/11/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm12/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm12/logo.png"
+    }
+   },
+   "number": "222",
+   "artist": "Naoki Saito",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    643,
+    644
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm12/222.png",
+    "large": "https://images.pokemontcg.io/sm12/222_hires.png"
+   }
+  },
+  {
+   "id": "sm11-226",
+   "name": "Mega Sableye & Tyranitar-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "280",
+   "types": [
+    "Darkness"
+   ],
+   "attacks": [
+    {
+     "name": "Greedy Crush",
+     "cost": [
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 5,
+     "damage": "210",
+     "text": "If your opponent's Pokémon-GX or Pokémon-EX is Knocked Out by damage from this attack, take 1 more Prize card."
+    },
+    {
+     "name": "Gigafall-GX",
+     "cost": [
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 5,
+     "damage": "250",
+     "text": "If this Pokémon has at least 5 extra Energy attached to it (in addition to this attack's cost), discard the top 15 cards of your opponent's deck. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Psychic",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "sm11",
+    "name": "Unified Minds",
+    "series": "Sun & Moon",
+    "printedTotal": 236,
+    "total": 260,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "UNM",
+    "releaseDate": "2019/08/02",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm11/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm11/logo.png"
+    }
+   },
+   "number": "226",
+   "artist": "chibi",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    248,
+    302
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm11/226.png",
+    "large": "https://images.pokemontcg.io/sm11/226_hires.png"
+   }
+  },
+  {
+   "id": "sm10-205",
+   "name": "Gardevoir & Sylveon-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "260",
+   "types": [
+    "Fairy"
+   ],
+   "attacks": [
+    {
+     "name": "Fairy Song",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Search your deck for up to 2 Fairy Energy cards and attach them to your Benched Pokémon in any way you like. Then, shuffle your deck."
+    },
+    {
+     "name": "Kaleidostorm",
+     "cost": [
+      "Fairy",
+      "Fairy",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "150",
+     "text": "Move any number of Energy from your Pokémon to your other Pokémon in any way you like."
+    },
+    {
+     "name": "Magical Miracle-GX",
+     "cost": [
+      "Fairy",
+      "Fairy",
+      "Fairy"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "200",
+     "text": "If this Pokémon has at least 3 extra Fairy Energy attached to it (in addition to this attack's cost), your opponent shuffles their hand into their deck. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Metal",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Darkness",
+     "value": "-20"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "sm10",
+    "name": "Unbroken Bonds",
+    "series": "Sun & Moon",
+    "printedTotal": 214,
+    "total": 234,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "UNB",
+    "releaseDate": "2019/05/03",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm10/logo.png"
+    }
+   },
+   "number": "205",
+   "artist": "Atsuko Nishida",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    282,
+    700
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm10/205.png",
+    "large": "https://images.pokemontcg.io/sm10/205_hires.png"
+   }
+  },
+  {
+   "id": "smp-SM193",
+   "name": "Garchomp & Giratina-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "270",
+   "types": [
+    "Dragon"
+   ],
+   "attacks": [
+    {
+     "name": "Linear Attack",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "This attack does 40 damage to 1 of your opponent's Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)"
+    },
+    {
+     "name": "Calamitous Slash",
+     "cost": [
+      "Psychic",
+      "Fighting",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "160+",
+     "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 80 more damage."
+    },
+    {
+     "name": "GG End-GX",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Fighting"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "Discard 1 of your opponent's Pokémon and all cards attached to it. If this Pokémon has at least 3 extra Fighting Energy attached to it (in addition to this attack's cost), discard 2 of your opponent's Pokémon instead. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fairy",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "smp",
+    "name": "SM Black Star Promos",
+    "series": "Sun & Moon",
+    "printedTotal": 248,
+    "total": 250,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "PR-SM",
+    "releaseDate": "2017/02/03",
+    "updatedAt": "2020/05/01 16:06:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/smp/symbol.png",
+     "logo": "https://images.pokemontcg.io/smp/logo.png"
+    }
+   },
+   "number": "SM193",
+   "artist": "Anesaki Dynamic",
+   "rarity": "Promo",
+   "nationalPokedexNumbers": [
+    445,
+    487
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/smp/SM193.png",
+    "large": "https://images.pokemontcg.io/smp/SM193_hires.png"
+   }
+  },
+  {
+   "id": "sm12-215",
+   "name": "Blastoise & Piplup-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "270",
+   "types": [
+    "Water"
+   ],
+   "attacks": [
+    {
+     "name": "Splash Maker",
+     "cost": [
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "150",
+     "text": "You may attach up to 3 Water Energy cards from your hand to your Pokémon in any way you like. If you do, heal 50 damage from those Pokémon for each card you attached to them in this way."
+    },
+    {
+     "name": "Bubble Launcher-GX",
+     "cost": [
+      "Water",
+      "Water",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "100+",
+     "text": "Your opponent's Active Pokémon is now Paralyzed. If this Pokémon has at least 3 extra Water Energy attached to it (in addition to this attack's cost), this attack does 150 more damage. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "sm12",
+    "name": "Cosmic Eclipse",
+    "series": "Sun & Moon",
+    "printedTotal": 236,
+    "total": 272,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "CEC",
+    "releaseDate": "2019/11/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm12/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm12/logo.png"
+    }
+   },
+   "number": "215",
+   "artist": "Akira Komayama",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    9,
+    393
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm12/215.png",
+    "large": "https://images.pokemontcg.io/sm12/215_hires.png"
+   }
+  },
+  {
+   "id": "sm10-197",
+   "name": "Muk & Alolan Muk-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "270",
+   "types": [
+    "Psychic"
+   ],
+   "attacks": [
+    {
+     "name": "Severe Poison",
+     "cost": [
+      "Psychic",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "",
+     "text": "Your opponent's Active Pokémon is now Poisoned. Put 8 damage counters instead of 1 on that Pokémon between turns."
+    },
+    {
+     "name": "Poison Absorption",
+     "cost": [
+      "Psychic",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "120",
+     "text": "If your opponent's Active Pokémon is Poisoned, heal 100 damage from this Pokémon."
+    },
+    {
+     "name": "Nasty Goo Mix-GX",
+     "cost": [],
+     "convertedEnergyCost": 0,
+     "damage": "",
+     "text": "Your opponent's Active Pokémon is now Paralyzed and Poisoned. If this Pokémon has at least 4 extra Energy attached to it (in addition to this attack's cost), put 15 damage counters instead of 1 on that Pokémon between turns. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "sm10",
+    "name": "Unbroken Bonds",
+    "series": "Sun & Moon",
+    "printedTotal": 214,
+    "total": 234,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "UNB",
+    "releaseDate": "2019/05/03",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm10/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm10/logo.png"
+    }
+   },
+   "number": "197",
+   "artist": "Masakazu Fukuda",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    89
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm10/197.png",
+    "large": "https://images.pokemontcg.io/sm10/197_hires.png"
+   }
+  },
+  {
+   "id": "sm9-171",
+   "name": "Eevee & Snorlax-GX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "TAG TEAM",
+    "GX"
+   ],
+   "hp": "270",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Cheer Up",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "",
+     "text": "Attach an Energy card from your hand to 1 of your Pokémon."
+    },
+    {
+     "name": "Dump Truck Press",
+     "cost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "120+",
+     "text": "If your opponent's Active Pokémon is an Evolution Pokémon, this attack does 120 more damage."
+    },
+    {
+     "name": "Megaton Friends-GX",
+     "cost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "210",
+     "text": "If this Pokémon has at least 1 extra Energy attached to it (in addition to this attack's cost), draw cards until you have 10 cards in your hand. (You can't use more than 1 GX attack in a game.)"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "sm9",
+    "name": "Team Up",
+    "series": "Sun & Moon",
+    "printedTotal": 181,
+    "total": 198,
+    "legalities": {
+     "unlimited": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "TEU",
+    "releaseDate": "2019/02/01",
+    "updatedAt": "2021/09/01 05:37:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/sm9/symbol.png",
+     "logo": "https://images.pokemontcg.io/sm9/logo.png"
+    }
+   },
+   "number": "171",
+   "artist": "5ban Graphics",
+   "rarity": "Rare Ultra",
+   "nationalPokedexNumbers": [
+    133,
+    143
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/sm9/171.png",
+    "large": "https://images.pokemontcg.io/sm9/171_hires.png"
+   }
+  },
+  {
+   "id": "base1-14",
+   "name": "Raichu",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1"
+   ],
+   "hp": "80",
+   "types": [
+    "Lightning"
+   ],
+   "evolvesFrom": "Pikachu",
+   "attacks": [
+    {
+     "name": "Agility",
+     "cost": [
+      "Lightning",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "20",
+     "text": "Flip a coin. If heads, during your opponent's next turn, prevent all effects of attacks, including damage, done to Raichu."
+    },
+    {
+     "name": "Thunder",
+     "cost": [
+      "Lightning",
+      "Lightning",
+      "Lightning",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "60",
+     "text": "Flip a coin. If tails, Raichu does 30 damage to itself."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "14",
+   "artist": "Ken Sugimori",
+   "rarity": "Rare Holo",
+   "flavorText": "Its long tail serves as a ground to protect itself from its own high-voltage power.",
+   "nationalPokedexNumbers": [
+    26
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/14.png",
+    "large": "https://images.pokemontcg.io/base1/14_hires.png"
+   }
+  },
+  {
+   "id": "base1-11",
+   "name": "Nidoking",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2"
+   ],
+   "hp": "90",
+   "types": [
+    "Grass"
+   ],
+   "evolvesFrom": "Nidorino",
+   "attacks": [
+    {
+     "name": "Thrash",
+     "cost": [
+      "Grass",
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "30+",
+     "text": "Flip a coin. If heads, this attack does 30 damage plus 10 more damage; if tails, this attack does 30 damage and Nidoking does 10 damage to itself."
+    },
+    {
+     "name": "Toxic",
+     "cost": [
+      "Grass",
+      "Grass",
+      "Grass"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "20",
+     "text": "The Defending Pokémon is now Poisoned. It now takes 20 Poison damage instead of 10 after each player's turn (even if it was already Poisoned)."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "11",
+   "artist": "Ken Sugimori",
+   "rarity": "Rare Holo",
+   "flavorText": "Uses its powerful tail in battle to smash, constrict, then break its prey's bones.",
+   "nationalPokedexNumbers": [
+    34
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/11.png",
+    "large": "https://images.pokemontcg.io/base1/11_hires.png"
+   }
+  },
+  {
+   "id": "base1-15",
+   "name": "Venusaur",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2"
+   ],
+   "hp": "100",
+   "types": [
+    "Grass"
+   ],
+   "evolvesFrom": "Ivysaur",
+   "attacks": [
+    {
+     "name": "Solarbeam",
+     "cost": [
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "60",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "15",
+   "artist": "Mitsuhiro Arita",
+   "rarity": "Rare Holo",
+   "flavorText": "This plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.",
+   "nationalPokedexNumbers": [
+    3
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/15.png",
+    "large": "https://images.pokemontcg.io/base1/15_hires.png"
+   }
+  },
+  {
+   "id": "base1-2",
+   "name": "Blastoise",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2"
+   ],
+   "hp": "100",
+   "types": [
+    "Water"
+   ],
+   "evolvesFrom": "Wartortle",
+   "attacks": [
+    {
+     "name": "Hydro Pump",
+     "cost": [
+      "Water",
+      "Water",
+      "Water"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "40+",
+     "text": "Does 40 damage plus 10 more damage for each Water Energy attached to Blastoise but not used to pay for this attack's Energy cost. Extra Water Energy after the 2nd doesn't count."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Lightning",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "2",
+   "artist": "Ken Sugimori",
+   "rarity": "Rare Holo",
+   "flavorText": "A brutal Pokémon with pressurized water jets on its shell. They are used for high-speed tackles.",
+   "nationalPokedexNumbers": [
+    9
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/2.png",
+    "large": "https://images.pokemontcg.io/base1/2_hires.png"
+   }
+  },
+  {
+   "id": "base1-1",
+   "name": "Alakazam",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2"
+   ],
+   "hp": "80",
+   "types": [
+    "Psychic"
+   ],
+   "evolvesFrom": "Kadabra",
+   "attacks": [
+    {
+     "name": "Confuse Ray",
+     "cost": [
+      "Psychic",
+      "Psychic",
+      "Psychic"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "30",
+     "text": "Flip a coin. If heads, the Defending Pokémon is now Confused."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "1",
+   "artist": "Ken Sugimori",
+   "rarity": "Rare Holo",
+   "flavorText": "Its brain can outperform a supercomputer. Its intelligence quotient is said to be 5000.",
+   "nationalPokedexNumbers": [
+    65
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/1.png",
+    "large": "https://images.pokemontcg.io/base1/1_hires.png"
+   }
+  },
+  {
+   "id": "base1-7",
+   "name": "Hitmonchan",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "70",
+   "types": [
+    "Fighting"
+   ],
+   "attacks": [
+    {
+     "name": "Jab",
+     "cost": [
+      "Fighting"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "20",
+     "text": ""
+    },
+    {
+     "name": "Special Punch",
+     "cost": [
+      "Fighting",
+      "Fighting",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 3,
+     "damage": "40",
+     "text": ""
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "base1",
+    "name": "Base",
+    "series": "Base",
+    "printedTotal": 102,
+    "total": 102,
+    "legalities": {
+     "unlimited": "Legal"
+    },
+    "ptcgoCode": "BS",
+    "releaseDate": "1999/01/09",
+    "updatedAt": "2022/10/10 15:12:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/base1/symbol.png",
+     "logo": "https://images.pokemontcg.io/base1/logo.png"
+    }
+   },
+   "number": "7",
+   "artist": "Ken Sugimori",
+   "rarity": "Rare Holo",
+   "flavorText": "While seeming to do nothing, it fires punches in lightning-fast volleys that are impossible to see.",
+   "nationalPokedexNumbers": [
+    107
+   ],
+   "legalities": {
+    "unlimited": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/base1/7.png",
+    "large": "https://images.pokemontcg.io/base1/7_hires.png"
+   }
+  },
+  {
+   "id": "me55c-114",
+   "name": "Mew VMAX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "VMAX"
+   ],
+   "hp": "310",
+   "types": [
+    "Psychic"
+   ],
+   "evolvesFrom": "Mew V",
+   "attacks": [
+    {
+     "name": "Cross Fusion Strike",
+     "cost": [
+      "Colorless",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "text": "Choose 1 of your Benched Fusion Strike Pokémon's attacks and use it as this attack."
+    },
+    {
+     "name": "Max Miracle",
+     "cost": [
+      "Psychic",
+      "Psychic"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "130",
+     "text": "This attack's damage isn't affected by any effects on your opponent's Active Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "set": {
+    "id": "me55c",
+    "name": "30th Celebration: Classic Collection",
+    "series": "Mega Evolution",
+    "total": 30,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55c-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55c-logo/logo"
+    }
+   },
+   "number": "114",
+   "artist": "5ban Graphics",
+   "rarity": "Holo Rare VMAX",
+   "nationalPokedexNumbers": [
+    151
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55c-114/small",
+    "large": "https://images.scrydex.com/pokemon/me55c-114/large"
+   }
+  },
+  {
+   "id": "me55-116",
+   "name": "Eevee",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "70",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Fetch and Hide",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "text": "Your opponent reveals their hand, and you put an Item card you find there on the bottom of your opponent's deck."
+    },
+    {
+     "name": "Tackle",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "damage": "10"
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fighting",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "me55",
+    "name": "30th Celebration",
+    "series": "Mega Evolution",
+    "printedTotal": 128,
+    "total": 161,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55-logo/logo"
+    }
+   },
+   "number": "116",
+   "artist": "Wintr Wandr",
+   "rarity": "Common",
+   "nationalPokedexNumbers": [
+    133
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55-116/small",
+    "large": "https://images.scrydex.com/pokemon/me55-116/large"
+   }
+  },
+  {
+   "id": "me1-177",
+   "name": "Mega Venusaur ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 2",
+    "MEGA",
+    "ex"
+   ],
+   "hp": "380",
+   "types": [
+    "Grass"
+   ],
+   "evolvesFrom": "Ivysaur",
+   "attacks": [
+    {
+     "name": "Jungle Dump",
+     "cost": [
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "240",
+     "text": "Heal 30 damage from this Pokémon."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Fire",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 4,
+   "set": {
+    "id": "me1",
+    "name": "Mega Evolution",
+    "series": "Mega Evolution",
+    "printedTotal": 132,
+    "total": 188,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "MEG",
+    "releaseDate": "2025/09/26",
+    "updatedAt": "2025/09/25 15:00:00",
+    "images": {
+     "symbol": "https://images.pokemontcg.io/me1/symbol.png",
+     "logo": "https://images.pokemontcg.io/me1/logo.png"
+    }
+   },
+   "number": "177",
+   "rarity": "Special Illustration Rare",
+   "nationalPokedexNumbers": [
+    3
+   ],
+   "legalities": {
+    "unlimited": "Legal",
+    "standard": "Legal",
+    "expanded": "Legal"
+   },
+   "images": {
+    "small": "https://images.pokemontcg.io/me1/177.png",
+    "large": "https://images.pokemontcg.io/me1/177_hires.png"
+   }
+  },
+  {
+   "id": "me55-92",
+   "name": "Umbreon ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1",
+    "ex"
+   ],
+   "hp": "270",
+   "types": [
+    "Darkness"
+   ],
+   "evolvesFrom": "Eevee",
+   "attacks": [
+    {
+     "name": "Lunatic Claw",
+     "cost": [
+      "Darkness",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "100+",
+     "text": "If your opponent's Active Pokémon already has any damage counters on it, this attack does 140 more damage."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Grass",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 2,
+   "set": {
+    "id": "me55",
+    "name": "30th Celebration",
+    "series": "Mega Evolution",
+    "printedTotal": 128,
+    "total": 161,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55-logo/logo"
+    }
+   },
+   "number": "92",
+   "artist": "Keisuke Azuma",
+   "rarity": "Double Rare",
+   "nationalPokedexNumbers": [
+    197
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55-92/small",
+    "large": "https://images.scrydex.com/pokemon/me55-92/large"
+   }
+  },
+  {
+   "id": "me55-70",
+   "name": "Espeon ex",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Stage 1",
+    "ex"
+   ],
+   "hp": "260",
+   "types": [
+    "Psychic"
+   ],
+   "evolvesFrom": "Eevee",
+   "attacks": [
+    {
+     "name": "Solar Beatdown",
+     "cost": [
+      "Psychic",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "30×",
+     "text": "This attack does 30 damage for each of your Pokémon in play."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Darkness",
+     "value": "×2"
+    }
+   ],
+   "resistances": [
+    {
+     "type": "Fighting",
+     "value": "-30"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "me55",
+    "name": "30th Celebration",
+    "series": "Mega Evolution",
+    "printedTotal": 128,
+    "total": 161,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55-logo/logo"
+    }
+   },
+   "number": "70",
+   "artist": "5ban Graphics",
+   "rarity": "Double Rare",
+   "nationalPokedexNumbers": [
+    196
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55-70/small",
+    "large": "https://images.scrydex.com/pokemon/me55-70/large"
+   }
+  },
+  {
+   "id": "me55c-149",
+   "name": "Lugia",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic"
+   ],
+   "hp": "80",
+   "types": [
+    "Colorless"
+   ],
+   "attacks": [
+    {
+     "name": "Psychic",
+     "cost": [
+      "Psychic",
+      "Fire"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "10×",
+     "text": "This attack does 10 damage times the number of Energy cards attached to the Defending Pokémon."
+    },
+    {
+     "name": "Steam Blast",
+     "cost": [
+      "Water",
+      "Water",
+      "Fire",
+      "Colorless"
+     ],
+     "convertedEnergyCost": 4,
+     "damage": "50",
+     "text": "Discard an Energy card attached to Lugia."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Psychic",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless",
+    "Colorless",
+    "Colorless"
+   ],
+   "convertedRetreatCost": 3,
+   "set": {
+    "id": "me55c",
+    "name": "30th Celebration: Classic Collection",
+    "series": "Mega Evolution",
+    "total": 30,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55c-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55c-logo/logo"
+    }
+   },
+   "number": "149",
+   "artist": "Naoyo Kimura",
+   "rarity": "Rare Secret",
+   "nationalPokedexNumbers": [
+    249
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55c-149/small",
+    "large": "https://images.scrydex.com/pokemon/me55c-149/large"
+   }
+  },
+  {
+   "id": "me55c-85",
+   "name": "Rayquaza-EX",
+   "supertype": "Pokémon",
+   "subtypes": [
+    "Basic",
+    "EX"
+   ],
+   "hp": "170",
+   "types": [
+    "Dragon"
+   ],
+   "attacks": [
+    {
+     "name": "Celestial Roar",
+     "cost": [
+      "Colorless"
+     ],
+     "convertedEnergyCost": 1,
+     "text": "Discard the top 3 cards of your deck. If any of those cards are Energy cards, attach them to this Pokémon."
+    },
+    {
+     "name": "Dragon Burst",
+     "cost": [
+      "Fire",
+      "Lightning"
+     ],
+     "convertedEnergyCost": 2,
+     "damage": "60×",
+     "text": "Discard all basic Fire Energy or all basic Lightning Energy attached to this Pokémon. This attack does 60 damage times the number of Energy cards you discarded."
+    }
+   ],
+   "weaknesses": [
+    {
+     "type": "Dragon",
+     "value": "×2"
+    }
+   ],
+   "retreatCost": [
+    "Colorless"
+   ],
+   "convertedRetreatCost": 1,
+   "set": {
+    "id": "me55c",
+    "name": "30th Celebration: Classic Collection",
+    "series": "Mega Evolution",
+    "total": 30,
+    "legalities": {
+     "unlimited": "Legal",
+     "standard": "Legal",
+     "expanded": "Legal"
+    },
+    "ptcgoCode": "30C",
+    "releaseDate": "2026/09/16",
+    "updatedAt": "2026/07/16 15:00:00",
+    "images": {
+     "symbol": "https://images.scrydex.com/pokemon/me55c-symbol/symbol",
+     "logo": "https://images.scrydex.com/pokemon/me55c-logo/logo"
+    }
+   },
+   "number": "85",
+   "artist": "Eske Yoshinob",
+   "rarity": "Rare Holo EX",
+   "nationalPokedexNumbers": [
+    384
+   ],
+   "images": {
+    "small": "https://images.scrydex.com/pokemon/me55c-85/small",
+    "large": "https://images.scrydex.com/pokemon/me55c-85/large"
+   }
+  }
+ ]
+}

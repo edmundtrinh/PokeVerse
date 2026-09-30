@@ -1,12 +1,21 @@
 // src/api/tcgApi.ts
 import axios from 'axios';
+import fixtures from '../data/tcgFixtures.json';
 
 const TCG_API_BASE_URL = 'https://api.pokemontcg.io/v2';
 
-// Set up axios - Pokemon TCG API works without key for basic usage
+// Optional key from dev.pokemontcg.io; the API works without one but is less reliable
+const API_KEY = process.env.EXPO_PUBLIC_TCG_API_KEY;
+// Set EXPO_PUBLIC_TCG_OFFLINE=1 to skip the network and always use the bundled sample data
+const FORCE_OFFLINE = process.env.EXPO_PUBLIC_TCG_OFFLINE === '1';
+
 const tcgAxios = axios.create({
   baseURL: TCG_API_BASE_URL,
+  timeout: 15000,
+  ...(API_KEY ? { headers: { 'X-Api-Key': API_KEY } } : {}),
 });
+
+export const retryConfig = { attempts: 3, baseDelayMs: 500 };
 
 export interface TCGCard {
   id: string;
@@ -95,102 +104,138 @@ export interface TCGSet {
   };
 }
 
-// Get all card sets
-export const getTCGSets = async (): Promise<TCGSet[]> => {
+const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
+
+// Network errors, timeouts, rate limits and 5xx responses are worth retrying; other 4xx are not
+const isRetryable = (error: any): boolean => {
+  const status = error?.response?.status;
+  return !status || status === 429 || status >= 500;
+};
+
+const requestWithRetry = async (path: string) => {
+  let lastError: unknown;
+  for (let attempt = 1; attempt <= retryConfig.attempts; attempt++) {
+    try {
+      return await tcgAxios.get(path);
+    } catch (error) {
+      lastError = error;
+      if (!isRetryable(error) || attempt === retryConfig.attempts) break;
+      await sleep(retryConfig.baseDelayMs * 2 ** (attempt - 1));
+    }
+  }
+  throw lastError;
+};
+
+// Fetch from the API with retries; if it stays unavailable, answer from the bundled sample data
+const fetchOrFallback = async <T>(
+  path: string,
+  fromResponse: (data: any) => T,
+  fromFixtures: () => T
+): Promise<T> => {
+  if (FORCE_OFFLINE) return fromFixtures();
   try {
-    const response = await tcgAxios.get('/sets');
-    return response.data.data;
+    const response = await requestWithRetry(path);
+    return fromResponse(response.data);
   } catch (error) {
-    console.error('Error fetching TCG sets:', error);
-    throw error;
+    console.warn(`TCG API unavailable for ${path}; using offline sample data`, error);
+    return fromFixtures();
   }
 };
+
+const sampleCards = (): TCGCard[] => addHiResImages(fixtures.cards as unknown as TCGCard[]);
+const sampleSets = (): TCGSet[] => fixtures.sets as unknown as TCGSet[];
+const byNewestSet = (a: TCGCard, b: TCGCard) => b.set.releaseDate.localeCompare(a.set.releaseDate);
+const paginate = <T>(items: T[], page: number, pageSize: number): T[] =>
+  items.slice((page - 1) * pageSize, page * pageSize);
+const matchesName = (card: TCGCard, name: string) =>
+  card.name.toLowerCase().includes(name.trim().toLowerCase());
+
+// Get all card sets
+export const getTCGSets = (): Promise<TCGSet[]> =>
+  fetchOrFallback('/sets', (data) => data.data, sampleSets);
 
 // Get recent sets (simpler query)
-export const getRecentSets = async (): Promise<TCGSet[]> => {
-  try {
-    const response = await tcgAxios.get('/sets?orderBy=-releaseDate&pageSize=10');
-    return response.data.data || [];
-  } catch (error) {
-    console.error('Error fetching recent sets:', error);
-    return [];
-  }
-};
+export const getRecentSets = (): Promise<TCGSet[]> =>
+  fetchOrFallback(
+    '/sets?orderBy=-releaseDate&pageSize=10',
+    (data) => data.data || [],
+    () => sampleSets().slice(0, 10)
+  );
 
 // Get cards from a specific set
-export const getCardsBySet = async (setId: string): Promise<TCGCard[]> => {
-  try {
-    const response = await tcgAxios.get(`/cards?q=set.id:${setId}`);
-    return addHiResImages(response.data.data);
-  } catch (error) {
-    console.error(`Error fetching cards from set ${setId}:`, error);
-    throw error;
-  }
-};
+export const getCardsBySet = (setId: string): Promise<TCGCard[]> =>
+  fetchOrFallback(
+    `/cards?q=set.id:${setId}`,
+    (data) => addHiResImages(data.data),
+    () => sampleCards().filter((card) => card.set.id === setId)
+  );
 
 // Search cards by name (simpler)
-export const searchCards = async (name: string): Promise<TCGCard[]> => {
-  try {
-    const response = await tcgAxios.get(`/cards?q=name:*${name}*&pageSize=30`);
-    return addHiResImages(response.data.data || []);
-  } catch (error) {
-    console.error(`Error searching for cards with name ${name}:`, error);
-    throw error;
-  }
-};
+export const searchCards = (name: string): Promise<TCGCard[]> =>
+  fetchOrFallback(
+    `/cards?q=name:*${name}*&pageSize=30`,
+    (data) => addHiResImages(data.data || []),
+    () => sampleCards().filter((card) => matchesName(card, name)).slice(0, 30)
+  );
 
 // Search cards by name in recent sets only
-export const searchRecentCards = async (name: string): Promise<TCGCard[]> => {
-  try {
-    const response = await tcgAxios.get(`/cards?q=name:*${name}* AND set.releaseDate:[2024-01-01 TO *]&orderBy=set.releaseDate`);
-    return addHiResImages(response.data.data);
-  } catch (error) {
-    console.error(`Error searching for recent cards with name ${name}:`, error);
-    throw error;
-  }
-};
+export const searchRecentCards = (name: string): Promise<TCGCard[]> =>
+  fetchOrFallback(
+    `/cards?q=name:*${name}* AND set.releaseDate:[2024-01-01 TO *]&orderBy=set.releaseDate`,
+    (data) => addHiResImages(data.data),
+    () =>
+      sampleCards()
+        .filter((card) => matchesName(card, name) && card.set.releaseDate >= '2024/01/01')
+        .sort(byNewestSet)
+  );
 
 // Get card by ID
-export const getCardById = async (id: string): Promise<TCGCard> => {
-  try {
-    const response = await tcgAxios.get(`/cards/${id}`);
-    return response.data.data;
-  } catch (error) {
-    console.error(`Error fetching card with ID ${id}:`, error);
-    throw error;
-  }
-};
+export const getCardById = (id: string): Promise<TCGCard> =>
+  fetchOrFallback(
+    `/cards/${id}`,
+    (data) => data.data,
+    () => {
+      const card = sampleCards().find((c) => c.id === id);
+      if (!card) throw new Error(`Card ${id} is not in the offline sample data`);
+      return card;
+    }
+  );
 
 // Get cards from recent sets with high quality images
-export const getRecentCards = async (page: number = 1, pageSize: number = 20): Promise<TCGCard[]> => {
-  try {
+export const getRecentCards = (page: number = 1, pageSize: number = 20): Promise<TCGCard[]> =>
+  fetchOrFallback(
     // Order by newest sets first, with variety in card types
-    const response = await tcgAxios.get(`/cards?q=set.releaseDate:[2024-01-01 TO *]&page=${page}&pageSize=${pageSize}&orderBy=-set.releaseDate,number`);
-    return addHiResImages(response.data.data);
-  } catch (error) {
-    console.error('Error fetching recent cards:', error);
-    throw error;
-  }
-};
+    `/cards?q=set.releaseDate:[2024-01-01 TO *]&page=${page}&pageSize=${pageSize}&orderBy=-set.releaseDate,number`,
+    (data) => addHiResImages(data.data),
+    () => paginate(sampleCards().sort(byNewestSet), page, pageSize)
+  );
 
 // Get cards by rarity from recent sets
-export const getCardsByRarity = async (rarity: string, page: number = 1, pageSize: number = 20): Promise<TCGCard[]> => {
-  try {
-    // Try multiple rarity variations since they can vary
-    const rarityQueries = [
-      `rarity:"${rarity}"`,
-      `rarity:"${rarity} Holo"`,
-      `rarity:"Holo ${rarity}"`,
-      `rarity:"${rarity} ex"`,
-    ];
-
-    const query = rarityQueries.join(' OR ');
-    const response = await tcgAxios.get(`/cards?q=set.releaseDate:[2024-01-01 TO *] AND (${query})&page=${page}&pageSize=${pageSize}&orderBy=-set.releaseDate`);
-    return addHiResImages(response.data.data);
-  } catch (error) {
-    console.error(`Error fetching ${rarity} cards:`, error);
-    throw error;
-  }
+export const getCardsByRarity = (
+  rarity: string,
+  page: number = 1,
+  pageSize: number = 20
+): Promise<TCGCard[]> => {
+  // Try multiple rarity variations since they can vary
+  const rarityQueries = [
+    `rarity:"${rarity}"`,
+    `rarity:"${rarity} Holo"`,
+    `rarity:"Holo ${rarity}"`,
+    `rarity:"${rarity} ex"`,
+  ];
+  const query = rarityQueries.join(' OR ');
+  return fetchOrFallback(
+    `/cards?q=set.releaseDate:[2024-01-01 TO *] AND (${query})&page=${page}&pageSize=${pageSize}&orderBy=-set.releaseDate`,
+    (data) => addHiResImages(data.data),
+    () =>
+      paginate(
+        sampleCards()
+          .filter((card) => (card.rarity || '').toLowerCase().includes(rarity.toLowerCase()))
+          .sort(byNewestSet),
+        page,
+        pageSize
+      )
+  );
 };
 
 // Add hi-res image URL to cards with multiple sources
@@ -222,24 +267,6 @@ export const getBestImageUrl = (card: TCGCard): string => {
   return card.images.large || card.images.small;
 };
 
-// Get cards with enhanced image quality scoring
-export const getCardsWithQualityScore = async (query: string, pageSize: number = 20): Promise<TCGCard[]> => {
-  try {
-    const response = await tcgAxios.get(`/cards?q=${query}&pageSize=${pageSize}`);
-    const cards = addHiResImages(response.data.data);
-
-    // Score cards by image quality and recency
-    return cards.sort((a, b) => {
-      const scoreA = getCardQualityScore(a);
-      const scoreB = getCardQualityScore(b);
-      return scoreB - scoreA;
-    });
-  } catch (error) {
-    console.error('Error fetching quality cards:', error);
-    throw error;
-  }
-};
-
 // Score cards based on image quality and other factors
 const getCardQualityScore = (card: TCGCard): number => {
   let score = 0;
@@ -263,14 +290,25 @@ const getCardQualityScore = (card: TCGCard): number => {
   return score;
 };
 
+const sortByQuality = (cards: TCGCard[]): TCGCard[] =>
+  cards.sort((a, b) => getCardQualityScore(b) - getCardQualityScore(a));
+
+// Get cards with enhanced image quality scoring
+export const getCardsWithQualityScore = (query: string, pageSize: number = 20): Promise<TCGCard[]> =>
+  fetchOrFallback(
+    `/cards?q=${query}&pageSize=${pageSize}`,
+    (data) => sortByQuality(addHiResImages(data.data)),
+    () => sortByQuality(sampleCards()).slice(0, pageSize)
+  );
+
 // Simple featured cards function
-export const getFeaturedCards = async (): Promise<TCGCard[]> => {
-  try {
+export const getFeaturedCards = (): Promise<TCGCard[]> =>
+  fetchOrFallback(
     // Simple search for popular cards
-    const response = await tcgAxios.get('/cards?q=name:charizard OR name:pikachu OR name:mewtwo&pageSize=15');
-    return addHiResImages(response.data.data || []);
-  } catch (error) {
-    console.error('Error fetching featured cards:', error);
-    throw error;
-  }
-};
+    '/cards?q=name:charizard OR name:pikachu OR name:mewtwo&pageSize=15',
+    (data) => addHiResImages(data.data || []),
+    () =>
+      sampleCards()
+        .filter((card) => /charizard|pikachu|mewtwo/i.test(card.name))
+        .slice(0, 15)
+  );
