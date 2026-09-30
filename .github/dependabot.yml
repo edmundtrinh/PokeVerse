@@ -7,6 +7,24 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 15
+    # Expo SDK upgrades set these versions (`npx expo install --fix`), so Dependabot
+    # doesn't propose them. Dependabot alerts still appear under Security.
+    ignore:
+      - dependency-name: "expo"
+      - dependency-name: "expo-*"
+      - dependency-name: "@expo/*"
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-*"
+      - dependency-name: "@react-native/*"
+      - dependency-name: "@react-native-community/*"
+      - dependency-name: "@types/react"
+      - dependency-name: "jest-expo"
+      - dependency-name: "@babel/core"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@react-navigation/*"
+        update-types: ["version-update:semver-major"]
     groups:
       expo:
         patterns:
