@@ -1,6 +1,7 @@
 // src/components/tcg/__tests__/BinderPlanner.test.tsx
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react-native';
+import { render, fireEvent, waitFor, within } from '@testing-library/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import BinderPlanner from '../BinderPlanner';
 import { UserProvider } from '../../../contexts/UserContext';
 import * as tcgApi from '../../../api/tcgApi';
@@ -241,6 +242,49 @@ describe('BinderPlanner', () => {
           fireEvent.press(saveDialogButton);
         }
       });
+    });
+  });
+
+  describe('Save dialog layout', () => {
+    afterEach(async () => {
+      await AsyncStorage.clear();
+    });
+
+    it('scrolls its body while keeping Save and Cancel pinned outside the scroll area', async () => {
+      await AsyncStorage.setItem(
+        'user_profile',
+        JSON.stringify({
+          id: 'test-user',
+          displayName: 'Test Trainer',
+          authProvider: 'guest',
+          preferences: {
+            defaultSpriteVersion: 'default',
+            showShinyByDefault: false,
+            enableHaptics: false,
+            enablePriceTracking: false,
+          },
+          caughtPokemon: [],
+          savedBinders: [],
+          favorites: [],
+          createdAt: '2024/01/01',
+        })
+      );
+
+      const { getByText, getByTestId, getByPlaceholderText } = renderWithProvider(<BinderPlanner />);
+      await waitFor(() => fireEvent.press(getByText('Save')));
+
+      const body = await waitFor(() => getByTestId('save-dialog-scroll'));
+      expect(within(body).getByPlaceholderText('Enter binder name')).toBeTruthy();
+      expect(within(body).getByText('Color Theme')).toBeTruthy();
+      expect(within(body).getByText('Tags (Optional)')).toBeTruthy();
+
+      // Buttons live outside the scrollable body, so a tall form can never push them off-screen
+      expect(within(body).queryByText('Cancel')).toBeNull();
+      expect(within(body).queryByText('Save Binder')).toBeNull();
+      expect(getByText('Cancel')).toBeTruthy();
+
+      fireEvent.press(getByText('Cancel'));
+      await waitFor(() => expect(() => getByPlaceholderText('Enter binder name')).toThrow());
     });
   });
 

@@ -11,6 +11,8 @@ import {
   ScrollView,
   Alert,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { searchCards, TCGCard, getFeaturedCards, getRecentSets, getCardsBySet, TCGSet } from '../../api/tcgApi';
@@ -524,9 +526,19 @@ const BinderPlanner: React.FC = () => {
     const selectedColorInfo = BINDER_COLORS.find(c => c.id === binderColor);
 
     return (
-      <View style={styles.saveDialogOverlay}>
+      <KeyboardAvoidingView
+        style={styles.saveDialogOverlay}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
         <View style={styles.saveDialog}>
           <Text style={styles.saveDialogTitle}>Save Binder</Text>
+
+          {/* Scrollable body; title and buttons stay pinned so Save/Cancel are always reachable */}
+          <ScrollView
+            testID="save-dialog-scroll"
+            style={styles.saveDialogScroll}
+            keyboardShouldPersistTaps="handled"
+          >
 
           {/* Binder Name */}
           <View style={styles.saveDialogSection}>
@@ -640,6 +652,7 @@ const BinderPlanner: React.FC = () => {
               🎨 {selectedColorInfo?.name}{binderTags.length > 0 ? ` • 🏷️ ${binderTags.join(', ')}` : ''}
             </Text>
           </View>
+          </ScrollView>
 
           <View style={styles.saveDialogButtons}>
             <TouchableOpacity
@@ -657,7 +670,7 @@ const BinderPlanner: React.FC = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   };
 
@@ -1034,6 +1047,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 8,
+  },
+  saveDialogScroll: {
+    flexShrink: 1,
   },
   saveDialogTitle: {
     fontSize: 20,
