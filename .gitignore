@@ -41,3 +41,6 @@ ios/
 # Claude Code (per-user settings)
 CLAUDE.md
 .claude/
+
+# Test coverage
+coverage/
