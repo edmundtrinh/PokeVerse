@@ -1,10 +1,10 @@
 # Data model
 
-- **As of:** 2026-09-28. §2 onward was updated on 2026-09-29 with the owner's decisions on species keys, binder pages and views, and new preferences; then with the decisions of 14:03 (the collection before binders, the wishlist, dex progress sources, and full collection search) and 14:41 (our own keys for other game entities, "Your valuation", the first-launch age question, and a separate crash-report switch).
+- **As of:** 2026-09-28. §2 onward was updated on 2026-09-29 with the owner's decisions on species keys, binder pages and views, and new preferences; then with the decisions of 14:03 (the collection before binders, the wishlist, dex progress sources, and full collection search) and 14:41 (our own keys for other game entities, "Your valuation", the first-launch age question, and a separate crash-report switch). On 2026-09-30, §1, §4, and §7 were checked against the binder screens that landed on 2026-09-29.
 - **Status:** §1 describes what `main` stores today. Everything from §2 on is the **proposed** target. None of it exists in code yet. It follows [ADR-0003](../decisions/ADR-0003-backend-and-auth.md) (backend and auth), [ADR-0007](../decisions/ADR-0007-state-and-data-fetching.md) (state and storage), and [ADR-0008](../decisions/ADR-0008-battle-engine.md) (battle engine).
 - **Related:** [architecture overview](overview.md) · [test strategy](../testing/test-strategy.md) · [battle-ecosystem research](../research/2026-09-28-battle-ecosystem.md) · [open questions](../../specs/open-questions.md)
 
-Line references point at `main` as of 2026-09-28. `BinderPlanner.tsx` and `SavedBinders.tsx` haven't been pushed yet, so how they use `SavedBinder` is inferred from their tests; items that depend on them are marked "(verify)".
+Line references point at `main` as of 2026-09-28. `BinderPlanner.tsx` and `SavedBinders.tsx` landed on 2026-09-29, and on 2026-09-30 §1, §4, and §7 were checked against them; references into those two files, and into `tcgApi.ts`, point at `main` as of 2026-09-30.
 
 ## Contents
 
@@ -31,7 +31,9 @@ Everything persists through `@react-native-async-storage/async-storage` 1.18.2 a
 | `@image_cache_metadata` | `imageCache.ts:94` | `:71` | `:244` | `{ entries: { [url]: CacheEntry }, totalSize: number }`. `size` is never set, so `totalSize` is always 0. |
 | `@image_cache_<url>` | never | never | `imageCache.ts:182` | A phantom key: only `removeItem` is ever called on it. |
 
-**Not persisted at all:** the deck (`DeckBuilder`), the team (`TeamBuilder`), the sprite style (`PokedexView.tsx:514`, reset on every launch), and every filter and toggle. `UserProfile.preferences` is written but never read, so `enableHaptics` does nothing.
+**The binder screens add no keys.** `BinderPlanner` saves through `saveBinder` (`BinderPlanner.tsx:32`, `:513`), and `SavedBinders` reads `user.savedBinders` and deletes through `deleteBinder` (`SavedBinders.tsx:24`, `:30`, `:79`). Both functions rewrite the whole `user_profile` (`UserContext.tsx:234-255`).
+
+**Not persisted at all:** the deck (`DeckBuilder`), the team (`TeamBuilder`), the sprite style (`PokedexView.tsx:514`, reset on every launch), the binder planner's unsaved cards, and every filter and toggle. `UserProfile.preferences` is written but never read, so `enableHaptics` does nothing.
 
 ### 1.2 Current TypeScript models
 
@@ -89,7 +91,16 @@ export interface SavedBinder {
 
 Supporting constants in the same file: `POKEBALL_TYPES` (8 balls, `:12-21`), `BINDER_COLORS` (10 colors, `:50-61`), and `SUGGESTED_TAGS` (20 tags, `:63-84`).
 
-Two in-memory models are never persisted. `TCGCard` is defined in `src/api/tcgApi.ts:11-76`, and the `evs` and `ivs` objects below are condensed onto one line each:
+**How the binder screens use `SavedBinder`** (checked against the code on 2026-09-30):
+- **Grid sizes are columns × rows.** `'4x3'` is 4 columns by 3 rows, labeled "12-Pocket" (`BinderPlanner.tsx:55-61`), and the grid renders with one column per `cols` (`:806`). So it's a landscape 12-pocket page, not the 3 columns by 4 rows of the target's `'3x4'` ([§2.4](#binders)).
+- **The planner holds one page at a time.** In memory, each slot is `{ card: TCGCard | null, id, position, page }` (`:24-29`). An effect rebuilds the array as empty slots for the current page whenever the page or the grid size changes (`:67-75`), so it never holds more than the page on screen, and turning the page or changing the grid drops any unsaved cards.
+- **`position` is the 0-based slot on its page,** in row-major order from the top left (`:68-72`, rendered in order at `:802-807`). The UI shows it 1-based, as "slot N" (`:306`). Pages are numbered from 1 (`:35`), and the planner offers 100 of them (`:36`).
+- **Saving writes one page.** `handleSaveBinder` (`:485-519`) saves the filled slots on screen as `{ position, cardId, cardName, rarity, dateAdded }` (`:491-499`), with no page number. `rarity` falls back to `'Common'`, `dateAdded` is the save time for every card, and `purchasePrice` is never written.
+- **Every save creates a new binder,** with `id: Date.now().toString()` (`:502`). Nothing loads a saved binder back into the planner: `TCGView` renders `<SavedBinders />` without its optional `onSelectBinder` (`TCGView.tsx:95`; `SavedBinders.tsx:19-21`, `:275`). So My Binders can list, sort, filter, and delete binders, but not reopen them.
+- **My Binders treats a binder as one page:** it computes the fill as `cards.length` over the grid's slot count (`SavedBinders.tsx:98-114`).
+- **Card IDs are pokemontcg.io IDs** (`TCGCard.id`), from the API or the bundled sample cards in `src/data/tcgFixtures.json`. The exception is the planner's three placeholder cards, `mock-1` to `mock-3` (`BinderPlanner.tsx:142-232`). It shows them when its opening search for "pikachu" fails or finds nothing (`:111-120`, `:132-135`), which is unlikely now that the sample data has Pikachu cards, and they can be saved like any other card.
+
+Two more in-memory models are never persisted. `TCGCard` is defined in `src/api/tcgApi.ts:27-92`, and the `evs` and `ivs` objects below are condensed onto one line each:
 
 ```ts
 // src/components/tcg/DeckBuilder.tsx:15-17
@@ -120,13 +131,15 @@ interface PokemonTeamMember {
 | 1 | **Two favorites stores.** The Pokédex UI uses `@pokemon_favorites` (`number[]`). `UserProfile.favorites` (`string[]`, commented "Pokemon IDs") is exposed by `UserContext` but no screen uses it, and its tests pass names such as `'pikachu'` (`UserContext.test.tsx:44`). The two never sync. | `PokedexView.tsx:92,530-562`; `UserContext.tsx:100,257-270` | One `favorites` collection ([§2.4](#favorites)) |
 | 2 | **No user scoping.** There's one global `user_profile`, and its `id` is a timestamp. Signing in as anyone overwrites it, and `@pokemon_favorites` isn't tied to a user at all. | `UserContext.tsx:141,161-184` | Documents owned by a Firebase `uid`, or by `local` before sign-in ([§3.2](#32-local-schema-sketch)) |
 | 3 | **No schema version and no validation.** Stored JSON is `JSON.parse`d and trusted (`:143`), so any shape change breaks old installs silently. | `UserContext.tsx:141-146` | `schemaVersion` on every document; zod on every read ([§5](#5-validation-rules)) |
-| 4 | **Binder positions have no page field.** Cards carry a single `position: number`, but the planner pages through up to 100 pages ("Page 1 of 100", `BinderPlanner.test.tsx:108`). So `position` has to encode page × slot, and changing `gridSize` silently moves every card. | `UserContext.tsx:37-45` | Explicit `pageIndex` and `slotIndex`, plus an explicit reflow when the grid changes ([§2.4](#binders)) |
+| 4 | **Binder positions have no page field.** Cards carry only `position`, the 0-based slot on one page, although the planner shows 100 pages. Saving drops the page number, and turning the page or changing `gridSize` drops the unsaved cards, so a saved binder is really one page ([§1.2](#12-current-typescript-models)). | `UserContext.tsx:37-45`; `BinderPlanner.tsx:36`, `:67-75`, `:491-499` | Explicit `pageIndex` and `slotIndex`, plus an explicit reflow when the grid changes ([§2.4](#binders)) |
 | 5 | **Login overwrites and logout deletes.** Every login builds a fresh profile with empty arrays (the cold-start wipe), and sign-out removes the profile. | `UserContext.tsx:161-194`; `App.tsx:121,130-134` | Load-or-create on login, keep data on sign-out (upgrade step U4, [review §9](../reviews/2026-09-28-tech-stack-review.md#9-recommended-sequence)); later, a local-first store with no login gate |
 | 6 | **Preferences merge bug.** `...userData` is spread last (`:179`), so a partial `preferences` object replaces the merged defaults (`:168-174`). | `UserContext.tsx:168-179` | Schema defaults applied by zod |
-| 7 | **Loose identifiers.** `CaughtPokemon.pokemonId` is a string whose meaning (number or name) isn't defined; `ballType` is free text rather than a `POKEBALL_TYPES` id; `SavedBinder.color` is typed `string` although the tests store a `BINDER_COLORS` id (`'red'`, `UserContext.test.tsx:181`). | `UserContext.tsx:23-37` | Typed IDs ([§2.2](#22-identifiers)) |
+| 7 | **Loose identifiers.** `CaughtPokemon.pokemonId` is a string whose meaning (number or name) isn't defined; `ballType` is free text rather than a `POKEBALL_TYPES` id; `SavedBinder.color` is typed `string` although the planner stores a `BINDER_COLORS` id, such as `'red'` (`BinderPlanner.tsx:47`, `:504`). | `UserContext.tsx:23-37` | Typed IDs ([§2.2](#22-identifiers)) |
 | 8 | **Simulated identity is stored as if real.** Social logins store `user@<provider>.com` and a generated avatar URL. | `HomeScreen.tsx:28-41` | Dropped in migration ([§4](#4-migration-from-todays-keys)) |
-| 9 | **Money as a bare number.** `purchasePrice` has no currency. | `UserContext.tsx:43` | `{ amount, currency }` in minor units |
+| 9 | **Money as a bare number.** `purchasePrice` has no currency. Nothing writes it yet: the planner's save leaves it out, and no other code sets it. | `UserContext.tsx:43`; `BinderPlanner.tsx:491-499` | `{ amount, currency }` in minor units |
 | 10 | **Binders are the only record of ownership.** A card exists only as a binder slot, so an unplaced card, a duplicate, or a card's condition can't be recorded. | `UserContext.tsx:37-45` | A collection of copies, with binders referencing them ([§2.4](#collection)) |
+| 11 | **Saved binders can't be reopened.** Nothing loads one back into the planner, so every save creates another binder, and My Binders can only list and delete them. | `TCGView.tsx:95`; `SavedBinders.tsx:19-21`, `:275`; `BinderPlanner.tsx:31`, `:502` | Binder documents that the planner opens and edits ([§2.4](#binders)) |
+| 12 | **Binder IDs are timestamps.** `id` is `Date.now().toString()`, while v1 documents use client-generated UUIDs ([§2.1](#21-principles)). | `BinderPlanner.tsx:502` | The migration keeps or replaces them, which is still open ([§7](#7-open-questions)) |
 
 ---
 
@@ -481,7 +494,7 @@ Embedded in `teams.members`. The team's `ruleset` decides which fields apply. Ab
 
 | Field | Type | Rules | Notes |
 |---|---|---|---|
-| *(document ID)* | string | Client-generated UUID; migrated binders keep their ID | |
+| *(document ID)* | string | Client-generated UUID; migrated binders keep their ID, though legacy IDs are timestamps, not UUIDs ([§7](#7-open-questions)) | |
 | `name` | string | 1–60 characters | |
 | `color` | string | A `BINDER_COLORS` id (`red`, `blue`, …) | |
 | `tags` | string[] | Up to 20, each 1–30 characters | `SUGGESTED_TAGS` are suggestions, not a closed list |
@@ -883,8 +896,8 @@ flowchart TD
 | `@pokemon_favorites` (`number[]`) | `favorites/species_<speciesKey>` | A dex number is already the key of that species' default form, so `25` becomes `species_25` |
 | `UserProfile.favorites` (`string[]`) | `favorites/species_<speciesKey>`, merged with the row above | Each string is resolved as a dex number first, then as a name through the crosswalk |
 | `UserProfile.caughtPokemon[]` | `dex/{speciesKey}` | `pokemonId` is resolved the same way; `caught = seen = true`; `isShiny` → `shiny`; `ballType` kept if it's a `POKEBALL_TYPES` id; `dateSpotted` → `firstSeenAt`; `dateCaught` → `caughtAt` |
-| `UserProfile.savedBinders[]` | `binders/{id}` | IDs, name, color, tags, `gridSize`, and dates are kept. `pageCount` becomes the larger of 50 and one more than the highest `pageIndex` in use (proposed). `position` → `pageIndex = ⌊position / slotsPerPage⌋`, `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. That assumes a 0-based, page-major encoding (verify against `BinderPlanner.tsx`). Legacy grid sizes: `'4x3'` becomes `'3x4'` if it meant 4 rows × 3 columns (verify against `BinderPlanner.tsx`), and `'5x5'` becomes `'4x4'` with a reflow that adds pages. `autoBuild` is `null`. |
-| `SavedBinder.cards[]` | `collection/{copyId}`, plus a slot `ref` | Each binder card becomes one collection copy, and its slot references that copy (decided 2026-09-29). `cardId` is mapped to a TCGdex ID with the pipeline's pokemontcg.io → TCGdex map ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)). A card the map can't resolve, or any card migrated before the map ships, keeps its old ID in `legacyCardId`, with `cardId` and `variant` null, and is flagged "needs matching", never dropped (PRD TCG-5). Until then, the pokemontcg.io screens read `legacyCardId`. `cardName` is kept. `purchasePrice` → `acquisition: { method: 'bought', price: { amount: round(price × 100), currency: 'USD' }, date: null }` (assumes USD; verify); without a price, `acquisition` is `null`. `dateAdded` → the copy's `createdAt`. `rarity` is dropped, because the catalog has it. A matched card gets its default variant from the bundle (for most cards, its only one), `language: 'en'`, `condition: null`, and `quantity: 1` (proposed; the old model records none of them). |
+| `UserProfile.savedBinders[]` | `binders/{id}` | Name, color, tags, and dates are kept. Whether the IDs are kept is open, because they're `Date.now()` strings rather than UUIDs (`BinderPlanner.tsx:502`; [§7](#7-open-questions)). `position` is the 0-based, row-major slot on the one page the planner saved (`:68-72`, `:491-499`), so `pageIndex = ⌊position / slotsPerPage⌋` and `slotIndex = position mod slotsPerPage`, where `slotsPerPage` = columns × rows. For every binder the planner can save, that puts all cards on page index 0. `pageCount` becomes the larger of 50 and one more than the highest `pageIndex` in use (proposed). Legacy grid sizes are columns × rows (`:55-61`): `'4x3'` is 4 columns by 3 rows and becomes the target's 12-pocket `'3x4'` (3 columns by 4 rows), and `'5x5'` becomes `'4x4'`, each through the grid reflow in [§2.4](#binders), which keeps reading order and adds pages as needed. `autoBuild` is `null`. |
+| `SavedBinder.cards[]` | `collection/{copyId}`, plus a slot `ref` | Each binder card becomes one collection copy, and its slot references that copy (decided 2026-09-29). `cardId` is mapped to a TCGdex ID with the pipeline's pokemontcg.io → TCGdex map ([ADR-0009](../decisions/ADR-0009-tcg-data-source.md)). A card the map can't resolve, or any card migrated before the map ships, keeps its old ID in `legacyCardId`, with `cardId` and `variant` null, and is flagged "needs matching", never dropped (PRD TCG-5). Until then, the pokemontcg.io screens read `legacyCardId`. `cardName` is kept. The planner's placeholder cards (`mock-1` to `mock-3`, `BinderPlanner.tsx:142-232`) can never be matched, so they stay flagged like any other unmatched card. Nothing writes `purchasePrice` today (`:491-499`), so copies normally get `acquisition: null`; a legacy value, if one turns up, becomes `acquisition: { method: 'bought', price: { amount: round(price × 100), currency: 'USD' }, date: null }` (proposed; the old model has no currency). `dateAdded` → the copy's `createdAt`; it's when the binder was saved, not when the card was placed (`:498`). `rarity` is dropped, because the catalog has it; the planner stored `'Common'` for cards without one (`:497`). A matched card gets its default variant from the bundle (for most cards, its only one), `language: 'en'`, `condition: null`, and `quantity: 1` (proposed; the old model records none of them). |
 | `@image_cache_metadata` | dropped | Obsolete once expo-image lands |
 
 ### 4.3 First sign-in (P5)
@@ -1230,8 +1243,9 @@ Settled answers become ADR updates; the shared list is [specs/open-questions.md]
 - **When legacy binders move.** The v0 → v1 migration (P1) turns binder cards into copies, so the old binder screens read the new model until P3. The alternative is to keep them in the legacy backup until P3's TCG work.
 - **Search on the web.** expo-sqlite, which is alpha and needs cross-origin isolation, or an in-memory index (verify)?
 - **Grading scales.** Each company's grades and labels, and whether half grades apply to all of them (verify).
-- **Binder encoding today.** What does `'4x3'` mean, and is `position` 0-based and page-major? Confirm when `BinderPlanner.tsx` lands.
-- **The currency of legacy `purchasePrice`.** Assumed USD.
+- **Binder encoding today: settled 2026-09-30,** from the code. Grid sizes are columns × rows, so `'4x3'` is 4 columns by 3 rows (`BinderPlanner.tsx:55-61`, `:806`). `position` is 0-based and row-major within a single page (`:68-72`). The question of page-major encoding doesn't arise, because a save keeps only the page on screen and stores no page number (`:491-499`). The [§4.2](#42-v0--v1-on-the-first-launch-of-the-new-version) mapping follows from that.
+- **The currency of legacy `purchasePrice`: mostly moot (2026-09-30).** Nothing writes it (the field is declared at `UserContext.tsx:43`, and the planner's save leaves it out, `BinderPlanner.tsx:491-499`), so migrated copies normally have no price. A stray value is treated as USD (proposed).
+- **Legacy binder IDs.** They're `Date.now()` strings (`BinderPlanner.tsx:502`), while v1 documents use UUIDs, and the `Doc` sketch in [§5.4](#54-schema-sketch) checks `id` with `z.uuid()`. Should migrated binders keep their IDs, which means the schema has to accept them, or get new UUIDs?
 - **Moderation workload.** Auto-approve after automated checks, with reports afterwards, or review everything first?
 - **Age bands.** Are three bands right, and what do teens get by default? Check COPPA and similar rules before accounts launch (verify).
 - **Nickname limits** per ruleset (verify the in-game limits).
