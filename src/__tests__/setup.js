@@ -36,26 +36,23 @@ jest.mock('react-native-gesture-handler', () => {
     BorderlessButton: View,
     FlatList: View,
     gestureHandlerRootHOC: jest.fn(() => (Component) => Component),
-    Gesture: {
-      Tap: () => ({
-        onBegin: jest.fn(),
-        onEnd: jest.fn(),
-      }),
-      Pan: () => ({
-        onUpdate: jest.fn(),
-        onEnd: jest.fn(),
-      }),
-      Pinch: () => ({
-        onUpdate: jest.fn(),
-        onEnd: jest.fn(),
-      }),
-      Rotation: () => ({
-        onUpdate: jest.fn(),
-        onEnd: jest.fn(),
-      }),
-      Simultaneous: jest.fn(),
-      Race: jest.fn(),
-    },
+    Gesture: (() => {
+      const chainable = () => {
+        const gesture = {};
+        ['onBegin', 'onStart', 'onUpdate', 'onEnd', 'onFinalize'].forEach((m) => {
+          gesture[m] = jest.fn(() => gesture);
+        });
+        return gesture;
+      };
+      return {
+        Tap: chainable,
+        Pan: chainable,
+        Pinch: chainable,
+        Rotation: chainable,
+        Simultaneous: jest.fn(() => ({})),
+        Race: jest.fn(() => ({})),
+      };
+    })(),
     GestureDetector: View,
     GestureHandlerRootView: View,
   };
@@ -82,6 +79,12 @@ jest.mock('expo-haptics', () => ({
     Heavy: 'heavy',
   },
 }));
+
+// Icon sets import .ttf font files that jest cannot parse; render nothing instead
+jest.mock('@expo/vector-icons', () => {
+  const Icon = () => null;
+  return new Proxy({ __esModule: true }, { get: (target, key) => (key in target ? target[key] : Icon) });
+});
 
 // Mock axios
 jest.mock('axios');

@@ -1,5 +1,4 @@
 // src/api/__tests__/tcgApi.test.ts
-import axios from 'axios';
 import {
   searchCards,
   getRecentCards,
@@ -11,14 +10,16 @@ import {
   TCGSet,
 } from '../tcgApi';
 
-// Mock axios
+// Mock axios: tcgApi uses an instance from axios.create(), so route its get() to a shared mock
+const mockGet = jest.fn();
 jest.mock('axios', () => ({
-  create: jest.fn(() => ({
-    get: jest.fn(),
-  })),
+  __esModule: true,
+  default: {
+    create: jest.fn(() => ({
+      get: (...args: unknown[]) => mockGet(...args),
+    })),
+  },
 }));
-
-const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 // Mock data
 const mockCard: TCGCard = {
@@ -81,11 +82,11 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await searchCards('pikachu');
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('/cards?q=name:*pikachu*&pageSize=30');
+      expect(mockGet).toHaveBeenCalledWith('/cards?q=name:*pikachu*&pageSize=30');
       expect(result).toEqual([{...mockCard, altImageSources: { pokeguardian: null }}]);
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('Pikachu');
@@ -100,14 +101,14 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await searchCards('nonexistentcard');
       expect(result).toEqual([]);
     });
 
     it('should handle API errors gracefully', async () => {
-      mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
+      mockGet.mockRejectedValueOnce(new Error('API Error'));
 
       await expect(searchCards('pikachu')).rejects.toThrow('API Error');
     });
@@ -123,11 +124,11 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await getRecentCards(1, 20);
 
-      expect(mockedAxios.get).toHaveBeenCalledWith(
+      expect(mockGet).toHaveBeenCalledWith(
         '/cards?q=set.releaseDate:[2024-01-01 TO *]&page=1&pageSize=20&orderBy=-set.releaseDate,number'
       );
       expect(result).toHaveLength(1);
@@ -142,11 +143,11 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await getCardsBySet('base1');
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('/cards?q=set.id:base1');
+      expect(mockGet).toHaveBeenCalledWith('/cards?q=set.id:base1');
       expect(result).toHaveLength(1);
       expect(result[0].set.id).toBe('base1');
     });
@@ -160,17 +161,17 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await getRecentSets();
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('/sets?orderBy=-releaseDate&pageSize=10');
+      expect(mockGet).toHaveBeenCalledWith('/sets?orderBy=-releaseDate&pageSize=10');
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('Base Set');
     });
 
     it('should handle errors and return empty array', async () => {
-      mockedAxios.get.mockRejectedValueOnce(new Error('Network Error'));
+      mockGet.mockRejectedValueOnce(new Error('Network Error'));
 
       const result = await getRecentSets();
       expect(result).toEqual([]);
@@ -185,11 +186,11 @@ describe('TCG API', () => {
         },
       };
 
-      mockedAxios.get.mockResolvedValueOnce(mockResponse);
+      mockGet.mockResolvedValueOnce(mockResponse);
 
       const result = await getFeaturedCards();
 
-      expect(mockedAxios.get).toHaveBeenCalledWith('/cards?q=name:charizard OR name:pikachu OR name:mewtwo&pageSize=15');
+      expect(mockGet).toHaveBeenCalledWith('/cards?q=name:charizard OR name:pikachu OR name:mewtwo&pageSize=15');
       expect(result).toHaveLength(1);
     });
   });
