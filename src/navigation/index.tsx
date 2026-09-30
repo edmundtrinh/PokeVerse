@@ -1,5 +1,5 @@
 // src/navigation/index.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from '@expo/vector-icons/Ionicons'; // Keep if you want icons
 
@@ -16,6 +16,16 @@ export type RootDrawerParamList = {
 };
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
+
+const PokedexScreen: React.FC = () => {
+  const [settingsModalVisible, setSettingsModalVisible] = useState(false);
+  return (
+    <PokedexView
+      settingsModalVisible={settingsModalVisible}
+      setSettingsModalVisible={setSettingsModalVisible}
+    />
+  );
+};
 
 /**
  * The main app navigator, which is a drawer navigator that contains the three main
@@ -48,7 +58,7 @@ const AppNavigator: React.FC = () => {
     >
       <Drawer.Screen
         name='Pokedex'
-        component={PokedexView}
+        component={PokedexScreen}
         options={{
           title: 'Pokédex',
           // Example of adding an icon (requires Ionicons or another icon library)

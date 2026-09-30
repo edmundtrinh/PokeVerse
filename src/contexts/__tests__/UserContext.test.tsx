@@ -1,6 +1,6 @@
 // src/contexts/__tests__/UserContext.test.tsx
 import React from 'react';
-import { render, act } from '@testing-library/react-native';
+import { render, act, fireEvent } from '@testing-library/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserProvider, useUser, SavedBinder } from '../UserContext';
 import { Text, TouchableOpacity } from 'react-native';
@@ -77,7 +77,7 @@ describe('UserContext', () => {
       );
 
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       expect(getByTestId('auth-status').children[0]).toBe('Authenticated');
@@ -93,12 +93,12 @@ describe('UserContext', () => {
 
       // Login first
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       // Then logout
       await act(async () => {
-        getByTestId('logout-button').props.onPress();
+        fireEvent.press(getByTestId('logout-button'));
       });
 
       expect(getByTestId('auth-status').children[0]).toBe('Not Authenticated');
@@ -114,7 +114,7 @@ describe('UserContext', () => {
       );
 
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       unmount();
@@ -146,7 +146,7 @@ describe('UserContext', () => {
 
       // Login first
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       // Initially not favorite
@@ -154,7 +154,7 @@ describe('UserContext', () => {
 
       // Toggle favorite
       await act(async () => {
-        getByTestId('toggle-favorite').props.onPress();
+        fireEvent.press(getByTestId('toggle-favorite'));
       });
 
       expect(getByTestId('pikachu-favorite').children[0]).toBe('Yes');
@@ -162,7 +162,7 @@ describe('UserContext', () => {
 
       // Toggle again to remove
       await act(async () => {
-        getByTestId('toggle-favorite').props.onPress();
+        fireEvent.press(getByTestId('toggle-favorite'));
       });
 
       expect(getByTestId('pikachu-favorite').children[0]).toBe('No');
@@ -213,12 +213,12 @@ describe('UserContext', () => {
 
       // Login first
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       // Save binder
       await act(async () => {
-        getByTestId('save-binder').props.onPress();
+        fireEvent.press(getByTestId('save-binder'));
       });
 
       expect(getByTestId('binders-count').children[0]).toBe('1');
@@ -272,17 +272,17 @@ describe('UserContext', () => {
 
       // Login, save, then delete
       await act(async () => {
-        getByTestId('login-button').props.onPress();
+        fireEvent.press(getByTestId('login-button'));
       });
 
       await act(async () => {
-        getByTestId('save-binder').props.onPress();
+        fireEvent.press(getByTestId('save-binder'));
       });
 
       expect(getByTestId('binders-count').children[0]).toBe('1');
 
       await act(async () => {
-        getByTestId('delete-binder').props.onPress();
+        fireEvent.press(getByTestId('delete-binder'));
       });
 
       expect(getByTestId('binders-count').children[0]).toBe('0');
@@ -321,7 +321,7 @@ describe('UserContext', () => {
       // Should not crash when save fails
       await act(async () => {
         expect(() => {
-          getByTestId('login-button').props.onPress();
+          fireEvent.press(getByTestId('login-button'));
         }).not.toThrow();
       });
     });

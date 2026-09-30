@@ -1,6 +1,6 @@
 // src/components/tcg/HoloCard.tsx
 import React, { useRef, useState } from 'react';
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -317,7 +317,10 @@ const HoloCard: React.FC<HoloCardProps> = ({ card, style }) => {
   };
 
   return (
-    <GestureHandlerRootView style={[styles.container, { height: cardHeight + 20 }]}>
+    <GestureHandlerRootView
+      testID='holo-card-container'
+      style={[styles.container, { height: cardHeight + 20 }]}
+    >
       <GestureDetector gesture={composedGesture}>
         <Animated.View
           style={[
@@ -328,6 +331,7 @@ const HoloCard: React.FC<HoloCardProps> = ({ card, style }) => {
           ]}
         >
           <Image
+            testID='card-image'
             source={{ uri: imageSource }}
             onLoad={() => {
               setImageLoaded(true);

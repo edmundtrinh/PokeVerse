@@ -309,7 +309,7 @@ describe('BinderPlanner', () => {
           // Add custom tag
           const tagInput = getByPlaceholderText('Add custom tag...');
           fireEvent.changeText(tagInput, 'Test Tag');
-          fireEvent.submitEditing(tagInput);
+          fireEvent(tagInput, 'submitEditing');
         }
       });
     });

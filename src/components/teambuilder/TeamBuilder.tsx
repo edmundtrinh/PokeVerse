@@ -152,7 +152,56 @@ const PokemonEditor: React.FC<{
 };
 
 const styles = StyleSheet.create({
-  // Styles for the team builder
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  teamContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  teamSlot: {
+    width: '30%',
+    aspectRatio: 1,
+    marginBottom: 12,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#ddd',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selectedSlot: {
+    borderColor: '#f44336',
+  },
+  filledSlot: {
+    backgroundColor: '#f5f5f5',
+  },
+  emptySlot: {
+    backgroundColor: '#fafafa',
+    borderStyle: 'dashed',
+  },
+  pokemonName: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  emptySlotText: {
+    fontSize: 14,
+    color: '#999',
+  },
+  editorContainer: {
+    marginTop: 16,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: '#f5f5f5',
+  },
 });
 
 export default TeamBuilder;
