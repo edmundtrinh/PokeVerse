@@ -27,7 +27,7 @@ npm start          # Metro on localhost
 npm run android    # or: npm run ios / npm run web
 ```
 
-- **Current caveat (2026-09-28):** the project is on Expo SDK 49 while an upgrade to SDK 57 is in progress. The app stores' Expo Go only runs the latest SDK, so use an emulator or simulator until the upgrade lands. Web isn't working yet either.
+- **Current caveat (2026-09-30):** the project is on Expo SDK 49, and the upgrade to SDK 57 is next. The app stores' Expo Go only runs the latest SDK, so use an emulator or simulator until the upgrade lands. The web build compiles with SDK 49's webpack and deploys to a [preview](https://edmundtrinh.github.io/PokeVerse/), but it hasn't been tested much.
 - **Metro trouble:** see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). The usual fix is `npm run start:dev` (it clears the cache), then reload the app.
 
 ## Finding something to work on
@@ -38,7 +38,9 @@ npm run android    # or: npm run ios / npm run web
 
 ## Making a change
 
-1. **Branch:** create a branch such as `feature/…`, `fix/…`, `docs/…`, or `chore/…`.
+1. **Branch:** `main` is PR-only, so nobody commits or pushes to it directly, the maintainer included. Work on a branch such as `feature/…`, `fix/…`, `docs/…`, or `chore/…` (on your fork, if you're an outside contributor).
+   - Push unfinished work to your branch as often as you like.
+   - Open a PR when the feature works end to end. Use a draft PR while you're still verifying it.
 2. **Scope:** keep PRs small and focused, one logical change each.
 3. **Follow the conventions** in [AGENTS.md](AGENTS.md). They apply to humans too:
    - strict TypeScript
@@ -47,7 +49,7 @@ npm run android    # or: npm run ios / npm run web
    - accessibility (labels, 44-pt targets, Dynamic Type, Reduce Motion)
    - honest loading, error, and empty states, never invented data
 4. **Verify before opening the PR:**
-   - `npx tsc --noEmit` and `npm test`. After the SDK 57 upgrade, also `npm run lint` and `npx expo export --platform web`.
+   - `npx tsc --noEmit` and `npm run test:coverage -- --ci`, the same checks CI runs. After the SDK 57 upgrade, also `npm run lint`, `npx expo-doctor`, and `npx expo export --platform web`.
    - Try your change on a phone-sized screen and a large screen (tablet, foldable, or desktop web) when it touches UI.
    - Add or update tests for logic you change. See the [test strategy](docs/testing/test-strategy.md).
 5. **Commit messages:** short, imperative, and high level (for example "Add Champions stat point editor"). Don't add AI-tool attribution trailers.
@@ -55,7 +57,7 @@ npm run android    # or: npm run ios / npm run web
 ## Pull requests
 
 - **Template:** fill in the PR template: what changed, why, how you tested, and screenshots for UI changes.
-- **CI:** it must pass once CI is set up as part of the SDK 57 upgrade.
+- **CI:** both checks, Type Check and Test, must pass before a PR merges. They run on every PR to `main`. The SDK 57 upgrade adds lint, `expo-doctor`, and `expo export` checks.
 - **Docs:** update any docs your change affects (ADRs, roadmap, architecture notes).
 
 ## Reporting bugs and security issues

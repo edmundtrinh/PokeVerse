@@ -1,7 +1,7 @@
 # ADR-0005: Web hosting
 
 - **Status:** Proposed
-- **Date:** 2026-09-28
+- **Date:** 2026-09-28 (updated 2026-09-30: GitHub Pages hosts the preview)
 - **Related:** [ADR-0001](ADR-0001-universal-app-expo-router.md) (static web export), [ADR-0003](ADR-0003-backend-and-auth.md) (Firebase), [ADR-0004](ADR-0004-static-game-data-pipeline.md) (data bundles), [ADR-0012](ADR-0012-brand-ip-and-assets.md) (store-safe name), [OQ-3](../../specs/open-questions.md#oq-3-store-safe-brand-name-and-domain)
 
 ## Context
@@ -14,6 +14,11 @@
   - universal links and app links (`apple-app-site-association`, `assetlinks.json`)
   - the brand, which has to be store-safe ([OQ-3](../../specs/open-questions.md#oq-3-store-safe-brand-name-and-domain))
 - **Reachability constraint:** maintainer environments must be able to reach the vendor's dashboard, docs, and deployments, and some networks restrict certain vendors.
+- **The preview today:** since 2026-09-29, GitHub Pages has hosted the web preview at https://edmundtrinh.github.io/PokeVerse/. It's free, and `.github/workflows/pages-deploy.yml` deploys it from GitHub Actions on every push to `main`, using SDK 49's webpack export for now. Its limits:
+  - it's served from a subpath (`/PokeVerse/`), so the build needs a base URL
+  - it can't set custom headers, so there's no cross-origin isolation, which expo-sqlite needs on the web ([data model §3.5](../architecture/data-model.md#35-search-and-derived-indexes)), and no custom cache headers
+  - it has no server functions
+  - single-page-app routes need a `404.html` fallback, because Pages only serves files that exist
 - **Candidates:**
   - **EAS Hosting:** the best Expo integration (`eas deploy`, API routes). Its free tier doesn't include a custom domain; paid tiers do.
   - **Vercel:** an excellent developer experience. Its free Hobby plan is for non-commercial use, which fits a non-profit project. Its strengths are Next.js features; for a static export, it's static hosting.
@@ -24,6 +29,7 @@
 ## Decision
 
 - **Host the web app on Firebase Hosting.** Netlify is the runner-up.
+- **Keep the GitHub Pages preview until the move.** Move to Firebase Hosting when the web app needs accounts or custom headers, such as the cross-origin isolation headers that expo-sqlite needs on the web.
 - **Use a custom domain from day one.** Buy it once the store-safe name is chosen ([OQ-3](../../specs/open-questions.md#oq-3-store-safe-brand-name-and-domain)). Until then, previews use Firebase's default domain.
 - **Serve data bundles from Cloudflare R2** behind Cloudflare's CDN on a subdomain (for example `data.<domain>`). Pokémon images come from the PokeAPI sprite project on the device, not from us. While traffic is small, Firebase Hosting can serve them too.
 - **Deploy from GitHub Actions:** a preview channel for every PR, and production on merge to `main`.
@@ -46,6 +52,7 @@
 - **The domain has a small yearly cost.**
 - **DNS:** an R2 custom domain must be added to Cloudflare as a zone, so the data subdomain's DNS runs through Cloudflare.
 - **Two vendors serve bytes** (Firebase and Cloudflare), so document the DNS layout and the deploy steps.
+- **Until the move,** the Pages preview covers only `main`: there are no per-PR previews.
 
 ## Alternatives considered
 
@@ -55,7 +62,7 @@
 | **Vercel** | Excellent developer experience, and Hobby is free for non-commercial use; excellent where maintainers can reach it. Its main edge over Firebase is Next.js support we don't use. It's also a preferred option if the constraint goes away. |
 | **Netlify** (runner-up) | Deploy previews and a generous free tier. It loses only on keeping the web app in the same console as the backend. It also has an open-source program (verify eligibility). |
 | **Cloudflare Pages** | A great CDN that pairs well with R2, but it would add a third console for the app itself. |
-| **GitHub Pages** | Free and simple, but no per-PR previews without extra tooling, and no custom cache headers. |
+| **GitHub Pages** | Hosts the preview today (since 2026-09-29): it's free, and it deploys from GitHub Actions. As the long-term host it falls short: it serves from a subpath, can't set custom headers (so no cross-origin isolation and no custom cache headers), has no server functions, needs a 404 fallback for single-page-app routes, and has no per-PR previews without extra tooling. |
 
 ## Revisit when
 

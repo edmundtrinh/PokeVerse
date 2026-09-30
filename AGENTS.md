@@ -8,23 +8,30 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 - It targets iOS, Android, and responsive web (mobile browser first, then desktop). The quality bar is an app that's immersive, delightful, and genuinely nice to use.
 - It's an unofficial fan project, not affiliated with Nintendo, Game Freak, Creatures, or The Pokémon Company.
 
-## Status (2026-09-28)
+## Status (2026-09-30)
 
-- The stack is Expo SDK 49, React Native 0.72, and React 18.2. The upgrade to Expo SDK 57 is in progress: [ADR-0002](docs/decisions/ADR-0002-expo-sdk-upgrade-path.md).
-- Known problems on `main` are listed in [docs/reviews/2026-09-28-tech-stack-review.md](docs/reviews/2026-09-28-tech-stack-review.md). For example, `TCGView` imports components that aren't committed yet, and the test suite doesn't run.
+- The stack is Expo SDK 49, React Native 0.72, and React 18.2. The upgrade to Expo SDK 57 is next, and nothing blocks it now: [ADR-0002](docs/decisions/ADR-0002-expo-sdk-upgrade-path.md).
+- The maintainer's work from another machine landed on 2026-09-29 (PRs #31–#36):
+  - the full `BinderPlanner` and `SavedBinders` (My Binders), plus `PokeBallSelector`, which no screen uses yet
+  - retries and a bundled sample-data fallback in `tcgApi.ts`
+  - CI: the tests and a typecheck, both green on `main`
+  - a web preview at https://edmundtrinh.github.io/PokeVerse/, SDK 49's webpack build on GitHub Pages
+- **Checked in the iOS simulator:** Binder Planner renders; the grid size, color theme, and tags work; saving a binder works; and card search returns cards. **Not checked yet:** My Binders, Deck Builder, the page buttons, Android, and real devices.
+- **Still open on `main`:** the cold-start data wipe (`App.tsx:121`), the demo type map behind the Pokédex type filter, the URL-only image cache, and the silent fallback to sample card data. The rest are in [docs/reviews/2026-09-28-tech-stack-review.md](docs/reviews/2026-09-28-tech-stack-review.md), whose update note says which findings are fixed.
 - Where things are headed: [specs/roadmap.md](specs/roadmap.md), [docs/decisions/](docs/decisions/), and [specs/open-questions.md](specs/open-questions.md).
 
 ## Setup
 
 - Node.js LTS (20.19.4+, 22.13+, or 24.3+) and **npm**. The repo uses `package-lock.json`, so don't mix package managers.
 - `npm install`
+- Optional: copy `.env.example` to `.env`. `EXPO_PUBLIC_TCG_API_KEY` takes a free Pokémon TCG API key from dev.pokemontcg.io, if you have one (the API's shutdown notice says new registrations are closed), and `EXPO_PUBLIC_TCG_OFFLINE=1` always uses the bundled sample cards. Never commit `.env`.
 - `npm start` runs Metro on localhost (`expo start --localhost`). Platform shortcuts: `npm run android`, `npm run ios`, and `npm run web`.
-- On Windows, iOS builds go through EAS Build. iOS simulators, including iPhone Duo in Xcode 27's Device Hub, need macOS.
+- On Windows, iOS builds will go through EAS Build, once the project is linked to EAS (it isn't yet). iOS simulators, including iPhone Duo in Xcode 27's Device Hub, need macOS. On Xcode 27, `npm run ios` fails; see the [Device Hub workaround](.claude/skills/ios-platform/references/known-issues.md#xcode-27-ships-device-hub-instead-of-simulatorapp).
 
 ## Verify before you finish
 
-- **Today:** run `npx tsc --noEmit` and `npm test`. Both currently fail on `main`; the SDK 57 upgrade fixes them.
-- **After the upgrade:** run `npm run typecheck`, `npm run lint`, `npm test`, `npx expo-doctor`, and `npx expo export --platform web` (plus `android` and `ios`). CI runs the same checks.
+- **Today:** run `npx tsc --noEmit` and `npm run test:coverage -- --ci`. They're what CI runs (its Type Check and Test jobs), and both pass on `main`.
+- **After the upgrade:** run `npm run typecheck`, `npm run lint`, `npm test`, `npx expo-doctor`, and `npx expo export --platform web` (plus `android` and `ios`). CI will run the same checks.
 - Report exactly what you ran and what passed or failed. Never claim something works without running it.
 
 ## Code map
@@ -33,9 +40,12 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 |---|---|
 | `App.tsx` | App shell: drawer navigation and the login gate |
 | `src/components/pokedex/PokedexView.tsx` | Pokédex list, filters, and detail. Scheduled to be split; see the review's appendix. |
-| `src/components/tcg/` | TCG views: deck builder, holo card, binders |
+| `src/components/tcg/` | TCG views: binder planner, My Binders (`SavedBinders`), deck builder, holo card |
 | `src/contexts/UserContext.tsx` | Local profile and saved user data |
-| `src/api/` | PokeAPI client (`pokeApi.ts`) and Pokémon TCG API client (`tcgApi.ts`) |
+| `src/api/` | PokeAPI client (`pokeApi.ts`) and Pokémon TCG API client (`tcgApi.ts`, which retries and then falls back to the sample data) |
+| `src/data/tcgFixtures.json` | About 100 bundled sample cards and their sets. `tcgApi.ts` answers from them when the API fails, or always with `EXPO_PUBLIC_TCG_OFFLINE=1`. |
+| `scripts/fetch-tcg-fixtures.js` | Regenerates `tcgFixtures.json`: `node scripts/fetch-tcg-fixtures.js` |
+| `.github/workflows/` | CI (`ci.yml`: Test and Type Check), the GitHub Pages web preview (`pages-deploy.yml`), and the PR labeler (`labeler.yml`) |
 | `packages/design/` | Design-system spec and tokens (`colors_and_type.css`), previews, UI kit, and the `pokeverse-design` skill |
 
 ## Conventions
@@ -44,7 +54,7 @@ Instructions for coding agents (Claude Code, Codex, Cursor, and others), followi
 - **Universal first:** code is shared across platforms. Platform-specific code goes only in `*.ios.tsx` / `*.android.tsx` / `*.web.tsx`, Expo config plugins, or local Expo Modules in `modules/`. Never commit `ios/` or `android/`.
 - **Layout:** size from the window or container, never from the device model. Every screen must handle resizing: iPhone Duo, foldables, tablets, and desktop web.
 - **Accessibility:** roles, labels, hints, 44-pt touch targets, Dynamic Type, and Reduce Motion.
-- **Honest states:** show real loading, error, and empty states. Never invent fallback data.
+- **Honest states:** show real loading, error, and empty states. Never invent fallback data, and label bundled sample data as sample data.
 - **Bulk game data:** don't fetch it from third-party APIs at runtime. The plan is a CI-built data bundle ([ADR-0004](docs/decisions/ADR-0004-static-game-data-pipeline.md)).
 
 ## Hot reload and Metro

@@ -18,7 +18,7 @@
   - tcgcsv.com is an unofficial daily mirror of TCGplayer prices.
   - TCGdex's own server uses the tcgcsv mirror and Cardmarket's price guide.
 - **Saved binders store pokemontcg.io card IDs** (`SavedBinder.cards[].cardId`), and TCGdex uses its own IDs (verify the exact formats).
-- **The binder planner and saved-binders screens** arrive with the maintainer's pending local changes.
+- **The binder planner and saved-binders screens** landed on 2026-09-29 (`BinderPlanner`, `SavedBinders`). TCG v2 rebuilds binders on the collection from there.
 
 ## Decision
 
@@ -55,7 +55,7 @@
 - The shutdown stops being a cliff.
 
 **Costs and risks**
-- **ID migration work**, including the binder data in the pending local changes.
+- **ID migration work**, including the binder data the planner saves today.
 - **No in-app TCGplayer or Cardmarket prices.** Link-outs avoid the licensing gray area, but users leave the app to see a price. eBay listings (v2) add live numbers under eBay's own API terms. Anything price-related must degrade cleanly, source by source.
 - **Cardmarket's terms** require written agreement before displaying its prices (verify). That's one reason to request permission early.
 - **Be a good TCGdex citizen:** ingest from the GitHub repository, and don't hammer its API or image CDN at scale.

@@ -1,7 +1,7 @@
 # PokeVerse product requirements
 
 - **Status:** Draft, for the maintainer's review
-- **Last updated:** 2026-09-29
+- **Last updated:** 2026-09-30
 - **Owner:** the maintainer
 - **Related:** [roadmap](roadmap.md), [open questions](open-questions.md), [decisions (ADRs)](../docs/decisions/README.md), [architecture overview](../docs/architecture/overview.md), [tech-stack review](../docs/reviews/2026-09-28-tech-stack-review.md), [test strategy](../docs/testing/test-strategy.md), [tracking plan](../docs/analytics/tracking-plan.md)
 
@@ -82,16 +82,16 @@ It's a non-profit project, built to learn mobile development. It aims for the be
 - **Delighted by:** setup docs that work from a fresh clone on Windows or macOS, ADRs that explain the decisions, and CI that says exactly what broke.
 - **Pillars:** none directly. The docs, CI, and architecture serve them.
 
-## 4. Where things stand (2026-09-28)
+## 4. Where things stand (2026-09-30)
 
 | Area | State |
 |---|---|
 | Pokédex | Works, but the type filter uses placeholder data, failed requests show invented stats, and every launch re-downloads 540 full-size sprites. |
-| TCG | The deck builder works, and HoloCard crashes on render. The binder planner and saved binders arrive with the maintainer's pending local changes. The card API goes offline on 2027-03-01. |
+| TCG | The binder planner and saved binders (My Binders) landed on 2026-09-29. The planner, saving, and card search were checked in the iOS simulator; My Binders, the deck builder, page turning, and Android weren't. HoloCard no longer crashes on a missing import, but it still calls a hook inside a helper. When the card API fails, the app quietly answers from about 100 bundled sample cards, and the API goes offline on 2027-03-01. |
 | Battle hub | A "Coming Soon" placeholder and an unrouted stub. |
 | Accounts | Sign-in is simulated, and a bug wipes saved data on every cold start. |
-| Web | Doesn't build: react-native-web is missing. |
-| Quality | Tests can't run. There's no CI, typecheck, or lint, and the app is on Expo SDK 49, eight SDKs behind. |
+| Web | An SDK 49 webpack build deploys to a GitHub Pages [preview](https://edmundtrinh.github.io/PokeVerse/) on every push to `main`; it hasn't been tested much. |
+| Quality | Since 2026-09-29, CI runs the tests and a typecheck on every PR and push to `main`, and both pass. There's no lint yet, and the app is on Expo SDK 49, eight SDKs behind. |
 
 The [tech-stack review](../docs/reviews/2026-09-28-tech-stack-review.md) has the details.
 

@@ -1,7 +1,7 @@
 # Test strategy
 
-- **As of:** 2026-09-28. Updated on 2026-09-29 for the new phase order, and with tests for the collection, dex progress, valuation, CSV, and search.
-- **Status:** §1 describes `main` on that date. §2 is the P0 repair (step U5 of the SDK 57 upgrade). §3 onward is the target for P1 and later.
+- **As of:** 2026-09-28. Updated on 2026-09-29 for the new phase order, and with tests for the collection, dex progress, valuation, CSV, and search. Updated on 2026-09-30, after the suites started running in CI: a note at the top of §1, progress in §2, today's CI versus the plan in §5, and §8's checklist notes.
+- **Status:** §1 describes `main` on 2026-09-28, with a note on what changed since. §2 is the P0 repair (step U5 of the SDK 57 upgrade). §3 onward is the target for P1 and later.
 - **Related:** [architecture overview](../architecture/overview.md) · [data model](../architecture/data-model.md) · [device layouts](../architecture/device-layouts.md) · [roadmap](../../specs/roadmap.md) · manual checklists [TEST_CASES.md](../TEST_CASES.md) and [TCG_TEST_CASES.md](../TCG_TEST_CASES.md)
 
 ## Principles
@@ -27,6 +27,15 @@
 ---
 
 ## 1. Current state (2026-09-28)
+
+> **Update (2026-09-30): the suites have run in CI since 2026-09-29.** The maintainer's changes landed that day (PRs #31–#36). `.github/workflows/ci.yml` runs `npm run test:coverage -- --ci --passWithNoTests` and `npx tsc --noEmit` on every push and pull request to `main`, and both are green ([§5](#5-ci-gates)). What changed:
+> - **Types:** 17 TypeScript errors were fixed, so `tsc --noEmit` passes.
+> - **Config:** `jest.config.js` no longer collects the setup file as a suite (it's in `testPathIgnorePatterns`), transforms every package whose name starts with `expo` or `@expo`, and sets a 20 s timeout.
+> - **Mocks:** the gesture builders chain (`setup.js:39-55`), icon fonts are mocked (`:83-87`), `tcgApi.test.ts` has an axios mock its tests can reach, and the UserContext tests press through `fireEvent.press`.
+> - **Components:** HoloCard imports `Text` and sets the `card-image` and `holo-card-container` testIDs, and the binder tests run against the real `BinderPlanner` and `SavedBinders`. No test is skipped. There are now 66 tests, counted from the source.
+> - **Still true below:** the preset is `react-native`, not `jest-expo`; `console.warn` and `console.error` are still silenced; and the weak assertions in item 8 of §1.2 remain.
+>
+> The rest of §1 is the 2026-09-28 snapshot, kept as history.
 
 ### 1.1 What exists
 
@@ -98,6 +107,11 @@ Dead modules (`useSprites.ts`, `spriteScraper.ts`, `src/navigation/index.tsx`, `
 
 This is step U5 of the SDK 57 upgrade (P0); the steps U1–U8 are listed in [the review's §9](../reviews/2026-09-28-tech-stack-review.md#9-recommended-sequence). It depends on U2 (fix HoloCard and add the pushed TCG files) and U3 (the SDK bump).
 
+**Progress (2026-09-30).** The suites pass on the `react-native` preset, with parts of this list done another way ([§1](#1-current-state-2026-09-28)):
+- **Done:** the `fireEvent.press` part of item 6, in the UserContext tests, and item 10.
+- **Done differently:** item 3, since the setup file is excluded through `testPathIgnorePatterns` instead of moved; item 4, since the hand-written gesture mock now chains instead of being dropped; and item 5, since `tcgApi.test.ts` has its own reachable mock, though the global `jest.mock('axios')` is still in the setup file.
+- **Still to do:** items 1, 2, 7, 8, and 9.
+
 **Config after the fix** (a sketch):
 
 ```js
@@ -147,7 +161,7 @@ module.exports = {
 9. **Drop `@testing-library/jest-native`** and use RNTL's built-in matchers.
    - RNTL 14.0.1 is current. It needs Node ^22.13 or ≥ 24, which the `.nvmrc` pin (24) satisfies, and it takes `test-renderer` as a peer dependency in place of `react-test-renderer`.
    - If it conflicts with `jest-expo` 57, use 13.3 (verify).
-10. **Don't stub the missing components.** `BinderPlanner` and `SavedBinders` come with the maintainer's next push; their tests are the spec.
+10. **Don't stub the missing components.** `BinderPlanner` and `SavedBinders` landed on 2026-09-29, replacing short-lived stubs, and their tests now run against the real components.
 
 **Done when** `npm test -- --ci` passes. Any skipped test states a reason and links an issue.
 
@@ -296,7 +310,20 @@ await cdp.send('Emulation.setDevicePostureOverride', { posture: { type: 'folded'
 
 ## 5. CI gates
 
-**`.github/workflows/ci.yml` runs on every pull request and every push to `main`** (step U7). Every gate below is a required check.
+**What CI runs today (since 2026-09-29).** `.github/workflows/ci.yml` runs on every push to `main` and every pull request to `main`, on Node 18, with two jobs. Both are green on `main`.
+
+| Job | Command (after `npm ci`) | Notes |
+|---|---|---|
+| Test | `npm run test:coverage -- --ci --passWithNoTests` | Uploads the coverage report as an artifact, kept for 14 days |
+| Type Check | `npx tsc --noEmit` | |
+
+Also running on the repository:
+- **CodeQL** code scanning, through GitHub's default setup, so there's no workflow file for it.
+- **The PR labeler** (`.github/workflows/labeler.yml`, with its rules in `.github/labeler.yml`).
+- **Dependabot** (`.github/dependabot.yml`): weekly npm updates, grouped as `expo`, `react-native`, and `testing`, plus GitHub Actions updates.
+- **The web preview deploy** (`.github/workflows/pages-deploy.yml`), which runs on pushes to `main` or by hand, so it doesn't check pull requests.
+
+**The plan (step U7 of the SDK 57 upgrade).** `ci.yml` grows to the gates below, on Node 24, and every one of them is a required check. Dropping `--passWithNoTests` is proposed too, so a run that finds no suites fails.
 
 ```mermaid
 flowchart LR
@@ -388,7 +415,7 @@ The tools and the full device QA checklist are in [device layouts §8](../archit
 [`docs/TEST_CASES.md`](../TEST_CASES.md) (TC-001 to TC-083: Pokédex, caching, sprites, Android) and [`docs/TCG_TEST_CASES.md`](../TCG_TEST_CASES.md) (TC-TCG-001 to TC-TCG-108) stay useful, with a new role:
 
 - **They're release acceptance checklists,** not coverage. A release runs the relevant sections by hand.
-- **Triage every case** into automate, keep manual, or retire. Some examples follow. `main` doesn't bundle today, so the "Today" column describes the app once the missing TCG files are pushed.
+- **Triage every case** into automate, keep manual, or retire. Some examples follow. The "Today" column describes `main` with the TCG files that landed on 2026-09-29.
 
   | Case | Today | Becomes |
   |---|---|---|
@@ -397,13 +424,13 @@ The tools and the full device QA checklist are in [device layouts §8](../archit
   | TC-060 to TC-066: LRU image cache | Describe the URL-only "cache" | Retired. Replaced by "sprites load offline from the disk cache" once expo-image lands. |
   | TC-073: all 1,025 Pokémon load on start | Manual | The dex-index count contract test and the E2E smoke flow |
   | TC-078 to TC-083: Android | Manual | The device matrix ([§6](#6-device-test-matrix)) |
-  | TC-TCG-001 to 005: grid sizes | List `4x5` and `5x4`, which the code doesn't have (it has `4x3` and `5x5`) | Reconciled with the real sizes when `BinderPlanner` lands; then component tests |
+  | TC-TCG-001 to 005: grid sizes | List `4x5` and `5x4`, which the code doesn't have (it has `4x3` and `5x5`, `BinderPlanner.tsx:55-61`) | Reconciled with the real sizes, now that `BinderPlanner` has landed; then component tests |
   | TC-TCG-013: binders persist after restart | Fails: the cold-start wipe erases saved binders | The regression test for U4, plus a Maestro flow |
 
 - **Remove the Detox and Flipper references** from `TCG_TEST_CASES.md`'s tools section; Maestro and Playwright replace them.
 - **Name automated tests after the case they cover,** for example `it('TC-020: favorites persist after restart', ...)`, so each checklist line can link to its test.
 - **Known failures** get an issue link, not a silent pass.
-- **Update the TCG checklist twice:** when `BinderPlanner` lands, and again with the TCGdex migration (P3).
+- **Update the TCG checklist twice:** first now, since `BinderPlanner` landed on 2026-09-29, and again with the TCGdex migration (P3).
 
 ## 9. Fixtures and test data
 

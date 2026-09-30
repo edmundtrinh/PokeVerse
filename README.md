@@ -2,7 +2,7 @@
 
 A non-profit, open-source Pokémon companion app built with React Native and Expo, for iOS, Android, and the web. The goal is an app that's not just functional but immersive and genuinely nice to use.
 
-> **Status (2026-09-28): early and actively being modernized.** An upgrade from Expo SDK 49 to 57 is in progress, and several features below are partial. See the [tech-stack review](docs/reviews/2026-09-28-tech-stack-review.md) and the [roadmap](specs/roadmap.md).
+> **Status (2026-09-30): early and actively being modernized.** The binder planner, CI, and a [web preview](https://edmundtrinh.github.io/PokeVerse/) landed on 2026-09-29. The upgrade from Expo SDK 49 to 57 is next, and several features below are partial. See [Development Status](#-development-status), the [tech-stack review](docs/reviews/2026-09-28-tech-stack-review.md), and the [roadmap](specs/roadmap.md).
 
 ## ✨ Features
 
@@ -20,8 +20,8 @@ A non-profit, open-source Pokémon companion app built with React Native and Exp
 
 ### 🃏 Trading Cards (in development)
 - **Deck builder:** card search, and adding or removing cards.
-- **Binder planner and saved binders:** in progress.
-- **Card data source:** moving from the Pokémon TCG API, which goes offline on 2027-03-01, to TCGdex. See the [decisions](docs/decisions/).
+- **Binder planner:** pick a page grid (2×2 to 5×5), fill slots from card search, and save the binder with a name, color, and tags. **My Binders** lists, sorts, filters, and deletes saved binders. Both landed on 2026-09-29, and the planner has been checked in the iOS simulator; My Binders and page turning haven't been verified yet.
+- **Card data source:** moving from the Pokémon TCG API, which goes offline on 2027-03-01, to TCGdex. See the [decisions](docs/decisions/). Until then, the app retries the API and, if it's still down, shows about 100 bundled sample cards, with no on-screen label yet.
 - **Marketplace links (planned):** "View on TCGplayer" and "View on Cardmarket" for each card. Current eBay listings come later.
 
 ### ⚔️ Battle (planned)
@@ -54,12 +54,14 @@ npm install
 npm start
 ```
 
+Optional: copy `.env.example` to `.env` to set your Pokémon TCG API key from dev.pokemontcg.io, if you have one (new registrations are closed), or to always use the bundled sample cards (`EXPO_PUBLIC_TCG_OFFLINE=1`).
+
 ### Platforms
 | Platform | Command | Notes |
 |---|---|---|
 | Android emulator | `npm run android` | Needs Android Studio and a virtual device. See [docs/RUN_ANDROID.md](docs/RUN_ANDROID.md). |
-| iOS Simulator | `npm run ios` | Needs Xcode on macOS. |
-| Web | `npm run web` | Not working yet (react-native-web is missing); fixed by the SDK 57 upgrade. |
+| iOS Simulator | `npm run ios` | Needs Xcode on macOS. On Xcode 27 this command fails; see the [Device Hub workaround](.claude/skills/ios-platform/references/known-issues.md#xcode-27-ships-device-hub-instead-of-simulatorapp). |
+| Web | `npm run web` | Uses SDK 49's webpack bundler. A GitHub Actions workflow deploys a web build to the [web preview](https://edmundtrinh.github.io/PokeVerse/) on every push to `main`; it hasn't been tested much. |
 
 ## 🎮 How to Use
 1. **Browse** the Pokédex, or search by name ("Pikachu") or number ("25").
@@ -79,11 +81,18 @@ npm start
 |---|---|
 | Pokédex | ✅ Working; the type filter data and error states need fixes |
 | Image caching | 🚧 Tracks sprite URLs today; a real disk cache (expo-image) is planned |
-| Trading Cards | 🚧 Deck builder partial; binders in progress |
+| Trading Cards | 🚧 Binder planner checked in the iOS simulator; My Binders, the deck builder, and Android not yet verified |
 | Battle hub (Champions + Showdown) | 📋 Planned |
 | Accounts and sync | 📋 Planned (sign-in today is a local profile only) |
+| Web preview | 🚧 [Live on GitHub Pages](https://edmundtrinh.github.io/PokeVerse/) since 2026-09-29 (SDK 49 webpack build) |
 | Web and foldable layouts | 📋 Planned |
-| Tests and CI | 🚧 Being repaired as part of the SDK upgrade |
+| Tests and CI | 🚧 Tests and a typecheck pass in CI on every PR and push to `main`; lint and bundle checks come with the SDK upgrade |
+
+**Known issues on `main`:**
+- **The cold-start data wipe:** every cold start shows the sign-in screen, and signing in replaces the saved profile, including saved binders.
+- **Pokédex:** the type filter still runs on placeholder type data, and the image "cache" tracks URLs rather than images.
+- **Sample card data isn't labeled:** when the Pokémon TCG API fails, the app shows bundled sample cards without saying so.
+- **Binder planner** (from reading the code; verify): turning the page or changing the grid clears the cards placed so far, saving keeps only the page on screen, and a saved binder can't be reopened for editing.
 
 ## 📚 Docs
 - [Tech-stack review](docs/reviews/2026-09-28-tech-stack-review.md) and [interview guide](docs/reviews/2026-09-28-chief-of-staff-interview.md)

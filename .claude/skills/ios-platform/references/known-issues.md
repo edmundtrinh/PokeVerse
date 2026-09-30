@@ -18,6 +18,17 @@ Entry format:
 
 ---
 
+### Xcode 27 ships Device Hub instead of Simulator.app
+- **Status:** workaround (verify on SDK 57 and 58)
+- **Since:** Xcode 27 · **Applies to:** `expo start --ios` (`npm run ios`) on macOS; found on SDK 49 with Expo Go
+- **What happens:** Xcode 27 has no `Simulator.app` (it ships `DeviceHub.app` instead), so `expo start --ios` fails.
+- **Workaround:** start the simulator and Expo Go by hand.
+  1. Start Metro without `--ios`: `npm start`.
+  2. Boot a device: find its UDID with `xcrun simctl list devices`, then run `xcrun simctl boot <udid>`.
+  3. Install the Expo Go build for the project's SDK (2.29.6 for SDK 49): `xcrun simctl install <udid> <path to the Expo Go .app>`.
+  4. Open the project: `xcrun simctl openurl <udid> exp://127.0.0.1:8081`, then tap to confirm "Open in Expo Go".
+- **Source:** the maintainer's testing with Xcode 27, September 2026
+
 ### iPhone Duo: custom JS headers and tab bars don't move to the side
 - **Status:** workaround (verify on SDK 58)
 - **Since:** 2026-09 · **Applies to:** iOS 27, iPhone Duo

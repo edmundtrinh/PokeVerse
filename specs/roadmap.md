@@ -1,6 +1,6 @@
 # Roadmap
 
-- **Last updated:** 2026-09-29
+- **Last updated:** 2026-09-30
 - **Related:** [PRD](PRD.md), [open questions](open-questions.md), [decisions (ADRs)](../docs/decisions/README.md), [tech-stack review](../docs/reviews/2026-09-28-tech-stack-review.md), [tracking plan](../docs/analytics/tracking-plan.md)
 
 Phases run roughly in order, and each ends at a gate that CI or a checklist can prove. Dates appear only where the outside world sets them; this is a spare-time project, so the phases have no deadlines of their own. The one exception is the TCG data migration, which has a hard external deadline.
@@ -29,19 +29,28 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 ### P0: Stabilize and modernize (in progress)
 
 - [x] **Pull the latest `main`**, which renamed `CLAUDE.md` to `AGENTS.md`.
-- [ ] **Docs refresh** (in progress, on `docs/2026-09-tech-review`):
+- [x] **Land the maintainer's pending changes** (2026-09-29, PRs #31–#36): the full `BinderPlanner` and `SavedBinders`, `PokeBallSelector` (not used by any screen yet), TCG API retries with a bundled sample-data fallback, the CI workflow, Dependabot, a PR labeler, and a GitHub Pages [web preview](https://edmundtrinh.github.io/PokeVerse/). Only Binder Planner has been checked, in the iOS simulator.
+- [ ] **Docs refresh** (in progress, on `docs/2026-09-tech-review`, rebased onto the new `main` on 2026-09-30):
   - the tech-stack review, interview guide, research, and architecture docs
   - ADRs 0001–0013, the PRD, this roadmap, open questions, and the test strategy
   - the AGENTS.md rewrite, platform agents and skills, and the open-source essentials
-- [ ] **SDK 57 upgrade** (`chore/expo-sdk-57`, [ADR-0002](../docs/decisions/ADR-0002-expo-sdk-upgrade-path.md)). **Blocked:** it waits on the maintainer's pending local changes, which include the TCG components that `TCGView` imports. Once those land:
+- [ ] **SDK 57 upgrade** (`chore/expo-sdk-57`, [ADR-0002](../docs/decisions/ADR-0002-expo-sdk-upgrade-path.md)). **Unblocked on 2026-09-30:** the pending changes it waited on landed on 2026-09-29.
   - [ ] prune dead code and unused dependencies
-  - [ ] fix HoloCard, and wire in the synced TCG files
+  - [x] wire in the synced TCG files: `TCGView` renders the real `BinderPlanner` and `SavedBinders`
+  - [ ] fix HoloCard's hook call inside the `renderHoloEffect` helper (its missing `Text` import is fixed)
   - [ ] move to SDK 57, React 19, Reanimated 4, React Navigation 7, and the web dependencies
   - [ ] fix the cold-start data wipe
-  - [ ] get the tests running on `jest-expo`
+  - [x] get the tests running: all five suites pass in CI, on the `react-native` preset
+  - [ ] move the tests to `jest-expo`, and finish the fixes in [test strategy §2](../docs/testing/test-strategy.md#2-fixing-the-existing-suites)
   - [ ] add lint, typecheck, and format scripts, plus `.gitattributes` and `.nvmrc`
-  - [ ] add the CI workflow
+  - [x] add the CI workflow: Test and Type Check, on Node 18, both green on `main`
+  - [ ] **extend CI** to the gate below: lint, `expo-doctor`, and `expo export` for web, Android, and iOS, on Node 24 (SDK 57 needs Node 20.19.4 or later)
+  - [ ] **move the Pages deploy** from SDK 49's webpack build (`expo export:web`) to Metro's `npx expo export --platform web`
   - [ ] write the migration notes
+- [ ] **EAS builds from CI.** Link the project with `npx eas-cli@latest init`; `app.json` has no `extra.eas.projectId` or `owner` yet, and there's no `eas.json`. Then build with the Expo access token the maintainer added as a repository secret (conventionally `EXPO_TOKEN`; verify the name). Secrets aren't passed to pull requests from forks under the `pull_request` trigger, so EAS jobs should run on pushes to `main` or by hand.
+- [ ] **Dependabot ignore rules** (in progress on `chore/dependency-updates`, 2026-09-30) for the packages whose versions `npx expo install` sets (`expo`, `react`, `react-dom`, `react-native`, `@types/react`, and the like), so Dependabot stops proposing versions the SDK doesn't support.
+- [ ] **Triage the open Dependabot PRs** (28 on 2026-09-30; in progress: `chore/dependency-updates` combines the 18 safe bumps): consolidate the safe bumps into one PR, and close the ones the SDK 57 upgrade supersedes. Most of the security alerts on `main` come from the SDK 49 dependency tree, so the upgrade should clear most of them (verify once it lands).
+- [ ] **A visible "sample data" indicator:** when `tcgApi.ts` falls back to `src/data/tcgFixtures.json`, the TCG screens say so. Today the fallback is silent.
 - [ ] **Add the MIT LICENSE**, once the maintainer confirms the code can be licensed ([OQ-5](open-questions.md#oq-5-license)).
 - **Gate:** CI is green: `expo-doctor`, typecheck, lint, tests, and `expo export` for web, Android, and iOS.
 - **Deferred to P1:** the real type-filter fix (it needs the pipeline's type index), removing the orientation lock, and adopting Expo Router.
@@ -78,7 +87,7 @@ Phases run roughly in order, and each ends at a gate that CI or a checklist can 
 - Move card data to TCGdex: the catalog, images, and set lists, plus each card's featured Pokémon, variants, and search fields ([ADR-0009](../docs/decisions/ADR-0009-tcg-data-source.md)).
 - **The collection first** (PRD TCG-7): every copy, with its variant, language, condition or grade, acquisition and optional disposal, notes, tags, and favorite; duplicates and an "extras for trade" list; and the optional buy/sell/trade log. It's the source of truth for ownership (decided 2026-09-29).
 - **The wishlist and set completion,** including master sets (TCG-8, TCG-9).
-- **Binders on top of the collection** (TCG-2, TCG-10): slots hold copies or wishlist entries. The planner comes from the maintainer's pending changes: double-sided pages, 50 by default and added or removed one at a time, and three views: single page, binder view, and continuous grid. Then auto-build from a set, ghosts, and drag and drop.
+- **Binders on top of the collection** (TCG-2, TCG-10): slots hold copies or wishlist entries. The planner that landed on 2026-09-29 is the starting point, with its grid sizes, card picker, and save dialog. It gains double-sided pages, 50 by default and added or removed one at a time, and three views: single page, binder view, and continuous grid. Then auto-build from a set, ghosts, and drag and drop.
 - **Living Dex binders** (TCG-11), from the pipeline's dex lists.
 - **Dex progress** (DEX-9, DEX-10): the National, regional, Regional Forms, and Mega views, with "Owned (TCG)" from the collection and "Caught" from the P1 marks (DEX-5). The pipeline adds the dex lists.
 - **Your valuation** (TCG-12): actual and projected value, from the user's own values and purchase prices.
@@ -141,10 +150,12 @@ Short, time-boxed investigations that answer a question before the work that dep
 ## Now / Next / Later
 
 **Now (P0)**
-- The docs refresh on `docs/2026-09-tech-review`.
-- The SDK 57 upgrade on `chore/expo-sdk-57`, waiting on the maintainer's pending local changes.
-- The critical fixes that ride with it: the missing TCG modules, the cold-start data wipe, and HoloCard.
-- Tests that run, and CI on every PR.
+- The docs refresh on `docs/2026-09-tech-review`, rebased onto the new `main`.
+- The SDK 57 upgrade on `chore/expo-sdk-57`, unblocked since the maintainer's changes landed on 2026-09-29.
+- The critical fixes that ride with it: the cold-start data wipe and HoloCard's hook call. The missing TCG modules landed.
+- CI grows to the full gate (lint, `expo-doctor`, `expo export`, Node 24), and EAS builds follow once the project is linked.
+- Dependabot: ignore rules for the Expo-managed packages, and triage of the open PRs.
+- A visible "sample data" indicator for the TCG fallback.
 - The styling comparison, a desk study that doesn't need the upgrade ([research spikes](#research-spikes)).
 - **To decide:** the license ([OQ-5](open-questions.md#oq-5-license)).
 
@@ -199,3 +210,4 @@ Decided 2026-09-29, 14:41 ([OQ-11](open-questions.md#oq-11-phase-order)): TCG v2
 - **2026-09-29:** Recorded the owner's decisions. P1 gets reorderable tabs (Pokédex, TCG, Battle, and Profile), species keys in data pipeline v1, and analytics from the start. P3 gets the Battle tab's section switcher. P5 gets double-sided binder pages with three views, marketplace link-outs as the current direction for prices, and collection value from purchase prices. Added the research spikes: styling, sprites, and card price sources. (These phase numbers predate the 14:41 reorder.)
 - **2026-09-29 (14:03 decisions):** The collection comes before binders. TCG v2 builds the collection first, then binders that reference it, with the wishlist, set completion, auto-build, ghosts, drag and drop, Living Dex binders, value, CSV, and search and filters, plus dex progress from the collection. The default marketplace by region is decided. Added the after-launch plan (v1.1 and v2) and three research spikes: TCGdex coverage, local search, and camera scanning.
 - **2026-09-29 (14:41 decisions):** Reordered the phases: TCG v2 is now P3, the battle hub P4, and accounts and sync P5; P0–P2 and P6 are unchanged. P1 gains the first-launch age question, the separate crash-report switch, web consent where the law requires it, and the remote images-off switch. Value is now "Your valuation", with licensed market prices later, each in its own row.
+- **2026-09-30:** The maintainer's pending changes landed on 2026-09-29 (PRs #31–#36): the binder planner and My Binders, TCG retries with a sample-data fallback, tests that pass in CI, the CI workflow (Test and Type Check), Dependabot, and a GitHub Pages web preview. The SDK 57 upgrade is unblocked. Ticked the synced TCG files, running tests, and the CI workflow. Added P0 items: extend CI, EAS builds, the Pages move to Metro, Dependabot ignore rules and PR triage, and a visible sample-data indicator. P3's planner is no longer pending.

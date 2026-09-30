@@ -20,7 +20,7 @@
   - iPhone Duo ships on 2026-10-23. Apps built with Xcode 26 or earlier don't extend under its status bar and camera.
   - EAS Build images with Xcode 27 were "coming soon" as of 2026-09-28.
 - **Experience from a sibling project's Expo upgrade:** jumping straight between SDKs cost far less than stepping through each one.
-- **The upgrade is gated** on the maintainer's pending local changes, which include the TCG components (`BinderPlanner`, `SavedBinders`) that `TCGView` already imports.
+- **The upgrade is gated** on the maintainer's pending local changes, which include the TCG components (`BinderPlanner`, `SavedBinders`) that `TCGView` already imports. **Unblocked on 2026-09-30:** those changes landed on 2026-09-29 (PRs #31–#36). [Progress](#progress-2026-09-30) tracks what's done.
 
 ## Decision
 
@@ -77,6 +77,29 @@
 **Follow-ups**
 - `docs/migrations/expo-sdk-57-upgrade.md`, written with the upgrade: steps, gotchas, and verification output.
 - Update the commands in AGENTS.md, the README, and CONTRIBUTING when the upgrade lands.
+
+## Progress (2026-09-30)
+
+The maintainer's pending changes landed on 2026-09-29, so some of the steps above are partly done on `main` already, on SDK 49.
+
+| Step | Status |
+|---|---|
+| 1. Prune dead code and unused dependencies | Not started |
+| 2. Fix HoloCard, and wire in the synced TCG files | Partly done. `TCGView` renders the real `BinderPlanner` and `SavedBinders`, and HoloCard imports `Text`. HoloCard still calls `useAnimatedStyle` inside its `renderHoloEffect` helper (`HoloCard.tsx:304`). |
+| 3. Upgrade | Not started; unblocked |
+| 4. Fix the cold-start data wipe | Not started (`App.tsx:121`) |
+| 5. Tests | Partly done. All five suites pass in CI on the `react-native` preset, with a 20 s timeout. The move to `jest-expo` and the rest of [test strategy §2](../testing/test-strategy.md#2-fixing-the-existing-suites) remain. |
+| 6. Tooling | Not started: no lint, typecheck, or format scripts, and no `.nvmrc` or `.gitattributes` |
+| 7. CI | Partly done. `.github/workflows/ci.yml` runs Test (`npm run test:coverage -- --ci --passWithNoTests`) and Type Check (`npx tsc --noEmit`) on every push to `main` and every PR to `main`. Both are green. |
+| 8. Migration notes | Not started |
+
+**Added to the upgrade on 2026-09-30:**
+- **Node:** CI and the Pages workflow run Node 18, which SDK 57 doesn't support (it needs 20.19.4 or later). Move both to Node 24, as decision 6 says.
+- **The full CI gate:** add lint, `npx expo install --check`, `expo-doctor`, and `expo export` for web, Android, and iOS, to reach the gate in decision 8.
+- **The Pages workflow:** `.github/workflows/pages-deploy.yml` deploys the web preview (https://edmundtrinh.github.io/PokeVerse/) with SDK 49's webpack export: `npx expo export:web` with `PUBLIC_URL=/PokeVerse/`, plus `@expo/webpack-config` and `"bundler": "webpack"` in `app.json`. SDK 57 builds web with Metro, so switch it to `npx expo export --platform web` (output in `dist/`), set the subpath with `experiments.baseUrl` (verify), and remove the webpack pieces. Hosting is [ADR-0005](ADR-0005-web-hosting.md).
+- **Dependabot:** `.github/dependabot.yml` opens weekly npm updates (grouped as `expo`, `react-native`, and `testing`) and GitHub Actions updates. Add ignore rules for the packages whose versions `npx expo install` sets (`expo`, `react`, `react-dom`, `react-native`, `@types/react`, and the like), so it stops proposing versions the SDK doesn't support. Then triage the open Dependabot PRs (28 on 2026-09-30): consolidate the safe bumps, and close the ones this upgrade supersedes.
+- **EAS builds:** there's no EAS project yet, so `app.json` has no `extra.eas.projectId` or `owner`, and there's no `eas.json`. Link it with `npx eas-cli@latest init`, then add EAS build jobs that use the Expo access token the maintainer added as a repository secret (conventionally `EXPO_TOKEN`; verify the name). Secrets aren't passed to pull requests from forks under the `pull_request` trigger, so run those jobs on pushes to `main` or by hand.
+- **Outside this branch, also in P0:** a visible "sample data" label for when `tcgApi.ts` falls back to its bundled cards ([roadmap](../../specs/roadmap.md)).
 
 ## Alternatives considered
 

@@ -934,6 +934,28 @@ Where to go next:
 
 ---
 
+### [2026-09-30] Pending Work Landed and Docs Rebased
+**Work:** The maintainer's work from another machine reached `main` on 2026-09-29 through PRs #31–#36, and the docs refresh was rebased onto it and corrected to match.
+
+**What landed:**
+- The full `BinderPlanner` and `SavedBinders`, so `main` bundles again, and a save dialog that scrolls with Save and Cancel pinned. `PokeBallSelector` came too, but no screen uses it yet.
+- TCG API retries, then a silent fallback to about 100 bundled sample cards, plus `.env.example`.
+- CI with Test and Type Check jobs, both green after 17 TypeScript errors and the Jest setup and mocks were fixed. Also Dependabot, a PR labeler, and a GitHub Pages web preview built with SDK 49's webpack.
+- Checked in the iOS simulator: the planner, its grid, color, and tag options, saving, and card search. Not checked yet: My Binders, the deck builder, page turning, Android, and real devices.
+
+**Decisions recorded on 2026-09-29** (in the ADRs, PRD, roadmap, and open questions): the tab order with a Champions / Showdown switcher in Battle, our own species keys and slugs, the collection before binders, double-sided binder pages with three views, marketplace link-outs and "Your valuation", images loaded on the device from PokeAPI's sprite project, analytics with a first-launch age question, and the new phase order: TCG v2, then the battle hub, then accounts.
+
+**Workflow clarified:** `main` is PR-only. Unfinished work is pushed to its feature branch at every stopping point, so it never lives on one machine only, and a PR opens only when the feature works end to end.
+
+**Next:**
+- The SDK 57 upgrade, now unblocked, with CI extended to lint, `expo-doctor`, and `expo export` on Node 24.
+- Dependabot ignore rules and triage, a visible "sample data" label, and the cold-start data wipe fix.
+
+**Lessons Learned:**
+1. Date every current-state claim, so it's easy to find and fix when the facts change.
+
+---
+
 ## Code Patterns & Standards
 
 ### State Management Pattern
@@ -1070,5 +1092,5 @@ src/
 
 ---
 
-*Last updated: 2026-09-28*
+*Last updated: 2026-09-30*
 *Project: PokeVerse v1.0*

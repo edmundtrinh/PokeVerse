@@ -4,7 +4,15 @@
 - **Status:** Part 1 (as-is) describes `main` on 2026-09-28. Part 2 (target) is the working plan from the [tech-stack review](../reviews/2026-09-28-tech-stack-review.md); most of it is recorded in Proposed ADRs under [`docs/decisions/`](../decisions/).
 - **Related:** [data model](data-model.md) · [device layouts](device-layouts.md) · [test strategy](../testing/test-strategy.md) · [tracking plan](../analytics/tracking-plan.md) · [roadmap](../../specs/roadmap.md) · [open questions](../../specs/open-questions.md)
 
-Line references (`file:line`) point at `main` as of 2026-09-28. Two TCG components, `BinderPlanner.tsx` and `SavedBinders.tsx`, live on the maintainer's other machine and haven't been pushed yet. This doc gets updated when they land.
+Line references (`file:line`) point at `main` as of 2026-09-28.
+
+> **Since 2026-09-28 (noted 2026-09-30):** the maintainer's work from another machine landed on 2026-09-29 (PRs #31–#36), so parts of Part 1 are out of date.
+> - `BinderPlanner.tsx` and `SavedBinders.tsx` are in the repo, so `main` bundles again. `PokeBallSelector.tsx` arrived too, unused so far.
+> - `.github/workflows/ci.yml` runs the Jest suites and `tsc --noEmit` on every push and pull request to `main`, and both pass ([test strategy §5](../testing/test-strategy.md#5-ci-gates)).
+> - `react-native-web` and `@expo/webpack-config` are installed, and a webpack web build deploys to a GitHub Pages preview ([ADR-0005](../decisions/ADR-0005-web-hosting.md)).
+> - `tcgApi.ts` gained a 15 s timeout, retries, and a silent fallback to bundled sample cards (`src/data/tcgFixtures.json`), and `HoloCard.tsx` imports `Text`.
+>
+> Still true: the cold-start wipe, the demo type map, the URL-only image cache, and HoloCard's hook call inside a helper. Line references into `tcgApi.ts`, `HoloCard.tsx`, and `TeamBuilder.tsx` have shifted.
 
 ## Contents
 
@@ -447,7 +455,7 @@ GitHub Actions is free for public repositories, so CI and the data pipeline cost
 | Today | Target | Phase | Decision |
 |---|---|---|---|
 | Expo SDK 49, legacy architecture | SDK 57 now, then SDK 58 once stable (built for iOS 27 and iPhone Duo) | P0, P2 | [ADR-0002](../decisions/ADR-0002-expo-sdk-upgrade-path.md) |
-| No CI; tests can't run | CI gates on every PR; repaired suites | P0 | [Test strategy](../testing/test-strategy.md) |
+| CI runs the tests and a typecheck (since 2026-09-29) | The full CI gate on every PR; suites repaired on `jest-expo` | P0 | [Test strategy](../testing/test-strategy.md) |
 | Cold-start wipe; login gate | Wait for storage before rendering, never overwrite on login, keep data on sign-out; then no gate at all | P0, then P1 | [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md) |
 | Drawer, `Modal` screens, and mode switches | Expo Router: native stack, Native Tabs in the user's order, URLs | P1 | [ADR-0001](../decisions/ADR-0001-universal-app-expo-router.md) |
 | One package | npm workspaces + Turborepo | P1 | [ADR-0010](../decisions/ADR-0010-monorepo.md) |
@@ -457,7 +465,7 @@ GitHub Actions is free for public repositories, so CI and the data pipeline cost
 | AsyncStorage blobs, two favorites stores | Versioned local store with migrations | P1 (local), P5 (sync) | [Data model](data-model.md) |
 | Binder cards as the only record of ownership | A collection of copies as the source of truth, with binders referencing it | P1 (migration), P3 (features) | [Data model](data-model.md#collection) |
 | Hardcoded styles; NativeWind unused | `@pokeverse/tokens` + Tailwind v4 (Uniwind or NativeWind 5, after a spike) | P1 | [ADR-0006](../decisions/ADR-0006-styling-and-tokens.md) |
-| No web build | Static export, PWA, deployed to our domain | P1 | [ADR-0005](../decisions/ADR-0005-web-hosting.md) |
+| An SDK 49 webpack build on a GitHub Pages preview (since 2026-09-29) | Static export, PWA, deployed to our domain | P1 | [ADR-0005](../decisions/ADR-0005-web-hosting.md) |
 | No crash reporting or analytics | Sentry, plus anonymous events through our `analytics.track` wrapper | P1 | [Tracking plan](../analytics/tracking-plan.md) |
 | Portrait lock, fixed sizes | Lock removed; then window classes, posture, and adaptive components | P1 (lock), P2 (layouts) | [ADR-0011](../decisions/ADR-0011-adaptive-layouts-and-foldables.md), [device layouts](device-layouts.md) |
 | pokemontcg.io (offline 2027-03-01) | TCGdex through the pipeline; off pokemontcg.io by 2027-01-31 | P3 | [ADR-0009](../decisions/ADR-0009-tcg-data-source.md) |
