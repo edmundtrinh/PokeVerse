@@ -1,3 +1,5 @@
 - Never mention claude code when making commit messages. Keep them short and concise describing the changes made at a high level.
 - Remember how hot reload works. Metro should detect changes. Only changed modules should rebuild. App should update live without losing state. Changes should appear automatically with no manual reload needed.
 - Remember the standard React Native developer workflow that we just did to fix this issue. In the future if we run into Metro Bundler issues, we know exactly how to resolve it. Next time we'll do the nuclear option and do a shake device and reload
+- Git workflow: `main` is PR-only. Never commit or push directly to it; work on `feature/<name>` (or `fix/`, `chore/`, `docs/`) branches and merge through a PR after CI passes and the owner approves.
+- Cross-machine WIP: at every stopping point, commit and push unfinished work to a `feature/<name>` branch, even if it is broken, and open a draft PR whose description says what is done, what is broken or unverified, and what is next. Other machines find in-progress work with `git fetch --all && gh pr list`. Never leave work uncommitted on only one machine.
