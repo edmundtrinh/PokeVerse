@@ -40,7 +40,7 @@ If Fast Refresh stops working:
 
 1. **Check the URL in terminal:**
    - ✅ Good: `exp://127.0.0.1:8081` or `exp://localhost:8081`
-   - ❌ Bad: `exp://10.0.0.15:8081` (LAN URL)
+   - ❌ Bad: `exp://192.168.1.20:8081` (LAN URL)
 
 2. **Open Developer Menu in simulator:**
    - iOS: `Cmd+D` or `Device > Shake`
@@ -123,8 +123,9 @@ When you need to test on a physical device:
 1. **Kill everything and fix watchman:**
    ```bash
    pkill -f expo; pkill -f metro
-   watchman watch-del '/Users/edmundtrinh/Documents/Projects/PokeVerse'
-   watchman watch-project '/Users/edmundtrinh/Documents/Projects/PokeVerse'
+   # run these from the repo root
+   watchman watch-del "$PWD"
+   watchman watch-project "$PWD"
    npm run ios:dev
    ```
 

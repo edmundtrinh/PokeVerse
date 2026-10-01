@@ -138,7 +138,7 @@ if ($node) {
 
 # Check 8: Check if we're in the PokeVerse directory
 Write-Host "`nChecking project directory..." -NoNewline
-$pokeversePath = "c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse"
+$pokeversePath = $PSScriptRoot  # this script lives in the repo root
 if (Test-Path $pokeversePath) {
     Write-Host " ✓ Found" -ForegroundColor Green
     

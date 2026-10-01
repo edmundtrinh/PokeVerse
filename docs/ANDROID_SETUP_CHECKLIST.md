@@ -39,7 +39,7 @@
 - [ ] Click "Apply" to install
 
 **Note the SDK Location** (top of SDK Manager window):
-- Usually: `C:\Users\ETrinh1\AppData\Local\Android\Sdk`
+- Usually: `C:\Users\<you>\AppData\Local\Android\Sdk`
 - Write it down: _________________________________
 
 ---
@@ -72,7 +72,7 @@
 **Add ANDROID_HOME:**
 1. [ ] Under "System variables", click **New**
 2. [ ] Variable name: `ANDROID_HOME`
-3. [ ] Variable value: `C:\Users\ETrinh1\AppData\Local\Android\Sdk`
+3. [ ] Variable value: `C:\Users\<you>\AppData\Local\Android\Sdk`
    - (Use the path you noted in Step 3)
 4. [ ] Click **OK**
 
@@ -101,7 +101,7 @@
 - [ ] Open PowerShell in VS Code
 - [ ] Navigate to PokeVerse:
   ```powershell
-  cd 'c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse'
+  cd 'C:\path\to\PokeVerse'
   ```
 - [ ] Run verification script:
   ```powershell
@@ -117,13 +117,13 @@
 ```powershell
 # In Android Studio: Device Manager → Click ▶️ on your AVD
 # Then:
-cd 'c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse'
+cd 'C:\path\to\PokeVerse'
 npm run android
 ```
 
 **Option B: Let Expo start it**
 ```powershell
-cd 'c:\Users\ETrinh1\OneDrive - T-Mobile USA\Documents\PokeVerse'
+cd 'C:\path\to\PokeVerse'
 npm run android
 ```
 

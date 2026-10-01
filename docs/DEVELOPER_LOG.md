@@ -7,6 +7,8 @@ React Native Pokédex app with Expo, featuring comprehensive Pokémon data, spri
 
 ## Development Log Entries
 
+> Some headings below carry approximate dates; git history is the authoritative record of when work landed.
+
 ### [2025-12-14] Search Functionality Implementation
 **Feature:** Real-time Pokémon search by name and number
 
@@ -882,6 +884,78 @@ const parseEvolutionChain = (chain: EvolutionChain) => {
 
 ---
 
+### [2026-09-28] Tech-Stack Review and Modernization Plan
+**Work:** An end-to-end review of the code, docs, tests, and tooling, and a plan for where the project goes next.
+
+**Findings (details in [the tech-stack review](reviews/2026-09-28-tech-stack-review.md)):**
+- **Build and data-loss blockers:**
+  - `TCGView` imports `BinderPlanner` and `SavedBinders`, which were never committed, so `main` can't bundle. The files exist on another machine and will be pushed.
+  - Saved profile data is overwritten on every cold start: the login gate renders before storage finishes loading.
+  - HoloCard uses `<Text>` without importing it, and calls a hook conditionally.
+- **Wrong data and dead caching:**
+  - The type filter uses an 11-entry demo map that defaults to Electric.
+  - Failed detail requests fall back to invented data.
+  - The "LRU image cache" tracks URLs rather than images, and rewrites storage on every hit.
+- **Missing feedback loop:** the tests can't run, and there's no CI, typecheck, or lint. Several "done" claims in the docs didn't match the code.
+- **Stack age:** 8 SDK releases behind (SDK 49 vs 57). The app stores' Expo Go can't open it, and the legacy architecture was removed in SDK 55.
+- **External deadline:** the Pokémon TCG API goes offline on 2027-03-01.
+
+**Decision Tree:**
+```
+Where to go next:
+├── Stabilize + modernize first (CHOSEN)
+│   ✅ Green main with CI gates catches regressions the day they land
+│   ✅ SDK 57 now, SDK 58 (iOS 27 / iPhone Duo) as a fast-follow
+│   ❌ Features wait a few weeks
+│
+├── Keep adding features on SDK 49
+│   ✅ Visible progress now
+│   ❌ Builds on code that doesn't bundle or test
+│   ❌ Upgrade gets harder every release
+│
+└── Rewrite from scratch
+    ✅ Clean slate
+    ❌ Throws away working domain logic (sprite matrix, forms data, accessibility work)
+```
+
+**Outcome:**
+- New docs: architecture, data model, device layouts, ADRs, PRD, roadmap, open questions, test strategy, and research notes.
+- A rewritten `AGENTS.md`, plus iOS and Android platform agents and skills.
+- Repo hygiene: personal paths scrubbed, local settings untracked.
+
+**Next:**
+- The SDK 57 upgrade, on its own branch.
+- Then the foundation work: Expo Router, the data pipeline, and design tokens.
+
+**Lessons Learned:**
+1. Without CI, "complete" is a feeling, not a fact. Make every claim checkable.
+2. Showing wrong data is worse than showing an honest error, especially in a competitive tool.
+3. Treat dates in this log as approximate. For when things happened, git history is authoritative.
+
+---
+
+### [2026-09-30] Pending Work Landed and Docs Rebased
+**Work:** The maintainer's work from another machine reached `main` on 2026-09-29 through PRs #31–#36, and the docs refresh was rebased onto it and corrected to match.
+
+**What landed:**
+- The full `BinderPlanner` and `SavedBinders`, so `main` bundles again, and a save dialog that scrolls with Save and Cancel pinned. `PokeBallSelector` came too, but no screen uses it yet.
+- TCG API retries, then a silent fallback to about 100 bundled sample cards, plus `.env.example`.
+- CI with Test and Type Check jobs, both green after 17 TypeScript errors and the Jest setup and mocks were fixed. Also Dependabot, a PR labeler, and a GitHub Pages web preview built with SDK 49's webpack.
+- Checked in the iOS simulator: the planner, its grid, color, and tag options, saving, and card search. Not checked yet: My Binders, the deck builder, page turning, Android, and real devices.
+
+**Decisions recorded on 2026-09-29** (in the ADRs, PRD, roadmap, and open questions): the tab order with a Champions / Showdown switcher in Battle, our own species keys and slugs, the collection before binders, double-sided binder pages with three views, marketplace link-outs and "Your valuation", images loaded on the device from PokeAPI's sprite project, analytics with a first-launch age question, and the new phase order: TCG v2, then the battle hub, then accounts.
+
+**Workflow clarified:** `main` is PR-only. Unfinished work is pushed to its feature branch at every stopping point, so it never lives on one machine only, and a PR opens only when the feature works end to end.
+
+**Next:**
+- The SDK 57 upgrade, now unblocked, with CI extended to lint, `expo-doctor`, and `expo export` on Node 24.
+- Dependabot ignore rules and triage, a visible "sample data" label, and the cold-start data wipe fix.
+
+**Lessons Learned:**
+1. Date every current-state claim, so it's easy to find and fix when the facts change.
+
+---
+
 ## Code Patterns & Standards
 
 ### State Management Pattern
@@ -1018,5 +1092,5 @@ src/
 
 ---
 
-*Last updated: 2026-01-18*
+*Last updated: 2026-09-30*
 *Project: PokeVerse v1.0*
